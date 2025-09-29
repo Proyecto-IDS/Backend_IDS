@@ -1,0 +1,97 @@
+# Docker Compose for local development
+# This file is for LOCAL DEVELOPMENT ONLY
+# For production, use AWS RDS for PostgreSQL and AWS MSK for Kafka
+
+version: '3.8'
+
+services:
+  # PostgreSQL Database (for local development)
+  # In production, replace this with AWS RDS PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: ids-postgres
+    environment:
+      POSTGRES_DB: ids_database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ids-network
+
+  # Zookeeper (required for Kafka in local development)
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: ids-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - ids-network
+
+  # Kafka (for local development)
+  # In production, replace this with AWS MSK (Managed Streaming for Kafka)
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: ids-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - ids-network
+
+  # Spring Boot Application
+  app:
+    build: .
+    container_name: ids-backend
+    depends_on:
+      - postgres
+      - kafka
+    ports:
+      - "8080:8080"
+    environment:
+      # Database configuration for local development
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ids_database
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      
+      # Kafka configuration for local development
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      
+      # Application configuration
+      SPRING_PROFILES_ACTIVE: development
+      
+    networks:
+      - ids-network
+
+volumes:
+  postgres_data:
+
+networks:
+  ids-network:
+    driver: bridge
+
+# Usage:
+# For local development: docker-compose up -d
+# To build and run: docker-compose up --build
+# To stop: docker-compose down
+# To clean up: docker-compose down -v
+
+# AWS Production Configuration Notes:
+# 1. Replace postgres service with AWS RDS PostgreSQL endpoint
+# 2. Replace kafka service with AWS MSK bootstrap servers
+# 3. Update environment variables in app service with actual AWS endpoints
+# 4. Consider using AWS ECS or EKS for container orchestration
+# 5. Use AWS Secrets Manager for sensitive configuration values

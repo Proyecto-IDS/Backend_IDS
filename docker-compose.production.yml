@@ -1,0 +1,58 @@
+# Docker Compose for Production Deployment with AWS Services
+# This file uses AWS RDS and AWS MSK instead of local services
+
+version: '3.8'
+
+services:
+  # Spring Boot Application connected to AWS services
+  app:
+    build: .
+    container_name: ids-backend-production
+    ports:
+      - "8080:8080"
+    environment:
+      # Load from .env file or set directly
+      # Database configuration (AWS RDS PostgreSQL)
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      
+      # Kafka configuration (AWS MSK)
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS}
+      
+      # Application configuration
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-production}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      
+      # JVM configuration for production
+      JAVA_OPTS: ${JAVA_OPTS:--Xmx1024m -Xms512m -XX:+UseG1GC -XX:+UseContainerSupport}
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '0.25'
+
+# Usage Instructions:
+# 1. Copy .env.example to .env
+# 2. Update .env with your actual AWS RDS and MSK endpoints
+# 3. Run: docker-compose -f docker-compose.production.yml up -d
+# 4. Check logs: docker-compose -f docker-compose.production.yml logs -f
+# 5. Stop: docker-compose -f docker-compose.production.yml down
