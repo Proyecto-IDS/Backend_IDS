@@ -34,6 +34,8 @@ public class User implements UserDetails {
     
     private String name;
     private String email;
+    // Password is not used for OIDC logins; keep the field nullable for possible local auth but
+    // don't require it during OIDC flows.
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -41,6 +43,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (role == null) {
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        }
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
@@ -48,6 +53,12 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    @Override
+    public String getPassword() {
+        // For OIDC users we don't store or use the password here.
+        return password;
     }
 
     @Override
