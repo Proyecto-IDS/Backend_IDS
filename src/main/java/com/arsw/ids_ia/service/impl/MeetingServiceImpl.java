@@ -31,7 +31,7 @@ public class MeetingServiceImpl implements MeetingService {
         User creator = userRepository.findByEmail(creatorEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (creator.getRole() != Role.ROLE_ADMIN) {
+        if (creator.getRole() != Role.ADMIN) {
             throw new UnauthorizedException("Only administrators can create meetings");
         }
 
