@@ -54,3 +54,9 @@ buildNumber.properties
 
 ### Environment configuration files ###
 .env
+
+### Application Logs ###
+logs/
+
+### Test/Debug files ###
+response.json
