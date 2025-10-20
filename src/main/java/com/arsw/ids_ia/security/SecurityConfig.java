@@ -1,10 +1,6 @@
 package com.arsw.ids_ia.security;
 
 // JwtAuthenticationEntryPoint removed; resource server will handle authentication errors
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +22,12 @@ import java.util.Arrays;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
+    private final JwtUserAuthoritiesConverter jwtUserAuthoritiesConverter;
+
+    public SecurityConfig(JwtUserAuthoritiesConverter jwtUserAuthoritiesConverter) {
+        this.jwtUserAuthoritiesConverter = jwtUserAuthoritiesConverter;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -54,9 +56,9 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             );
 
-        // Use Spring's OAuth2 Resource Server support to validate JWTs issued by an external IDP.
-        // Configure a JwtAuthenticationConverter to extract roles from the token (e.g. Keycloak's realm_access.roles)
-        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
+    // Use Spring's OAuth2 Resource Server support to validate JWTs issued by an external IDP.
+    // Configure a JwtAuthenticationConverter to extract roles by mapping the JWT email to local user roles.
+    http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
         return http.build();
     }
@@ -90,39 +92,7 @@ public class SecurityConfig {
      */
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        converter.setJwtGrantedAuthoritiesConverter(new Converter<Jwt, java.util.Collection<GrantedAuthority>>() {
-            @Override
-            @SuppressWarnings("unchecked")
-            public java.util.Collection<GrantedAuthority> convert(Jwt jwt) {
-                Object realmAccess = jwt.getClaim("realm_access");
-                if (realmAccess instanceof java.util.Map) {
-                    java.util.Map<String, Object> realm = (java.util.Map<String, Object>) realmAccess;
-                    Object rolesObj = realm.get("roles");
-                    if (rolesObj instanceof java.util.Collection) {
-                        java.util.Collection<String> roles = (java.util.Collection<String>) rolesObj;
-                        java.util.List<GrantedAuthority> authorities = new java.util.ArrayList<>();
-                        for (String role : roles) {
-                            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
-                        }
-                        return authorities;
-                    }
-                }
-
-                // Fallback: try 'roles' claim at top-level (some IDPs use this)
-                Object topRoles = jwt.getClaim("roles");
-                if (topRoles instanceof java.util.Collection) {
-                    java.util.Collection<String> roles = (java.util.Collection<String>) topRoles;
-                    java.util.List<GrantedAuthority> authorities = new java.util.ArrayList<>();
-                    for (String role : roles) {
-                        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
-                    }
-                    return authorities;
-                }
-
-                return java.util.Collections.emptyList();
-            }
-        });
-
+        converter.setJwtGrantedAuthoritiesConverter(jwtUserAuthoritiesConverter);
         return converter;
     }
 }
