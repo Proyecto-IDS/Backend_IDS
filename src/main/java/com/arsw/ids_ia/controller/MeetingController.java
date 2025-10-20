@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +32,10 @@ public class MeetingController {
     @PostMapping
     public ResponseEntity<MeetingResponse> createMeeting(
             @Valid @RequestBody CreateMeetingRequest request,
-            @AuthenticationPrincipal UserDetails userDetails
+            @AuthenticationPrincipal Jwt jwt
     ) {
-        Meeting meeting = meetingService.createMeeting(request, userDetails.getUsername());
+        String email = jwt.getClaim("email");
+        Meeting meeting = meetingService.createMeeting(request, email);
         MeetingResponse response = new MeetingResponse(
             meeting.getId(),
             meeting.getCode(),
@@ -52,9 +53,10 @@ public class MeetingController {
     @PostMapping("/join")
     public ResponseEntity<MeetingResponse> joinMeeting(
             @Valid @RequestBody JoinMeetingRequest request,
-            @AuthenticationPrincipal UserDetails userDetails
+            @AuthenticationPrincipal Jwt jwt
     ) {
-        Meeting meeting = meetingService.joinMeeting(request, userDetails.getUsername());
+        String email = jwt.getClaim("email");
+        Meeting meeting = meetingService.joinMeeting(request, email);
         MeetingResponse response = new MeetingResponse(
             meeting.getId(),
             meeting.getCode(),
