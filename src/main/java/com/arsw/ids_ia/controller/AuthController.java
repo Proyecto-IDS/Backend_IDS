@@ -58,11 +58,20 @@ public class AuthController {
             return ResponseEntity.status(401).body(Map.of("error", "unauthenticated"));
         }
 
-        Object principal = authentication.getPrincipal();
+        // Extract email from JWT principal (format is usually the email or subject)
+        String email = authentication.getName();
+        
+        // Get authorities and extract role
+        String role = authentication.getAuthorities().stream()
+                .findFirst()
+                .map(auth -> auth.getAuthority())
+                .orElse("ROLE_USER");
+
         Map<String, Object> resp = Map.of(
-                "principal", principal.toString(),
-                "authenticated", authentication.isAuthenticated(),
-                "authorities", authentication.getAuthorities()
+                "email", email,
+                "role", role,
+                "authorities", authentication.getAuthorities(),
+                "authenticated", authentication.isAuthenticated()
         );
 
         return ResponseEntity.ok(resp);
