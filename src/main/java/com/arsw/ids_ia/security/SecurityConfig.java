@@ -56,9 +56,9 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             );
 
-    // Use Spring's OAuth2 Resource Server support to validate JWTs issued by an external IDP.
-    // Configure a JwtAuthenticationConverter to extract roles by mapping the JWT email to local user roles.
-    http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
+        // Use Spring's OAuth2 Resource Server support to validate JWTs issued by an external IDP.
+        // Configure a JwtAuthenticationConverter to extract roles by mapping the JWT email to local user roles.
+        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
         return http.build();
     }
@@ -88,7 +88,7 @@ public class SecurityConfig {
 
     /**
      * Convert JWT claims from the IDP into Spring GrantedAuthority collection.
-     * This example expects a claim structure like Keycloak's: { "realm_access": { "roles": ["user","admin"] } }
+     * This uses JwtUserAuthoritiesConverter to map user email to roles from the database.
      */
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
