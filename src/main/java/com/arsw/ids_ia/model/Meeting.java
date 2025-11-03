@@ -48,4 +48,12 @@ public class Meeting {
         uniqueConstraints = @UniqueConstraint(columnNames = {"meeting_id", "user_id"})
     )
     private Set<User> participants;
+
+    private Integer currentParticipantCount;
+    private Integer maxParticipants;
+    private String status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cancelled_by_id")
+    private User cancelledBy;
 }
