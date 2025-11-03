@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +46,10 @@ public class MeetingController {
             meeting.getStartTime().toString(),
             meeting.getEndTime().toString(),
             meeting.getCreator().getEmail(),
-            meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet())
+            meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
+            meeting.getCurrentParticipantCount(),
+            meeting.getMaxParticipants(),
+            meeting.getStatus()
         );
         return ResponseEntity.ok(response);
     }
@@ -65,7 +70,30 @@ public class MeetingController {
             meeting.getStartTime().toString(),
             meeting.getEndTime().toString(),
             meeting.getCreator().getEmail(),
-            meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet())
+            meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
+            meeting.getCurrentParticipantCount(),
+            meeting.getMaxParticipants(),
+            meeting.getStatus()
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{meetingId}")
+    public ResponseEntity<MeetingResponse> getMeeting(@PathVariable Long meetingId) {
+        Meeting meeting = meetingService.getMeetingById(meetingId);
+        MeetingResponse response = new MeetingResponse(
+            meeting.getId(),
+            meeting.getCode(),
+            meeting.getTitle(),
+            meeting.getDescription(),
+            meeting.getStartTime().toString(),
+            meeting.getEndTime().toString(),
+            meeting.getCreator().getEmail(),
+            meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
+            meeting.getCurrentParticipantCount(),
+            meeting.getMaxParticipants(),
+            meeting.getStatus()
         );
         return ResponseEntity.ok(response);
     }

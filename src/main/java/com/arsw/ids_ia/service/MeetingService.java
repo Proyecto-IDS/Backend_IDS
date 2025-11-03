@@ -7,4 +7,5 @@ import com.arsw.ids_ia.model.Meeting;
 public interface MeetingService {
     Meeting createMeeting(CreateMeetingRequest request, String creatorEmail);
     Meeting joinMeeting(JoinMeetingRequest request, String participantEmail);
+    Meeting getMeetingById(Long meetingId);
 }

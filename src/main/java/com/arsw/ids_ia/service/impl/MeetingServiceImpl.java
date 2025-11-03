@@ -1,22 +1,25 @@
 package com.arsw.ids_ia.service.impl;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.arsw.ids_ia.dto.request.CreateMeetingRequest;
 import com.arsw.ids_ia.dto.request.JoinMeetingRequest;
 import com.arsw.ids_ia.exception.UnauthorizedException;
 import com.arsw.ids_ia.model.Meeting;
 import com.arsw.ids_ia.model.User;
+import com.arsw.ids_ia.repository.AlertRepository;
 import com.arsw.ids_ia.repository.MeetingRepository;
 import com.arsw.ids_ia.repository.UserRepository;
 import com.arsw.ids_ia.service.MeetingService;
 import com.arsw.ids_ia.utils.enums.Role;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +27,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     private final MeetingRepository meetingRepository;
     private final UserRepository userRepository;
+    private final AlertRepository alertRepository;
 
     @Override
     @Transactional
@@ -53,7 +57,18 @@ public class MeetingServiceImpl implements MeetingService {
                 .build();
 
         meeting.getParticipants().add(creator);
-        return meetingRepository.save(meeting);
+        Meeting savedMeeting = meetingRepository.save(meeting);
+        
+        // If incidentId is provided, update all alerts with that incidentId to link to this meeting
+        if (request.getIncidentId() != null && !request.getIncidentId().isEmpty()) {
+            var alerts = alertRepository.findByIncidentId(request.getIncidentId());
+            for (var alert : alerts) {
+                alert.setWarRoomId(savedMeeting.getId());
+                alertRepository.save(alert);
+            }
+        }
+        
+        return savedMeeting;
     }
 
     @Override
@@ -67,6 +82,13 @@ public class MeetingServiceImpl implements MeetingService {
 
         meeting.getParticipants().add(participant);
         return meetingRepository.save(meeting);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Meeting getMeetingById(Long meetingId) {
+        return meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new RuntimeException("Meeting not found"));
     }
 
     private String generateUniqueCode() {

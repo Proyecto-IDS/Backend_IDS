@@ -1,7 +1,8 @@
 package com.arsw.ids_ia.security;
 
 // JwtAuthenticationEntryPoint removed; resource server will handle authentication errors
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,12 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -46,6 +46,8 @@ public class SecurityConfig {
                 // Public endpoints
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/actuator/**").permitAll()
+                // Allow traffic stream websocket handshake without requiring JWT (development convenience)
+                .requestMatchers("/traffic/stream").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/public/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/test/public").permitAll()
                 // Swagger endpoints (if you plan to add Swagger)
