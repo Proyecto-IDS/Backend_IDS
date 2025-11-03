@@ -51,3 +51,12 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+### Environment configuration files ###
+.env
+
+### Application Logs ###
+logs/
+
+### Test/Debug files ###
+response.json
