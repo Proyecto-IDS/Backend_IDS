@@ -21,4 +21,6 @@ public class CreateMeetingRequest {
     
     @NotBlank
     private String endTime;
+    
+    private String incidentId;
 }
