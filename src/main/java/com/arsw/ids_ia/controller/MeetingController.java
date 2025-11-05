@@ -97,4 +97,28 @@ public class MeetingController {
         );
         return ResponseEntity.ok(response);
     }
+    
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/{meetingId}/leave")
+    public ResponseEntity<MeetingResponse> leaveMeeting(
+            @PathVariable Long meetingId,
+            @AuthenticationPrincipal Jwt jwt
+    ) {
+        String email = jwt.getClaim("email");
+        Meeting meeting = meetingService.leaveMeeting(meetingId, email);
+        MeetingResponse response = new MeetingResponse(
+            meeting.getId(),
+            meeting.getCode(),
+            meeting.getTitle(),
+            meeting.getDescription(),
+            meeting.getStartTime().toString(),
+            meeting.getEndTime().toString(),
+            meeting.getCreator().getEmail(),
+            meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
+            meeting.getCurrentParticipantCount(),
+            meeting.getMaxParticipants(),
+            meeting.getStatus()
+        );
+        return ResponseEntity.ok(response);
+    }
 }
