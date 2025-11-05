@@ -77,6 +77,10 @@ public class AlertService {
         return repository.findById(id);
     }
 
+    public Optional<Alert> getByIncidentId(String incidentId) {
+        return repository.findLatestByIncidentId(incidentId);
+    }
+
     public List<Alert> recent(int limit) {
         if (limit <= 0) limit = 10;
         return repository.findAllByOrderByTimestampDesc(PageRequest.of(0, limit));

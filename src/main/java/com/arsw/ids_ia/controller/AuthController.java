@@ -1,8 +1,10 @@
 package com.arsw.ids_ia.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -14,15 +16,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.arsw.ids_ia.model.User;
+import com.arsw.ids_ia.repository.UserRepository;
+import com.arsw.ids_ia.utils.enums.Role;
+
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final JwtDecoder jwtDecoder;
-
-    public AuthController(JwtDecoder jwtDecoder) {
-        this.jwtDecoder = jwtDecoder;
-    }
+    private final UserRepository userRepository;
+    
+    @Value("${app.initial-admins:}")
+    private String initialAdmins;
 
     /**
      * Accept a Google id_token sent from the frontend (client-side flow) and validate it.
@@ -58,18 +67,38 @@ public class AuthController {
             return ResponseEntity.status(401).body(Map.of("error", "unauthenticated"));
         }
 
-        // Extract email from JWT principal (format is usually the email or subject)
-        String email = authentication.getName();
+        // Extract email and name from JWT
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        String email = jwt.getClaimAsString("email");
+        String name = jwt.getClaimAsString("name");
+        
+        // Create or get user from database
+        User user = userRepository.findByEmail(email).orElseGet(() -> {
+            // Determine role: ADMIN if email is in initialAdmins list, otherwise USER
+            List<String> adminEmails = List.of(initialAdmins.split(","));
+            Role role = adminEmails.stream()
+                    .map(String::trim)
+                    .anyMatch(adminEmail -> adminEmail.equalsIgnoreCase(email))
+                    ? Role.ADMIN
+                    : Role.USER;
+            
+            // Create new user
+            User newUser = User.builder()
+                    .email(email)
+                    .name(name)
+                    .role(role)
+                    .build();
+            
+            return userRepository.save(newUser);
+        });
         
         // Get authorities and extract role
-        String role = authentication.getAuthorities().stream()
-                .findFirst()
-                .map(auth -> auth.getAuthority())
-                .orElse("ROLE_USER");
+        String roleStr = user.getRole() != null ? "ROLE_" + user.getRole().name() : "ROLE_USER";
 
         Map<String, Object> resp = Map.of(
-                "email", email,
-                "role", role,
+                "email", user.getEmail(),
+                "name", user.getName() != null ? user.getName() : email,
+                "role", roleStr,
                 "authorities", authentication.getAuthorities(),
                 "authenticated", authentication.isAuthenticated()
         );

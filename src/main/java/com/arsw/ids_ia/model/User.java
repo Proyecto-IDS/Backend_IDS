@@ -33,7 +33,10 @@ public class User implements UserDetails {
     private Long id;
     
     private String name;
+    
+    @jakarta.persistence.Column(unique = true, nullable = false)
     private String email;
+    
     // Password is not used for OIDC logins; keep the field nullable for possible local auth but
     // don't require it during OIDC flows.
     private String password;

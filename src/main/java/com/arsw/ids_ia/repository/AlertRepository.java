@@ -19,4 +19,7 @@ public interface AlertRepository extends JpaRepository<Alert, Long> {
     Optional<Alert> findDuplicate(@Param("packetId") String packetId, @Param("incidentId") String incidentId, @Param("severity") String severity);
     
     List<Alert> findByIncidentId(String incidentId);
+    
+    @Query("SELECT a FROM Alert a WHERE a.incidentId = :incidentId ORDER BY a.timestamp DESC LIMIT 1")
+    Optional<Alert> findLatestByIncidentId(@Param("incidentId") String incidentId);
 }

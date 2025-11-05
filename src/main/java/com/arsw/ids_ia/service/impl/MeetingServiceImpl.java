@@ -106,34 +106,57 @@ public class MeetingServiceImpl implements MeetingService {
         Meeting meeting = meetingRepository.findByCode(request.getCode())
                 .orElseThrow(() -> new RuntimeException("Meeting not found"));
 
+        // Check if user is already in the meeting using database query
+        // Use a direct native query to avoid Hibernate cache issues
+        boolean alreadyJoined = meetingRepository.isUserParticipant(meeting.getId(), participant.getId());
+        
+        if (alreadyJoined) {
+            logger.info("User {} already in meeting {}, skipping join", participantEmail, meeting.getCode());
+            return meeting;
+        }
+        
+        // Double-check with in-memory collection as fallback
+        boolean inMemoryCheck = meeting.getParticipants().stream()
+                .anyMatch(p -> p.getId().equals(participant.getId()));
+        
+        if (inMemoryCheck) {
+            logger.info("User {} already in meeting {} (in-memory check), skipping join", participantEmail, meeting.getCode());
+            return meeting;
+        }
+        
+        // Add participant and save
         meeting.getParticipants().add(participant);
-        Meeting savedMeeting = meetingRepository.save(meeting);
+        meeting = meetingRepository.saveAndFlush(meeting);  // Force immediate flush
         
         // Broadcast warroom.participants event via WebSocket
         Map<String, Object> event = new HashMap<>();
         event.put("type", "warroom.participants");
-        event.put("warRoomId", savedMeeting.getId());
-        event.put("currentParticipantCount", savedMeeting.getCurrentParticipantCount());
+        event.put("warRoomId", meeting.getId());
+        event.put("currentParticipantCount", meeting.getCurrentParticipantCount());
         event.put("action", "joined");
         event.put("userEmail", participantEmail);
         
         logger.info("Broadcasting warroom.participants event: warRoomId={}, action=joined, user={}, count={}", 
-                    savedMeeting.getId(), participantEmail, savedMeeting.getCurrentParticipantCount());
+                    meeting.getId(), participantEmail, meeting.getCurrentParticipantCount());
         socketHandler.broadcastObject(event);
         
-        return savedMeeting;
+        return meeting;
     }
     
     @Override
     @Transactional
     public Meeting leaveMeeting(Long meetingId, String participantEmail) {
-        User participant = userRepository.findByEmail(participantEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
         Meeting meeting = meetingRepository.findById(meetingId)
                 .orElseThrow(() -> new RuntimeException("Meeting not found"));
 
-        meeting.getParticipants().remove(participant);
+        // Remove participant by email to ensure correct removal from ManyToMany relationship
+        boolean removed = meeting.getParticipants().removeIf(p -> p.getEmail().equals(participantEmail));
+        
+        if (!removed) {
+            logger.info("User {} was not in meeting {}, nothing to remove", participantEmail, meetingId);
+            return meeting;
+        }
+        
         Meeting savedMeeting = meetingRepository.save(meeting);
         
         // Broadcast warroom.participants event via WebSocket

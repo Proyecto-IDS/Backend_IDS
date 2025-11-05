@@ -43,6 +43,13 @@ public class AlertController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/by-incident/{incidentId}")
+    public ResponseEntity<Alert> getByIncidentId(@PathVariable String incidentId) {
+        return service.getByIncidentId(incidentId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity<Alert> create(@Validated @RequestBody Alert alert) {
         Alert created = service.create(alert);

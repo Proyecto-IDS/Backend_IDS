@@ -61,21 +61,44 @@ public class MeetingController {
             @AuthenticationPrincipal Jwt jwt
     ) {
         String email = jwt.getClaim("email");
-        Meeting meeting = meetingService.joinMeeting(request, email);
-        MeetingResponse response = new MeetingResponse(
-            meeting.getId(),
-            meeting.getCode(),
-            meeting.getTitle(),
-            meeting.getDescription(),
-            meeting.getStartTime().toString(),
-            meeting.getEndTime().toString(),
-            meeting.getCreator().getEmail(),
-            meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
-            meeting.getCurrentParticipantCount(),
-            meeting.getMaxParticipants(),
-            meeting.getStatus()
-        );
-        return ResponseEntity.ok(response);
+        try {
+            Meeting meeting = meetingService.joinMeeting(request, email);
+            MeetingResponse response = new MeetingResponse(
+                meeting.getId(),
+                meeting.getCode(),
+                meeting.getTitle(),
+                meeting.getDescription(),
+                meeting.getStartTime().toString(),
+                meeting.getEndTime().toString(),
+                meeting.getCreator().getEmail(),
+                meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
+                meeting.getCurrentParticipantCount(),
+                meeting.getMaxParticipants(),
+                meeting.getStatus()
+            );
+            return ResponseEntity.ok(response);
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            // User is already in the meeting (duplicate key constraint), just return the meeting
+            if (e.getMessage() != null && e.getMessage().contains("meeting_participants_pkey")) {
+                // Re-fetch the meeting to get current state
+                Meeting meeting = meetingService.getMeetingByCode(request.getCode());
+                MeetingResponse response = new MeetingResponse(
+                    meeting.getId(),
+                    meeting.getCode(),
+                    meeting.getTitle(),
+                    meeting.getDescription(),
+                    meeting.getStartTime().toString(),
+                    meeting.getEndTime().toString(),
+                    meeting.getCreator().getEmail(),
+                    meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
+                    meeting.getCurrentParticipantCount(),
+                    meeting.getMaxParticipants(),
+                    meeting.getStatus()
+                );
+                return ResponseEntity.ok(response);
+            }
+            throw e;
+        }
     }
 
     @PreAuthorize("isAuthenticated()")

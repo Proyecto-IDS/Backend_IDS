@@ -9,4 +9,5 @@ public interface MeetingService {
     Meeting joinMeeting(JoinMeetingRequest request, String participantEmail);
     Meeting leaveMeeting(Long meetingId, String participantEmail);
     Meeting getMeetingById(Long meetingId);
+    Meeting getMeetingByCode(String code);
 }
