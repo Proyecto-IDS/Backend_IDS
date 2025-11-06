@@ -10,4 +10,5 @@ public interface MeetingService {
     Meeting leaveMeeting(Long meetingId, String participantEmail);
     Meeting getMeetingById(Long meetingId);
     Meeting getMeetingByCode(String code);
+    Meeting markIncidentAsResolved(Long meetingId, String adminEmail);
 }
