@@ -62,10 +62,19 @@ public class MeetingServiceImpl implements MeetingService {
                 .endTime(LocalDateTime.parse(request.getEndTime(), formatter))
                 .creator(creator)
                 .participants(new HashSet<>())
+                .status("ACTIVE")
                 .build();
 
-        meeting.getParticipants().add(creator);
-        Meeting savedMeeting = meetingRepository.save(meeting);
+        // First save the meeting without participants
+        Meeting savedMeeting = meetingRepository.saveAndFlush(meeting);
+        
+        // Then manually add the creator to participants using the saved meeting
+        // This ensures the relationship is properly persisted
+        savedMeeting.getParticipants().add(creator);
+        savedMeeting = meetingRepository.saveAndFlush(savedMeeting);
+        
+        // Force refresh from database to get accurate participant count
+        savedMeeting = meetingRepository.findById(savedMeeting.getId()).orElseThrow();
         
         // If incidentId is provided, update all alerts with that incidentId to link to this meeting
         if (request.getIncidentId() != null && !request.getIncidentId().isEmpty()) {
@@ -91,14 +100,12 @@ public class MeetingServiceImpl implements MeetingService {
         
         event.put("warRoom", warRoomData);
         
-        logger.info("Broadcasting warroom.created event: incidentId={}, warRoomId={}", request.getIncidentId(), savedMeeting.getId());
         socketHandler.broadcastObject(event);
         
         return savedMeeting;
     }
 
     @Override
-    @Transactional
     public Meeting joinMeeting(JoinMeetingRequest request, String participantEmail) {
         User participant = userRepository.findByEmail(participantEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -107,28 +114,50 @@ public class MeetingServiceImpl implements MeetingService {
                 .orElseThrow(() -> new RuntimeException("Meeting not found"));
 
         // Check if user is already in the meeting using database query
-        // Use a direct native query to avoid Hibernate cache issues
         boolean alreadyJoined = meetingRepository.isUserParticipant(meeting.getId(), participant.getId());
         
         if (alreadyJoined) {
-            logger.info("User {} already in meeting {}, skipping join", participantEmail, meeting.getCode());
+            // Refresh meeting from DB to get accurate participant count
+            meeting = meetingRepository.findById(meeting.getId()).get();
+            // Still broadcast the event to notify frontend of the user's presence
+            broadcastJoinEvent(meeting, participantEmail);
             return meeting;
         }
-        
-        // Double-check with in-memory collection as fallback
-        boolean inMemoryCheck = meeting.getParticipants().stream()
-                .anyMatch(p -> p.getId().equals(participant.getId()));
-        
-        if (inMemoryCheck) {
-            logger.info("User {} already in meeting {} (in-memory check), skipping join", participantEmail, meeting.getCode());
+
+        // Try to add participant in separate transaction to avoid rollback issues
+        return attemptJoinMeeting(meeting, participant, participantEmail);
+    }
+
+    @Transactional
+    private Meeting attemptJoinMeeting(Meeting meeting, User participant, String participantEmail) {
+        try {
+            meeting.getParticipants().add(participant);
+            meeting = meetingRepository.saveAndFlush(meeting);
+            
+            // Broadcast warroom.participants event via WebSocket
+            broadcastJoinEvent(meeting, participantEmail);
+            
             return meeting;
+            
+        } catch (Exception e) {
+            // Handle race condition where user was added between check and save
+            if (e.getMessage() != null && e.getMessage().contains("meeting_participants_pkey")) {
+                // Handle in separate transaction to avoid rollback issues
+                return handleRaceCondition(meeting.getId(), participantEmail);
+            } else {
+                logger.error("Unexpected error joining meeting: {}", e.getMessage());
+                throw e;
+            }
         }
-        
-        // Add participant and save
-        meeting.getParticipants().add(participant);
-        meeting = meetingRepository.saveAndFlush(meeting);  // Force immediate flush
-        
-        // Broadcast warroom.participants event via WebSocket
+    }
+
+    @Transactional(readOnly = true)
+    private Meeting handleRaceCondition(Long meetingId, String participantEmail) {
+        // Reload meeting and broadcast event in separate read-only transaction
+        Meeting meeting = meetingRepository.findById(meetingId).get();
+        broadcastJoinEvent(meeting, participantEmail);
+        return meeting;
+    }    private void broadcastJoinEvent(Meeting meeting, String participantEmail) {
         Map<String, Object> event = new HashMap<>();
         event.put("type", "warroom.participants");
         event.put("warRoomId", meeting.getId());
@@ -136,11 +165,7 @@ public class MeetingServiceImpl implements MeetingService {
         event.put("action", "joined");
         event.put("userEmail", participantEmail);
         
-        logger.info("Broadcasting warroom.participants event: warRoomId={}, action=joined, user={}, count={}", 
-                    meeting.getId(), participantEmail, meeting.getCurrentParticipantCount());
         socketHandler.broadcastObject(event);
-        
-        return meeting;
     }
     
     @Override
@@ -153,7 +178,6 @@ public class MeetingServiceImpl implements MeetingService {
         boolean removed = meeting.getParticipants().removeIf(p -> p.getEmail().equals(participantEmail));
         
         if (!removed) {
-            logger.info("User {} was not in meeting {}, nothing to remove", participantEmail, meetingId);
             return meeting;
         }
         
@@ -167,8 +191,6 @@ public class MeetingServiceImpl implements MeetingService {
         event.put("action", "left");
         event.put("userEmail", participantEmail);
         
-        logger.info("Broadcasting warroom.participants event: warRoomId={}, action=left, user={}, count={}", 
-                    savedMeeting.getId(), participantEmail, savedMeeting.getCurrentParticipantCount());
         socketHandler.broadcastObject(event);
         
         return savedMeeting;
@@ -179,6 +201,41 @@ public class MeetingServiceImpl implements MeetingService {
     public Meeting getMeetingById(Long meetingId) {
         return meetingRepository.findById(meetingId)
                 .orElseThrow(() -> new RuntimeException("Meeting not found"));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Meeting getMeetingByCode(String code) {
+        return meetingRepository.findByCode(code)
+                .orElseThrow(() -> new RuntimeException("Meeting not found"));
+    }
+
+    @Override
+    @Transactional
+    public Meeting markIncidentAsResolved(Long meetingId, String adminEmail) {
+        Meeting meeting = meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new RuntimeException("Meeting not found"));
+
+        // Verify that the user is the creator (admin)
+        if (!meeting.getCreator().getEmail().equals(adminEmail)) {
+            throw new RuntimeException("Only the meeting creator can mark incident as resolved");
+        }
+
+        // Update meeting status and end time
+        meeting.setStatus("ENDED");
+        meeting.setEndTime(LocalDateTime.now());
+        
+        Meeting savedMeeting = meetingRepository.save(meeting);
+
+        // Broadcast meeting ended event via WebSocket
+        Map<String, Object> event = new HashMap<>();
+        event.put("type", "warroom.resolved");
+        event.put("warRoomId", savedMeeting.getId());
+        event.put("resolvedAt", savedMeeting.getEndTime().toString());
+        
+        socketHandler.broadcastObject(event);
+        
+        return savedMeeting;
     }
 
     private String generateUniqueCode() {
