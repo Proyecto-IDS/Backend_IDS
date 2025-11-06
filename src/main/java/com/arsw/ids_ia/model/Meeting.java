@@ -56,4 +56,9 @@ public class Meeting {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cancelled_by_id")
     private User cancelledBy;
+
+    // Method to get current participant count from participants set
+    public Integer getCurrentParticipantCount() {
+        return participants != null ? participants.size() : 0;
+    }
 }
