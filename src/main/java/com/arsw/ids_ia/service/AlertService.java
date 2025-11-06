@@ -83,7 +83,7 @@ public class AlertService {
 
     public List<Alert> recent(int limit) {
         if (limit <= 0) limit = 10;
-        return repository.findAllByOrderByTimestampDesc(PageRequest.of(0, limit));
+        return repository.findActiveAlertsOrderByTimestampDesc(PageRequest.of(0, limit));
     }
 
     public List<Alert> today() {
@@ -101,5 +101,9 @@ public class AlertService {
 
     public long count() {
         return repository.count();
+    }
+
+    public List<Alert> getResolvedIncidents() {
+        return repository.findResolvedIncidents();
     }
 }
