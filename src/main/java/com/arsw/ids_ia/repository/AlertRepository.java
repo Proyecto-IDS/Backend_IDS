@@ -22,4 +22,10 @@ public interface AlertRepository extends JpaRepository<Alert, Long> {
     
     @Query("SELECT a FROM Alert a WHERE a.incidentId = :incidentId ORDER BY a.timestamp DESC LIMIT 1")
     Optional<Alert> findLatestByIncidentId(@Param("incidentId") String incidentId);
+    
+    @Query("SELECT a FROM Alert a JOIN Meeting m ON a.warRoomId = m.id WHERE m.status = 'ENDED' ORDER BY a.timestamp DESC")
+    List<Alert> findResolvedIncidents();
+    
+    @Query("SELECT a FROM Alert a LEFT JOIN Meeting m ON a.warRoomId = m.id WHERE (m.id IS NULL OR m.status != 'ENDED') ORDER BY a.timestamp DESC")
+    List<Alert> findActiveAlertsOrderByTimestampDesc(Pageable pageable);
 }
