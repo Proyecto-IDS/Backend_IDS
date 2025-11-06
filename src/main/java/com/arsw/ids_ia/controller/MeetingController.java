@@ -38,19 +38,7 @@ public class MeetingController {
     ) {
         String email = jwt.getClaim("email");
         Meeting meeting = meetingService.createMeeting(request, email);
-        MeetingResponse response = new MeetingResponse(
-            meeting.getId(),
-            meeting.getCode(),
-            meeting.getTitle(),
-            meeting.getDescription(),
-            meeting.getStartTime().toString(),
-            meeting.getEndTime().toString(),
-            meeting.getCreator().getEmail(),
-            meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
-            meeting.getCurrentParticipantCount(),
-            meeting.getMaxParticipants(),
-            meeting.getStatus()
-        );
+        MeetingResponse response = createMeetingResponse(meeting);
         return ResponseEntity.ok(response);
     }
 
@@ -61,51 +49,13 @@ public class MeetingController {
             @AuthenticationPrincipal Jwt jwt
     ) {
         String email = jwt.getClaim("email");
-        try {
-            Meeting meeting = meetingService.joinMeeting(request, email);
-            MeetingResponse response = new MeetingResponse(
-                meeting.getId(),
-                meeting.getCode(),
-                meeting.getTitle(),
-                meeting.getDescription(),
-                meeting.getStartTime().toString(),
-                meeting.getEndTime().toString(),
-                meeting.getCreator().getEmail(),
-                meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
-                meeting.getCurrentParticipantCount(),
-                meeting.getMaxParticipants(),
-                meeting.getStatus()
-            );
-            return ResponseEntity.ok(response);
-        } catch (org.springframework.dao.DataIntegrityViolationException e) {
-            // User is already in the meeting (duplicate key constraint), just return the meeting
-            if (e.getMessage() != null && e.getMessage().contains("meeting_participants_pkey")) {
-                // Re-fetch the meeting to get current state
-                Meeting meeting = meetingService.getMeetingByCode(request.getCode());
-                MeetingResponse response = new MeetingResponse(
-                    meeting.getId(),
-                    meeting.getCode(),
-                    meeting.getTitle(),
-                    meeting.getDescription(),
-                    meeting.getStartTime().toString(),
-                    meeting.getEndTime().toString(),
-                    meeting.getCreator().getEmail(),
-                    meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
-                    meeting.getCurrentParticipantCount(),
-                    meeting.getMaxParticipants(),
-                    meeting.getStatus()
-                );
-                return ResponseEntity.ok(response);
-            }
-            throw e;
-        }
+        Meeting meeting = meetingService.joinMeeting(request, email);
+        MeetingResponse response = createMeetingResponse(meeting);
+        return ResponseEntity.ok(response);
     }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{meetingId}")
-    public ResponseEntity<MeetingResponse> getMeeting(@PathVariable Long meetingId) {
-        Meeting meeting = meetingService.getMeetingById(meetingId);
-        MeetingResponse response = new MeetingResponse(
+    
+    private MeetingResponse createMeetingResponse(Meeting meeting) {
+        return new MeetingResponse(
             meeting.getId(),
             meeting.getCode(),
             meeting.getTitle(),
@@ -118,6 +68,13 @@ public class MeetingController {
             meeting.getMaxParticipants(),
             meeting.getStatus()
         );
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{meetingId}")
+    public ResponseEntity<MeetingResponse> getMeeting(@PathVariable Long meetingId) {
+        Meeting meeting = meetingService.getMeetingById(meetingId);
+        MeetingResponse response = createMeetingResponse(meeting);
         return ResponseEntity.ok(response);
     }
     
@@ -129,19 +86,19 @@ public class MeetingController {
     ) {
         String email = jwt.getClaim("email");
         Meeting meeting = meetingService.leaveMeeting(meetingId, email);
-        MeetingResponse response = new MeetingResponse(
-            meeting.getId(),
-            meeting.getCode(),
-            meeting.getTitle(),
-            meeting.getDescription(),
-            meeting.getStartTime().toString(),
-            meeting.getEndTime().toString(),
-            meeting.getCreator().getEmail(),
-            meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
-            meeting.getCurrentParticipantCount(),
-            meeting.getMaxParticipants(),
-            meeting.getStatus()
-        );
+        MeetingResponse response = createMeetingResponse(meeting);
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/{meetingId}/mark-as-resolved")
+    public ResponseEntity<MeetingResponse> markIncidentAsResolved(
+            @PathVariable Long meetingId,
+            @AuthenticationPrincipal Jwt jwt
+    ) {
+        String email = jwt.getClaim("email");
+        Meeting meeting = meetingService.markIncidentAsResolved(meetingId, email);
+        MeetingResponse response = createMeetingResponse(meeting);
         return ResponseEntity.ok(response);
     }
 }
