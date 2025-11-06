@@ -93,4 +93,9 @@ public class AlertController {
         counts.put("high", todayAlerts.stream().filter(a -> "high".equalsIgnoreCase(a.getSeverity())).count());
         return counts;
     }
+
+    @GetMapping("/resolved")
+    public List<Alert> getResolvedIncidents() {
+        return service.getResolvedIncidents();
+    }
 }
