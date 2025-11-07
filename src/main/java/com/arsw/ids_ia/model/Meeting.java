@@ -34,7 +34,8 @@ public class Meeting {
     private String title;
     private String description;
     private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalDateTime endTime; // Ahora se establece solo cuando termina la reunión
+    private Long durationSeconds; // Duración total en segundos cuando termina
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
@@ -50,8 +51,7 @@ public class Meeting {
     private Set<User> participants;
 
     private Integer currentParticipantCount;
-    private Integer maxParticipants;
-    private String status;
+    private String status; // ACTIVE, ENDED
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cancelled_by_id")
