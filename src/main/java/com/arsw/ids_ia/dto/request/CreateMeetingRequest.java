@@ -16,11 +16,5 @@ public class CreateMeetingRequest {
     
     private String description;
     
-    @NotBlank
-    private String startTime;
-    
-    @NotBlank
-    private String endTime;
-    
     private String incidentId;
 }

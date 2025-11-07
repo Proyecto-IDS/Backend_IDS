@@ -12,6 +12,6 @@ public record MeetingResponse(
     String creatorEmail,
     Set<String> participantEmails,
     Integer currentParticipantCount,
-    Integer maxParticipants,
+    Long durationSeconds,
     String status
 ) {}
