@@ -60,12 +60,12 @@ public class MeetingController {
             meeting.getCode(),
             meeting.getTitle(),
             meeting.getDescription(),
-            meeting.getStartTime().toString(),
-            meeting.getEndTime().toString(),
+            meeting.getStartTime() != null ? meeting.getStartTime().atZone(java.time.ZoneOffset.UTC).toInstant().toString() : null,
+            meeting.getEndTime() != null ? meeting.getEndTime().atZone(java.time.ZoneOffset.UTC).toInstant().toString() : null,
             meeting.getCreator().getEmail(),
             meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
             meeting.getCurrentParticipantCount(),
-            meeting.getMaxParticipants(),
+            meeting.getDurationSeconds(),
             meeting.getStatus()
         );
     }
@@ -101,4 +101,6 @@ public class MeetingController {
         MeetingResponse response = createMeetingResponse(meeting);
         return ResponseEntity.ok(response);
     }
+
+
 }
