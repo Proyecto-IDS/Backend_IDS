@@ -1,7 +1,7 @@
 package com.arsw.ids_ia.service.impl;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -47,62 +47,116 @@ public class MeetingServiceImpl implements MeetingService {
             throw new UnauthorizedException("Only administrators can create meetings");
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        var start = LocalDateTime.parse(request.getStartTime(), formatter);
-        var end = LocalDateTime.parse(request.getEndTime(), formatter);
-        if (!end.isAfter(start)) {
-            throw new IllegalArgumentException("endTime must be after startTime");
-        }
-
+        // Create meeting without setting ID (let database generate it)
         Meeting meeting = Meeting.builder()
                 .code(generateUniqueCode())
                 .title(request.getTitle())
                 .description(request.getDescription())
-                .startTime(LocalDateTime.parse(request.getStartTime(), formatter))
-                .endTime(LocalDateTime.parse(request.getEndTime(), formatter))
+                .startTime(LocalDateTime.now(java.time.ZoneOffset.UTC)) // Usar UTC explícitamente
+                .endTime(null) // Se establecerá cuando termine
+                .durationSeconds(null) // Se calculará cuando termine
                 .creator(creator)
                 .participants(new HashSet<>())
                 .status("ACTIVE")
+                .currentParticipantCount(0)
                 .build();
 
-        // First save the meeting without participants
-        Meeting savedMeeting = meetingRepository.saveAndFlush(meeting);
-        
-        // Then manually add the creator to participants using the saved meeting
-        // This ensures the relationship is properly persisted
-        savedMeeting.getParticipants().add(creator);
-        savedMeeting = meetingRepository.saveAndFlush(savedMeeting);
-        
-        // Force refresh from database to get accurate participant count
-        savedMeeting = meetingRepository.findById(savedMeeting.getId()).orElseThrow();
-        
-        // If incidentId is provided, update all alerts with that incidentId to link to this meeting
-        if (request.getIncidentId() != null && !request.getIncidentId().isEmpty()) {
-            var alerts = alertRepository.findByIncidentId(request.getIncidentId());
+        try {
+            // Use save() instead of saveAndFlush() to avoid forcing immediate database write
+            Meeting savedMeeting = meetingRepository.save(meeting);
+            
+            // Add creator as first participant
+            savedMeeting.getParticipants().add(creator);
+            savedMeeting.setCurrentParticipantCount(1);
+            
+            // Final save with all data
+            savedMeeting = meetingRepository.saveAndFlush(savedMeeting);
+            
+            logger.info("Meeting created successfully with ID: {}, Code: {}", 
+                savedMeeting.getId(), savedMeeting.getCode());
+            
+            // Update alerts if incidentId is provided
+            if (request.getIncidentId() != null && !request.getIncidentId().isEmpty()) {
+                updateAlertsForMeeting(request.getIncidentId(), savedMeeting.getId());
+            }
+            
+            // Broadcast creation event
+            broadcastMeetingCreated(savedMeeting, request.getIncidentId());
+            
+            return savedMeeting;
+            
+        } catch (Exception e) {
+            logger.error("Error creating meeting for user {}: {}", creatorEmail, e.getMessage(), e);
+            
+            // Check if it's a duplicate key error and provide better error message
+            if (e.getMessage() != null && 
+                (e.getMessage().contains("duplicate key") || 
+                 e.getMessage().contains("constraint violation"))) {
+                
+                // Try to generate a different code and retry once
+                try {
+                    meeting.setCode(generateUniqueCode());
+                    Meeting retryMeeting = meetingRepository.save(meeting);
+                    retryMeeting.getParticipants().add(creator);
+                    retryMeeting.setCurrentParticipantCount(1);
+                    retryMeeting = meetingRepository.saveAndFlush(retryMeeting);
+                    
+                    logger.info("Meeting created on retry with ID: {}, Code: {}", 
+                        retryMeeting.getId(), retryMeeting.getCode());
+                    
+                    if (request.getIncidentId() != null && !request.getIncidentId().isEmpty()) {
+                        updateAlertsForMeeting(request.getIncidentId(), retryMeeting.getId());
+                    }
+                    
+                    broadcastMeetingCreated(retryMeeting, request.getIncidentId());
+                    return retryMeeting;
+                    
+                } catch (Exception retryEx) {
+                    logger.error("Retry failed for creating meeting: {}", retryEx.getMessage());
+                    throw new RuntimeException("Failed to create meeting after retry. Please try again.");
+                }
+            }
+            
+            throw new RuntimeException("Error creating meeting: " + e.getMessage());
+        }
+    }
+
+    private void updateAlertsForMeeting(String incidentId, Long meetingId) {
+        try {
+            var alerts = alertRepository.findByIncidentId(incidentId);
             for (var alert : alerts) {
-                alert.setWarRoomId(savedMeeting.getId());
+                alert.setWarRoomId(meetingId);
                 alertRepository.save(alert);
             }
+            logger.info("Updated {} alerts for incident {} with meeting ID {}", 
+                alerts.size(), incidentId, meetingId);
+        } catch (Exception e) {
+            logger.warn("Failed to update alerts for incident {}: {}", incidentId, e.getMessage());
         }
-        
-        // Broadcast warroom.created event via WebSocket
-        Map<String, Object> event = new HashMap<>();
-        event.put("type", "warroom.created");
-        event.put("incidentId", request.getIncidentId());
-        
-        Map<String, Object> warRoomData = new HashMap<>();
-        warRoomData.put("id", savedMeeting.getId());
-        warRoomData.put("code", savedMeeting.getCode());
-        warRoomData.put("title", savedMeeting.getTitle());
-        warRoomData.put("startTime", savedMeeting.getStartTime().toString());
-        warRoomData.put("endTime", savedMeeting.getEndTime().toString());
-        warRoomData.put("currentParticipantCount", savedMeeting.getCurrentParticipantCount());
-        
-        event.put("warRoom", warRoomData);
-        
-        socketHandler.broadcastObject(event);
-        
-        return savedMeeting;
+    }
+
+    private void broadcastMeetingCreated(Meeting meeting, String incidentId) {
+        try {
+            Map<String, Object> event = new HashMap<>();
+            event.put("type", "warroom.created");
+            event.put("incidentId", incidentId);
+            
+            Map<String, Object> warRoomData = new HashMap<>();
+            warRoomData.put("id", meeting.getId());
+            warRoomData.put("code", meeting.getCode());
+            warRoomData.put("title", meeting.getTitle());
+            warRoomData.put("startTime", meeting.getStartTime() != null ? meeting.getStartTime().atZone(ZoneOffset.UTC).toInstant().toString() : null);
+            warRoomData.put("currentParticipantCount", meeting.getCurrentParticipantCount());
+            warRoomData.put("status", meeting.getStatus());
+            warRoomData.put("durationSeconds", meeting.getDurationSeconds());
+            
+            event.put("warRoom", warRoomData);
+            
+            socketHandler.broadcastObject(event);
+            logger.info("Broadcasted meeting created event for meeting ID: {}", meeting.getId());
+        } catch (Exception e) {
+            logger.warn("Failed to broadcast meeting created event: {}", e.getMessage());
+        }
     }
 
     @Override
@@ -131,6 +185,12 @@ public class MeetingServiceImpl implements MeetingService {
     @Transactional
     private Meeting attemptJoinMeeting(Meeting meeting, User participant, String participantEmail) {
         try {
+            // Double-check if user is already in meeting before adding
+            if (meeting.getParticipants().stream().anyMatch(p -> p.getEmail().equals(participantEmail))) {
+                broadcastJoinEvent(meeting, participantEmail);
+                return meeting;
+            }
+            
             meeting.getParticipants().add(participant);
             meeting = meetingRepository.saveAndFlush(meeting);
             
@@ -141,12 +201,16 @@ public class MeetingServiceImpl implements MeetingService {
             
         } catch (Exception e) {
             // Handle race condition where user was added between check and save
-            if (e.getMessage() != null && e.getMessage().contains("meeting_participants_pkey")) {
+            if (e.getMessage() != null && 
+                (e.getMessage().contains("meeting_participants_pkey") || 
+                 e.getMessage().contains("duplicate key value violates unique constraint"))) {
+                logger.warn("Race condition detected when adding participant {} to meeting {}: {}", 
+                    participantEmail, meeting.getId(), e.getMessage());
                 // Handle in separate transaction to avoid rollback issues
                 return handleRaceCondition(meeting.getId(), participantEmail);
             } else {
-                logger.error("Unexpected error joining meeting: {}", e.getMessage());
-                throw e;
+                logger.error("Unexpected error joining meeting: {}", e.getMessage(), e);
+                throw new RuntimeException("Error joining meeting: " + e.getMessage());
             }
         }
     }
@@ -154,7 +218,10 @@ public class MeetingServiceImpl implements MeetingService {
     @Transactional(readOnly = true)
     private Meeting handleRaceCondition(Long meetingId, String participantEmail) {
         // Reload meeting and broadcast event in separate read-only transaction
-        Meeting meeting = meetingRepository.findById(meetingId).get();
+        Meeting meeting = meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new RuntimeException("Meeting not found after race condition"));
+        
+        logger.info("User {} already in meeting {}, broadcasting join event", participantEmail, meetingId);
         broadcastJoinEvent(meeting, participantEmail);
         return meeting;
     }    private void broadcastJoinEvent(Meeting meeting, String participantEmail) {
@@ -210,6 +277,45 @@ public class MeetingServiceImpl implements MeetingService {
                 .orElseThrow(() -> new RuntimeException("Meeting not found"));
     }
 
+
+
+    /**
+     * Calcula la duración actual de una reunión activa en segundos para tiempo real
+     */
+    @Override
+    public long getCurrentMeetingDurationSeconds(Meeting meeting) {
+        if (meeting.getStatus().equals("ACTIVE") && meeting.getStartTime() != null) {
+            return java.time.Duration.between(meeting.getStartTime(), LocalDateTime.now(java.time.ZoneOffset.UTC)).getSeconds();
+        }
+        Long duration = meeting.getDurationSeconds();
+        return duration != null ? duration : 0L;
+    }
+
+    /**
+     * Envía actualización de duración en tiempo real via WebSocket
+     */
+    @Override
+    public void broadcastDurationUpdate(Long meetingId) {
+        try {
+            Meeting meeting = meetingRepository.findById(meetingId).orElse(null);
+            if (meeting != null && meeting.getStatus().equals("ACTIVE")) {
+                long durationSeconds = getCurrentMeetingDurationSeconds(meeting);
+                
+                Map<String, Object> event = new HashMap<>();
+                event.put("type", "warroom.duration.update");
+                event.put("warRoomId", meetingId);
+                event.put("durationSeconds", durationSeconds);
+                event.put("durationMinutes", durationSeconds / 60);
+                event.put("timestamp", LocalDateTime.now(java.time.ZoneOffset.UTC).toString());
+                
+                socketHandler.broadcastObject(event);
+                logger.debug("Broadcasted duration update for meeting {}: {} seconds", meetingId, durationSeconds);
+            }
+        } catch (Exception e) {
+            logger.error("Error broadcasting duration update for meeting {}: {}", meetingId, e.getMessage());
+        }
+    }
+
     @Override
     @Transactional
     public Meeting markIncidentAsResolved(Long meetingId, String adminEmail) {
@@ -221,9 +327,13 @@ public class MeetingServiceImpl implements MeetingService {
             throw new RuntimeException("Only the meeting creator can mark incident as resolved");
         }
 
-        // Update meeting status and end time
+        // Calculate duration and end meeting
+        LocalDateTime endTime = LocalDateTime.now(java.time.ZoneOffset.UTC);
+        long durationSeconds = java.time.Duration.between(meeting.getStartTime(), endTime).getSeconds();
+        
         meeting.setStatus("ENDED");
-        meeting.setEndTime(LocalDateTime.now());
+        meeting.setEndTime(endTime);
+        meeting.setDurationSeconds(durationSeconds);
         
         Meeting savedMeeting = meetingRepository.save(meeting);
 
@@ -232,6 +342,7 @@ public class MeetingServiceImpl implements MeetingService {
         event.put("type", "warroom.resolved");
         event.put("warRoomId", savedMeeting.getId());
         event.put("resolvedAt", savedMeeting.getEndTime().toString());
+        event.put("durationSeconds", savedMeeting.getDurationSeconds());
         
         socketHandler.broadcastObject(event);
         
