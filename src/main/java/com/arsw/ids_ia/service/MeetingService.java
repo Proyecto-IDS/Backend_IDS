@@ -11,4 +11,6 @@ public interface MeetingService {
     Meeting getMeetingById(Long meetingId);
     Meeting getMeetingByCode(String code);
     Meeting markIncidentAsResolved(Long meetingId, String adminEmail);
+    long getCurrentMeetingDurationSeconds(Meeting meeting);
+    void broadcastDurationUpdate(Long meetingId);
 }
