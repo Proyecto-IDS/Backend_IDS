@@ -27,6 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private static final String KEY_ERROR = "error";
+    private static final String KEY_EMAIL = "email";
+
     private final JwtDecoder jwtDecoder;
     private final UserRepository userRepository;
     
@@ -38,10 +41,10 @@ public class AuthController {
      * Returns a small JSON with token and basic claims if valid.
      */
     @PostMapping("/google")
-    public ResponseEntity<?> loginWithGoogle(@RequestBody Map<String, String> body) {
+    public ResponseEntity<Map<String, Object>> loginWithGoogle(@RequestBody Map<String, String> body) {
         String idToken = body.get("idToken");
         if (idToken == null || idToken.isBlank()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "missing idToken"));
+            return ResponseEntity.badRequest().body(Map.of(KEY_ERROR, "missing idToken"));
         }
 
         try {
@@ -50,26 +53,26 @@ public class AuthController {
             Map<String, Object> resp = new HashMap<>();
             resp.put("token", idToken);
             resp.put("sub", jwt.getSubject());
-            resp.put("email", jwt.getClaimAsString("email"));
+            resp.put(KEY_EMAIL, jwt.getClaimAsString(KEY_EMAIL));
             resp.put("issuer", jwt.getIssuer());
             resp.put("aud", jwt.getAudience());
             resp.put("claims", jwt.getClaims());
 
             return ResponseEntity.ok(resp);
         } catch (JwtException e) {
-            return ResponseEntity.status(401).body(Map.of("error", "invalid_token", "message", e.getMessage()));
+            return ResponseEntity.status(401).body(Map.of(KEY_ERROR, "invalid_token", "message", e.getMessage()));
         }
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> me(Authentication authentication) {
+    public ResponseEntity<Map<String, Object>> me(Authentication authentication) {
         if (authentication == null) {
-            return ResponseEntity.status(401).body(Map.of("error", "unauthenticated"));
+            return ResponseEntity.status(401).body(Map.of(KEY_ERROR, "unauthenticated"));
         }
 
         // Extract email and name from JWT
         Jwt jwt = (Jwt) authentication.getPrincipal();
-        String email = jwt.getClaimAsString("email");
+        String email = jwt.getClaimAsString(KEY_EMAIL);
         String name = jwt.getClaimAsString("name");
         
         // Create or get user from database
@@ -96,7 +99,7 @@ public class AuthController {
         String roleStr = user.getRole() != null ? "ROLE_" + user.getRole().name() : "ROLE_USER";
 
         Map<String, Object> resp = Map.of(
-                "email", user.getEmail(),
+                KEY_EMAIL, user.getEmail(),
                 "name", user.getName() != null ? user.getName() : email,
                 "role", roleStr,
                 "authorities", authentication.getAuthorities(),

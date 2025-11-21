@@ -31,6 +31,11 @@ import lombok.RequiredArgsConstructor;
 public class MeetingServiceImpl implements MeetingService {
 
     private static final Logger logger = LoggerFactory.getLogger(MeetingServiceImpl.class);
+    private static final String STATUS_ACTIVE = "ACTIVE";
+    private static final String KEY_CURRENT_PARTICIPANT_COUNT = "currentParticipantCount";
+    private static final String KEY_DURATION_SECONDS = "durationSeconds";
+    private static final String MSG_MEETING_NOT_FOUND = "Meeting not found";
+    private static final String KEY_WAR_ROOM_ID = "warRoomId";
     
     private final MeetingRepository meetingRepository;
     private final UserRepository userRepository;
@@ -57,7 +62,7 @@ public class MeetingServiceImpl implements MeetingService {
                 .durationSeconds(null) // Se calculará cuando termine
                 .creator(creator)
                 .participants(new HashSet<>())
-                .status("ACTIVE")
+                .status(STATUS_ACTIVE)
                 .currentParticipantCount(0)
                 .build();
 
@@ -146,9 +151,9 @@ public class MeetingServiceImpl implements MeetingService {
             warRoomData.put("code", meeting.getCode());
             warRoomData.put("title", meeting.getTitle());
             warRoomData.put("startTime", meeting.getStartTime() != null ? meeting.getStartTime().atZone(ZoneOffset.UTC).toInstant().toString() : null);
-            warRoomData.put("currentParticipantCount", meeting.getCurrentParticipantCount());
+            warRoomData.put(KEY_CURRENT_PARTICIPANT_COUNT, meeting.getCurrentParticipantCount());
             warRoomData.put("status", meeting.getStatus());
-            warRoomData.put("durationSeconds", meeting.getDurationSeconds());
+            warRoomData.put(KEY_DURATION_SECONDS, meeting.getDurationSeconds());
             
             event.put("warRoom", warRoomData);
             
@@ -160,12 +165,13 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
+    @Transactional // Unifica la transacción aquí (Sonar S2229)
     public Meeting joinMeeting(JoinMeetingRequest request, String participantEmail) {
         User participant = userRepository.findByEmail(participantEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Meeting meeting = meetingRepository.findByCode(request.getCode())
-                .orElseThrow(() -> new RuntimeException("Meeting not found"));
+                .orElseThrow(() -> new RuntimeException(MSG_MEETING_NOT_FOUND));
 
         // Check if user is already in the meeting using database query
         boolean alreadyJoined = meetingRepository.isUserParticipant(meeting.getId(), participant.getId());
@@ -182,8 +188,8 @@ public class MeetingServiceImpl implements MeetingService {
         return attemptJoinMeeting(meeting, participant, participantEmail);
     }
 
-    @Transactional
-    private Meeting attemptJoinMeeting(Meeting meeting, User participant, String participantEmail) {
+    // Sin @Transactional para evitar self-invocation incompatible (Sonar S2229)
+    public Meeting attemptJoinMeeting(Meeting meeting, User participant, String participantEmail) {
         try {
             // Double-check if user is already in meeting before adding
             if (meeting.getParticipants().stream().anyMatch(p -> p.getEmail().equals(participantEmail))) {
@@ -215,20 +221,22 @@ public class MeetingServiceImpl implements MeetingService {
         }
     }
 
-    @Transactional(readOnly = true)
-    private Meeting handleRaceCondition(Long meetingId, String participantEmail) {
+    // Sin @Transactional para evitar self-invocation incompatible (Sonar S2229); operación sólo lectura
+    public Meeting handleRaceCondition(Long meetingId, String participantEmail) {
         // Reload meeting and broadcast event in separate read-only transaction
         Meeting meeting = meetingRepository.findById(meetingId)
-                .orElseThrow(() -> new RuntimeException("Meeting not found after race condition"));
+                .orElseThrow(() -> new RuntimeException(MSG_MEETING_NOT_FOUND + " after race condition"));
         
         logger.info("User {} already in meeting {}, broadcasting join event", participantEmail, meetingId);
         broadcastJoinEvent(meeting, participantEmail);
         return meeting;
-    }    private void broadcastJoinEvent(Meeting meeting, String participantEmail) {
+    }
+    
+    private void broadcastJoinEvent(Meeting meeting, String participantEmail) {
         Map<String, Object> event = new HashMap<>();
         event.put("type", "warroom.participants");
-        event.put("warRoomId", meeting.getId());
-        event.put("currentParticipantCount", meeting.getCurrentParticipantCount());
+        event.put(KEY_WAR_ROOM_ID, meeting.getId());
+        event.put(KEY_CURRENT_PARTICIPANT_COUNT, meeting.getCurrentParticipantCount());
         event.put("action", "joined");
         event.put("userEmail", participantEmail);
         
@@ -239,7 +247,7 @@ public class MeetingServiceImpl implements MeetingService {
     @Transactional
     public Meeting leaveMeeting(Long meetingId, String participantEmail) {
         Meeting meeting = meetingRepository.findById(meetingId)
-                .orElseThrow(() -> new RuntimeException("Meeting not found"));
+                .orElseThrow(() -> new RuntimeException(MSG_MEETING_NOT_FOUND));
 
         // Remove participant by email to ensure correct removal from ManyToMany relationship
         boolean removed = meeting.getParticipants().removeIf(p -> p.getEmail().equals(participantEmail));
@@ -253,8 +261,8 @@ public class MeetingServiceImpl implements MeetingService {
         // Broadcast warroom.participants event via WebSocket
         Map<String, Object> event = new HashMap<>();
         event.put("type", "warroom.participants");
-        event.put("warRoomId", savedMeeting.getId());
-        event.put("currentParticipantCount", savedMeeting.getCurrentParticipantCount());
+        event.put(KEY_WAR_ROOM_ID, savedMeeting.getId());
+        event.put(KEY_CURRENT_PARTICIPANT_COUNT, savedMeeting.getCurrentParticipantCount());
         event.put("action", "left");
         event.put("userEmail", participantEmail);
         
@@ -267,14 +275,14 @@ public class MeetingServiceImpl implements MeetingService {
     @Transactional(readOnly = true)
     public Meeting getMeetingById(Long meetingId) {
         return meetingRepository.findById(meetingId)
-                .orElseThrow(() -> new RuntimeException("Meeting not found"));
+                .orElseThrow(() -> new RuntimeException(MSG_MEETING_NOT_FOUND));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Meeting getMeetingByCode(String code) {
         return meetingRepository.findByCode(code)
-                .orElseThrow(() -> new RuntimeException("Meeting not found"));
+                .orElseThrow(() -> new RuntimeException(MSG_MEETING_NOT_FOUND));
     }
 
 
@@ -284,7 +292,7 @@ public class MeetingServiceImpl implements MeetingService {
      */
     @Override
     public long getCurrentMeetingDurationSeconds(Meeting meeting) {
-        if (meeting.getStatus().equals("ACTIVE") && meeting.getStartTime() != null) {
+        if (meeting.getStatus().equals(STATUS_ACTIVE) && meeting.getStartTime() != null) {
             return java.time.Duration.between(meeting.getStartTime(), LocalDateTime.now(java.time.ZoneOffset.UTC)).getSeconds();
         }
         Long duration = meeting.getDurationSeconds();
@@ -298,13 +306,13 @@ public class MeetingServiceImpl implements MeetingService {
     public void broadcastDurationUpdate(Long meetingId) {
         try {
             Meeting meeting = meetingRepository.findById(meetingId).orElse(null);
-            if (meeting != null && meeting.getStatus().equals("ACTIVE")) {
+            if (meeting != null && meeting.getStatus().equals(STATUS_ACTIVE)) {
                 long durationSeconds = getCurrentMeetingDurationSeconds(meeting);
                 
                 Map<String, Object> event = new HashMap<>();
                 event.put("type", "warroom.duration.update");
-                event.put("warRoomId", meetingId);
-                event.put("durationSeconds", durationSeconds);
+                event.put(KEY_WAR_ROOM_ID, meetingId);
+                event.put(KEY_DURATION_SECONDS, durationSeconds);
                 event.put("durationMinutes", durationSeconds / 60);
                 event.put("timestamp", LocalDateTime.now(java.time.ZoneOffset.UTC).toString());
                 
@@ -320,7 +328,7 @@ public class MeetingServiceImpl implements MeetingService {
     @Transactional
     public Meeting markIncidentAsResolved(Long meetingId, String adminEmail) {
         Meeting meeting = meetingRepository.findById(meetingId)
-                .orElseThrow(() -> new RuntimeException("Meeting not found"));
+                .orElseThrow(() -> new RuntimeException(MSG_MEETING_NOT_FOUND));
 
         // Verify that the user is the creator (admin)
         if (!meeting.getCreator().getEmail().equals(adminEmail)) {
@@ -340,9 +348,9 @@ public class MeetingServiceImpl implements MeetingService {
         // Broadcast meeting ended event via WebSocket
         Map<String, Object> event = new HashMap<>();
         event.put("type", "warroom.resolved");
-        event.put("warRoomId", savedMeeting.getId());
+        event.put(KEY_WAR_ROOM_ID, savedMeeting.getId());
         event.put("resolvedAt", savedMeeting.getEndTime().toString());
-        event.put("durationSeconds", savedMeeting.getDurationSeconds());
+        event.put(KEY_DURATION_SECONDS, savedMeeting.getDurationSeconds());
         
         socketHandler.broadcastObject(event);
         
