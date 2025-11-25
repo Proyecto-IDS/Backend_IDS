@@ -125,16 +125,16 @@ public class TrafficAnalysisService {
 
             String probabilitiesJson = objectMapper.writeValueAsString(prediction.getProbabilities());
 
-            Alert alert = new Alert(
-                packetId,
-                incidentId,
-                severity.name(),
-                prediction.getAttackProbability(),
-                prediction.getPrediction(),
-                prediction.getCategory(),
-                prediction.getStandardProtocol(),
-                probabilitiesJson
-            );
+            Alert alert = new Alert.Builder()
+                .packetId(packetId)
+                .incidentId(incidentId)
+                .severity(severity.name())
+                .attackProbability(prediction.getAttackProbability())
+                .prediction(prediction.getPrediction())
+                .category(prediction.getCategory())
+                .standardProtocol(prediction.getStandardProtocol())
+                .probabilities(probabilitiesJson)
+                .build();
 
             Alert savedAlert = alertService.create(alert);
             logger.info("Alert created: {} - {} ({})", savedAlert.getId(), incidentId, severity);
