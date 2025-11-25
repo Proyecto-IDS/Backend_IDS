@@ -142,7 +142,6 @@ public class TrafficAnalysisService {
             return savedAlert;
 
         } catch (IOException e) {
-            logger.error("Error creating alert from prediction: {}", e.getMessage(), e);
             throw new IllegalStateException("Failed to create alert from prediction", e);
         }
     }
@@ -161,7 +160,7 @@ public class TrafficAnalysisService {
         } catch (Exception e) {
             logger.warn("Failed to parse as array, trying as wrapped object");
             JsonWrapper wrapper = objectMapper.readValue(file.getInputStream(), JsonWrapper.class);
-            return wrapper.features;
+            return TrafficAnalysisService.JsonWrapper.getFeatures();
         }
     }
 
