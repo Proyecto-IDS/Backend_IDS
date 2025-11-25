@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "alerts")
-public class Alert {
+public class Alert implements com.arsw.ids_ia.dto.MLFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -130,43 +130,24 @@ public class Alert {
         this.warRoomId = warRoomId;
     }
 
-    public String getPrediction() {
-        return prediction;
-    }
-
-    public void setPrediction(String prediction) {
-        this.prediction = prediction;
-    }
-
-    public Double getAttackProbability() {
-        return attackProbability;
-    }
-
-    public void setAttackProbability(Double attackProbability) {
-        this.attackProbability = attackProbability;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getStandardProtocol() {
-        return standardProtocol;
-    }
-
-    public void setStandardProtocol(String standardProtocol) {
-        this.standardProtocol = standardProtocol;
-    }
-
-    public String getProbabilities() {
-        return probabilities;
-    }
-
-    public void setProbabilities(String probabilities) {
-        this.probabilities = probabilities;
-    }
+    @Override
+    public String getPrediction() { return prediction; }
+    @Override
+    public void setPrediction(String prediction) { this.prediction = prediction; }
+    @Override
+    public Double getAttackProbability() { return attackProbability; }
+    @Override
+    public void setAttackProbability(Double attackProbability) { this.attackProbability = attackProbability; }
+    @Override
+    public String getCategory() { return category; }
+    @Override
+    public void setCategory(String category) { this.category = category; }
+    @Override
+    public String getStandardProtocol() { return standardProtocol; }
+    @Override
+    public void setStandardProtocol(String standardProtocol) { this.standardProtocol = standardProtocol; }
+    @Override
+    public String getProbabilities() { return probabilities; }
+    @Override
+    public void setProbabilities(String probabilities) { this.probabilities = probabilities; }
 }
