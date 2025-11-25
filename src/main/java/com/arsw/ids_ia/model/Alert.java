@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "alerts")
-public class Alert implements com.arsw.ids_ia.dto.MLFields {
+public class Alert extends com.arsw.ids_ia.dto.MLFieldsBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,16 +28,13 @@ public class Alert implements com.arsw.ids_ia.dto.MLFields {
     @Column(name = "war_room_id")
     private Long warRoomId;
 
-    // Campos del modelo ML
-    private String prediction;
-    private Double attackProbability;
-    private String category;
-    
+    // Campos del modelo ML (heredados de MLFieldsBase)
     @Column(columnDefinition = "TEXT")
-    private String standardProtocol;
-    
+    @Override
+    public String getStandardProtocol() { return standardProtocol; }
     @Column(columnDefinition = "TEXT")
-    private String probabilities; // JSON string con todas las probabilidades
+    @Override
+    public String getProbabilities() { return probabilities; }
 
     public Alert() {
     }
@@ -130,24 +127,5 @@ public class Alert implements com.arsw.ids_ia.dto.MLFields {
         this.warRoomId = warRoomId;
     }
 
-    @Override
-    public String getPrediction() { return prediction; }
-    @Override
-    public void setPrediction(String prediction) { this.prediction = prediction; }
-    @Override
-    public Double getAttackProbability() { return attackProbability; }
-    @Override
-    public void setAttackProbability(Double attackProbability) { this.attackProbability = attackProbability; }
-    @Override
-    public String getCategory() { return category; }
-    @Override
-    public void setCategory(String category) { this.category = category; }
-    @Override
-    public String getStandardProtocol() { return standardProtocol; }
-    @Override
-    public void setStandardProtocol(String standardProtocol) { this.standardProtocol = standardProtocol; }
-    @Override
-    public String getProbabilities() { return probabilities; }
-    @Override
-    public void setProbabilities(String probabilities) { this.probabilities = probabilities; }
+    // Los métodos MLFields se heredan de MLFieldsBase
 }

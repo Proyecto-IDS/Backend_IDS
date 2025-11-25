@@ -8,53 +8,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Response del modelo ML de AWS Lambda.
  * Contiene la predicción, probabilidades y clasificación del ataque.
  */
-public class MLPredictionResponse implements com.arsw.ids_ia.dto.MLFields {
+public class MLPredictionResponse extends com.arsw.ids_ia.dto.MLFieldsBase {
 
-    private String prediction;
-    private Map<String, Double> probabilities;
+    private Map<String, Double> probabilitiesMap;
     private String probabilitiesStr;
     private String state;
-    
-    @JsonProperty("attack_probability")
-    private Double attackProbability;
-    
-    private String category;
-    
-    @JsonProperty("standard_protocol")
-    private String standardProtocol;
 
     public MLPredictionResponse() {
     }
 
 
-    // MLFields interface methods
-    @Override
-    public String getPrediction() { return prediction; }
-    @Override
-    public void setPrediction(String prediction) { this.prediction = prediction; }
-    @Override
-    public Double getAttackProbability() { return attackProbability; }
-    @Override
-    public void setAttackProbability(Double attackProbability) { this.attackProbability = attackProbability; }
-    @Override
-    public String getCategory() { return category; }
-    @Override
-    public void setCategory(String category) { this.category = category; }
-    @Override
-    public String getStandardProtocol() { return standardProtocol; }
-    @Override
-    public void setStandardProtocol(String standardProtocol) { this.standardProtocol = standardProtocol; }
-    @Override
-    public String getProbabilities() { return probabilitiesStr; }
-    @Override
-    public void setProbabilities(String probabilities) { this.probabilitiesStr = probabilities; }
+    // Los métodos MLFields se heredan de MLFieldsBase
 
-    // Unique methods
+    // Métodos únicos
     public Map<String, Double> getProbabilitiesMap() {
-        return probabilities;
+        return probabilitiesMap;
     }
     public void setProbabilitiesMap(Map<String, Double> probabilities) {
-        this.probabilities = probabilities;
+        this.probabilitiesMap = probabilities;
     }
     public String getState() {
         return state;
