@@ -159,7 +159,7 @@ public class TrafficAnalysisService {
             );
         } catch (Exception e) {
             logger.warn("Failed to parse as array, trying as wrapped object");
-            JsonWrapper wrapper = objectMapper.readValue(file.getInputStream(), JsonWrapper.class);
+            objectMapper.readValue(file.getInputStream(), JsonWrapper.class);
             return TrafficAnalysisService.JsonWrapper.getFeatures();
         }
     }
