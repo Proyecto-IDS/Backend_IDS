@@ -28,6 +28,17 @@ public class Alert {
     @Column(name = "war_room_id")
     private Long warRoomId;
 
+    // Campos del modelo ML
+    private String prediction;
+    private Double attackProbability;
+    private String category;
+    
+    @Column(columnDefinition = "TEXT")
+    private String standardProtocol;
+    
+    @Column(columnDefinition = "TEXT")
+    private String probabilities; // JSON string con todas las probabilidades
+
     public Alert() {
     }
 
@@ -38,6 +49,21 @@ public class Alert {
         this.score = score;
         this.modelVersion = modelVersion;
         this.timestamp = timestamp;
+    }
+
+    public Alert(String packetId, String incidentId, String severity, Double attackProbability, 
+                 String prediction, String category, String standardProtocol, String probabilities) {
+        this.packetId = packetId;
+        this.incidentId = incidentId;
+        this.severity = severity;
+        this.score = attackProbability;
+        this.attackProbability = attackProbability;
+        this.prediction = prediction;
+        this.category = category;
+        this.standardProtocol = standardProtocol;
+        this.probabilities = probabilities;
+        this.timestamp = Instant.now();
+        this.modelVersion = "v1.0";
     }
 
     public Long getId() {
@@ -102,5 +128,45 @@ public class Alert {
 
     public void setWarRoomId(Long warRoomId) {
         this.warRoomId = warRoomId;
+    }
+
+    public String getPrediction() {
+        return prediction;
+    }
+
+    public void setPrediction(String prediction) {
+        this.prediction = prediction;
+    }
+
+    public Double getAttackProbability() {
+        return attackProbability;
+    }
+
+    public void setAttackProbability(Double attackProbability) {
+        this.attackProbability = attackProbability;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getStandardProtocol() {
+        return standardProtocol;
+    }
+
+    public void setStandardProtocol(String standardProtocol) {
+        this.standardProtocol = standardProtocol;
+    }
+
+    public String getProbabilities() {
+        return probabilities;
+    }
+
+    public void setProbabilities(String probabilities) {
+        this.probabilities = probabilities;
     }
 }
