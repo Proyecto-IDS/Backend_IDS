@@ -2,7 +2,7 @@ package com.arsw.ids_ia.dto.response;
 
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
  * Response del modelo ML de AWS Lambda.
@@ -11,10 +11,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MLPredictionResponse extends com.arsw.ids_ia.dto.MLFieldsBase {
 
     private Map<String, Double> probabilitiesMap;
-    private String probabilitiesStr;
+
     private String state;
 
     public MLPredictionResponse() {
+        // Empty constructor required for serialization/deserialization
     }
 
 
