@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClientException;
 
 import com.arsw.ids_ia.dto.request.MLPredictionRequest;
 import com.arsw.ids_ia.dto.request.NetworkTrafficFeatures;
@@ -20,6 +21,14 @@ import com.arsw.ids_ia.utils.enums.AlertSeverity;
  */
 @Service
 public class MachineLearningService {
+    public static class MLServiceException extends RuntimeException {
+        public MLServiceException(String message, Throwable cause) {
+            super(message, cause);
+        }
+        public MLServiceException(String message) {
+            super(message);
+        }
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(MachineLearningService.class);
 
@@ -42,35 +51,34 @@ public class MachineLearningService {
     public MLPredictionResponse analyzeThreat(NetworkTrafficFeatures features) {
         try {
             logger.info("Sending traffic data to ML model at {}", mlEndpoint);
-            
+
             MLPredictionRequest request = new MLPredictionRequest(features);
-            
+
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            
+
             HttpEntity<MLPredictionRequest> entity = new HttpEntity<>(request, headers);
-            
+
             ResponseEntity<MLPredictionResponse> response = restTemplate.postForEntity(
                 mlEndpoint,
                 entity,
                 MLPredictionResponse.class
             );
-            
+
             MLPredictionResponse prediction = response.getBody();
-            
+
             if (prediction == null) {
-                throw new RuntimeException("ML model returned null response");
+                throw new MLServiceException("ML model returned null response");
             }
-            
+
             logger.info("ML prediction received: {} with probability {}", 
                 prediction.getPrediction(), 
                 prediction.getAttackProbability());
-            
+
             return prediction;
-            
-        } catch (Exception e) {
-            logger.error("Error calling ML prediction endpoint: {}", e.getMessage(), e);
-            throw new RuntimeException("Failed to analyze threat with ML model", e);
+
+        } catch (RestClientException e) {
+            throw new MLServiceException("Failed to analyze threat with ML model", e);
         }
     }
 
