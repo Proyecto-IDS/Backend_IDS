@@ -123,6 +123,7 @@ public class NetworkTrafficFeatures {
     private Double dstHostSrvRerrorRate;
 
     public NetworkTrafficFeatures() {
+        // Empty constructor required for Jackson deserialization and frameworks
     }
 
     public Integer getDuration() {
