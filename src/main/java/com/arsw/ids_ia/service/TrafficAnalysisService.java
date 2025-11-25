@@ -47,14 +47,14 @@ public class TrafficAnalysisService {
      */
     public List<Alert> analyzeTrafficFile(MultipartFile file) throws IOException {
         logger.info("Processing traffic file upload");
-        
+
         String filename = file.getOriginalFilename();
         if (filename == null) {
             throw new IllegalArgumentException("File name cannot be null");
         }
-        
+
         List<NetworkTrafficFeatures> trafficData;
-        
+
         if (filename.endsWith(".json")) {
             trafficData = parseJsonFile(file);
         } else if (filename.endsWith(".csv")) {
@@ -62,7 +62,7 @@ public class TrafficAnalysisService {
         } else {
             throw new IllegalArgumentException("Unsupported file format. Only JSON and CSV are supported.");
         }
-        
+
         logger.info("Parsed {} traffic records from file", trafficData.size());
         return analyzeTrafficBatch(trafficData);
     }
@@ -75,21 +75,20 @@ public class TrafficAnalysisService {
      */
     public Alert analyzeSinglePacket(NetworkTrafficFeatures features) {
         logger.info("Analyzing single packet");
-        
+
+        MLPredictionResponse prediction;
         try {
-            MLPredictionResponse prediction = mlService.analyzeThreat(features);
-            
-            if (!mlService.shouldCreateAlert(prediction.getAttackProbability())) {
-                logger.info("Traffic classified as NORMAL - no alert created");
-                return null;
-            }
-            
-            return createAlertFromPrediction(prediction, generatePacketId());
-            
-        } catch (Exception e) {
-            logger.error("Error analyzing packet: {}", e.getMessage(), e);
-            throw new RuntimeException("Failed to analyze packet", e);
+            prediction = mlService.analyzeThreat(features);
+        } catch (RuntimeException e) {
+            throw new IllegalStateException("Failed to analyze threat for packet", e);
         }
+
+        if (!mlService.shouldCreateAlert(prediction.getAttackProbability())) {
+            logger.info("Traffic classified as NORMAL - no alert created");
+            return null;
+        }
+
+        return createAlertFromPrediction(prediction, generatePacketId());
     }
 
     /**
@@ -108,7 +107,7 @@ public class TrafficAnalysisService {
                     createdAlerts.add(alert);
                     logger.info("Alerta creada (incidentId: {})", alert.getIncidentId());
                 }
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 logger.error("Error analizando paquete: {}", e.getMessage());
             }
         }
@@ -123,9 +122,9 @@ public class TrafficAnalysisService {
         try {
             AlertSeverity severity = mlService.determineSeverity(prediction.getAttackProbability());
             String incidentId = "INC-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-            
+
             String probabilitiesJson = objectMapper.writeValueAsString(prediction.getProbabilities());
-            
+
             Alert alert = new Alert(
                 packetId,
                 incidentId,
@@ -136,15 +135,15 @@ public class TrafficAnalysisService {
                 prediction.getStandardProtocol(),
                 probabilitiesJson
             );
-            
+
             Alert savedAlert = alertService.create(alert);
             logger.info("Alert created: {} - {} ({})", savedAlert.getId(), incidentId, severity);
-            
+
             return savedAlert;
-            
-        } catch (Exception e) {
+
+        } catch (IOException e) {
             logger.error("Error creating alert from prediction: {}", e.getMessage(), e);
-            throw new RuntimeException("Failed to create alert", e);
+            throw new IllegalStateException("Failed to create alert from prediction", e);
         }
     }
 
@@ -207,7 +206,7 @@ public class TrafficAnalysisService {
         for (int i = 0; i < headers.length && i < values.length; i++) {
             String header = headers[i].trim();
             String value = values[i].trim();
-            
+
             switch (header) {
                 case "duration" -> features.setDuration(parseIntOrDefault(value, 0));
                 case "protocol_type" -> features.setProtocolType(value);
@@ -219,8 +218,9 @@ public class TrafficAnalysisService {
                 case "srv_count" -> features.setSrvCount(parseIntOrDefault(value, 0));
                 case "serror_rate" -> features.setSerrorRate(parseDoubleOrDefault(value, 0.0));
                 case "srv_serror_rate" -> features.setSrvSerrorRate(parseDoubleOrDefault(value, 0.0));
-                
-                default -> {} 
+                default -> {
+                    // No action for unknown header
+                }
             }
         }
         
@@ -249,6 +249,10 @@ public class TrafficAnalysisService {
 
     // Clase auxiliar para parsear JSON envuelto
     private static class JsonWrapper {
-        public List<NetworkTrafficFeatures> features;
+        private static final List<NetworkTrafficFeatures> features = new ArrayList<>();
+
+        public static List<NetworkTrafficFeatures> getFeatures() {
+            return features;
+        }
     }
 }
