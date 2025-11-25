@@ -49,8 +49,7 @@ public class TrafficController {
             @RequestParam("file") MultipartFile file) {
         
         try {
-            logger.info("Received traffic file upload: {} ({})", 
-                file.getOriginalFilename(), file.getContentType());
+            logger.info("Received traffic file upload");
             
             if (file.isEmpty()) {
                 return ResponseEntity.badRequest()

@@ -46,7 +46,7 @@ public class TrafficAnalysisService {
      * @throws IOException si hay error al leer el archivo
      */
     public List<Alert> analyzeTrafficFile(MultipartFile file) throws IOException {
-        logger.info("Processing traffic file: {} (size: {} bytes)", file.getOriginalFilename(), file.getSize());
+        logger.info("Processing traffic file upload");
         
         String filename = file.getOriginalFilename();
         if (filename == null) {
