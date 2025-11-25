@@ -25,6 +25,9 @@ import com.arsw.ids_ia.service.TrafficAnalysisService;
 @RestController
 @RequestMapping("/api/traffic")
 public class TrafficController {
+    private static final String ERROR_KEY = "error";
+    private static final String SUCCESS_KEY = "success";
+    private static final String MESSAGE_KEY = "message";
 
     private static final Logger logger = LoggerFactory.getLogger(TrafficController.class);
 
@@ -53,20 +56,20 @@ public class TrafficController {
             
             if (file.isEmpty()) {
                 return ResponseEntity.badRequest()
-                    .body(Map.of("error", "File is empty"));
+                    .body(Map.of(ERROR_KEY, "File is empty"));
             }
             
             String filename = file.getOriginalFilename();
             if (filename == null || (!filename.endsWith(".json") && !filename.endsWith(".csv"))) {
                 return ResponseEntity.badRequest()
-                    .body(Map.of("error", "Invalid file format. Only JSON and CSV are supported."));
+                    .body(Map.of(ERROR_KEY, "Invalid file format. Only JSON and CSV are supported."));
             }
             
             List<Alert> alerts = analysisService.analyzeTrafficFile(file);
             
             Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
-            response.put("message", "Traffic file analyzed successfully");
+            response.put(SUCCESS_KEY, true);
+            response.put(MESSAGE_KEY, "Traffic file analyzed successfully");
             response.put("alertsCreated", alerts.size());
             response.put("alerts", alerts);
             
@@ -77,12 +80,12 @@ public class TrafficController {
         } catch (IllegalArgumentException e) {
             logger.error("Invalid file format: {}", e.getMessage());
             return ResponseEntity.badRequest()
-                .body(Map.of("error", e.getMessage()));
+                .body(Map.of(ERROR_KEY, e.getMessage()));
                 
         } catch (Exception e) {
             logger.error("Error processing traffic file: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Failed to process file: " + e.getMessage()));
+                .body(Map.of(ERROR_KEY, "Failed to process file: " + e.getMessage()));
         }
     }
 
@@ -109,14 +112,14 @@ public class TrafficController {
             Map<String, Object> response = new HashMap<>();
             
             if (alert == null) {
-                response.put("success", true);
-                response.put("message", "Traffic analyzed - no threat detected (NORMAL)");
+                response.put(SUCCESS_KEY, true);
+                response.put(MESSAGE_KEY, "Traffic analyzed - no threat detected (NORMAL)");
                 response.put("alertCreated", false);
                 return ResponseEntity.ok(response);
             }
-            
-            response.put("success", true);
-            response.put("message", "Threat detected - alert created");
+
+            response.put(SUCCESS_KEY, true);
+            response.put(MESSAGE_KEY, "Threat detected - alert created");
             response.put("alertCreated", true);
             response.put("alert", alert);
             
@@ -125,7 +128,7 @@ public class TrafficController {
         } catch (Exception e) {
             logger.error("Error analyzing packet: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Failed to analyze packet: " + e.getMessage()));
+                .body(Map.of(ERROR_KEY, "Failed to analyze packet: " + e.getMessage()));
         }
     }
 }
