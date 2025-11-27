@@ -58,6 +58,13 @@ public class AlertService {
                 // include snake_case variant used by some frontend code
                 alertMap.put("model_version", saved.getModelVersion());
                 alertMap.put("timestamp", saved.getTimestamp());
+                
+                // Include ML model data
+                alertMap.put("prediction", saved.getPrediction());
+                alertMap.put("attackProbability", saved.getAttackProbability());
+                alertMap.put("category", saved.getCategory());
+                alertMap.put("standardProtocol", saved.getStandardProtocol());
+                alertMap.put("probabilities", saved.getProbabilities());
 
                 Map<String, Object> outer = new HashMap<>();
                 outer.put("type", "alert");

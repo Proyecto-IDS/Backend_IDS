@@ -86,6 +86,13 @@ public class AlertController {
         response.put("updatedAt", alert.getTimestamp());
         response.put("warRoomId", alert.getWarRoomId());
         
+        // ML Model data
+        response.put("prediction", alert.getPrediction());
+        response.put("attackProbability", alert.getAttackProbability());
+        response.put("category", alert.getCategory());
+        response.put("standardProtocol", alert.getStandardProtocol());
+        response.put("probabilities", alert.getProbabilities());
+        
         // Mock data for now - these would come from a proper incident management system
         response.put("type", "Incidente INC-2024-001");
         response.put("source", "PKT-001");
