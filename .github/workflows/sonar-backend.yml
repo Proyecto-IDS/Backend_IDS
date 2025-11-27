@@ -61,4 +61,4 @@ jobs:
             -Dsonar.java.binaries=target/classes \
             -Dsonar.exclusions=**/target/**,**/logs/** \
             -Dsonar.sourceEncoding=UTF-8 \
-            -Dsonar.qualitygate.wait=false
+##          -Dsonar.qualitygate.wait=false
