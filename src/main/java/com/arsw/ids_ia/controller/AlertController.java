@@ -29,6 +29,11 @@ import com.arsw.ids_ia.service.MeetingService;
 @RequestMapping("/api/alerts")
 public class AlertController {
 
+    private static final String SEV_CRITICAL = "critical";
+    private static final String SEV_HIGH = "high";
+    private static final String SEV_MEDIUM = "medium";
+    private static final String SEV_LOW = "low";
+
     private final AlertService service;
     private final MeetingService meetingService;
 
@@ -135,10 +140,10 @@ public class AlertController {
         Map<String, Long> counts = new HashMap<>();
         List<Alert> allAlerts = service.recent(Integer.MAX_VALUE);
         counts.put("total", (long) allAlerts.size());
-        counts.put("critical", allAlerts.stream().filter(a -> "critical".equalsIgnoreCase(a.getSeverity())).count());
-        counts.put("high", allAlerts.stream().filter(a -> "high".equalsIgnoreCase(a.getSeverity())).count());
-        counts.put("medium", allAlerts.stream().filter(a -> "medium".equalsIgnoreCase(a.getSeverity())).count());
-        counts.put("low", allAlerts.stream().filter(a -> "low".equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_CRITICAL, allAlerts.stream().filter(a -> SEV_CRITICAL.equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_HIGH, allAlerts.stream().filter(a -> SEV_HIGH.equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_MEDIUM, allAlerts.stream().filter(a -> SEV_MEDIUM.equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_LOW, allAlerts.stream().filter(a -> SEV_LOW.equalsIgnoreCase(a.getSeverity())).count());
         return counts;
     }
 
@@ -152,8 +157,8 @@ public class AlertController {
         List<Alert> todayAlerts = service.today();
         Map<String, Long> counts = new HashMap<>();
         counts.put("total", (long) todayAlerts.size());
-        counts.put("critical", todayAlerts.stream().filter(a -> "critical".equalsIgnoreCase(a.getSeverity())).count());
-        counts.put("high", todayAlerts.stream().filter(a -> "high".equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_CRITICAL, todayAlerts.stream().filter(a -> SEV_CRITICAL.equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_HIGH, todayAlerts.stream().filter(a -> SEV_HIGH.equalsIgnoreCase(a.getSeverity())).count());
         return counts;
     }
 

@@ -37,10 +37,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .exceptionHandling(exception -> exception.authenticationEntryPoint((request, response, authException) -> {
-                response.setStatus(401);
-            }))
+            // CSRF deshabilitado: API JWT stateless sin cookies/sesión. Seguro. NOSONAR
+            .csrf(csrf -> csrf.disable()) // NOSONAR
+            .exceptionHandling(exception -> exception.authenticationEntryPoint((request, response, authException) -> response.setStatus(401)))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authz -> authz
                 // Public endpoints

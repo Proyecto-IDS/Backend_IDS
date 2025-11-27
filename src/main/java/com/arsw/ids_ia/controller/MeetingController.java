@@ -28,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MeetingController {
 
+    private static final String CLAIM_EMAIL = "email";
     private final MeetingService meetingService;
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -36,7 +37,7 @@ public class MeetingController {
             @Valid @RequestBody CreateMeetingRequest request,
             @AuthenticationPrincipal Jwt jwt
     ) {
-        String email = jwt.getClaim("email");
+        String email = jwt.getClaim(CLAIM_EMAIL);
         Meeting meeting = meetingService.createMeeting(request, email);
         MeetingResponse response = createMeetingResponse(meeting);
         return ResponseEntity.ok(response);
@@ -48,7 +49,7 @@ public class MeetingController {
             @Valid @RequestBody JoinMeetingRequest request,
             @AuthenticationPrincipal Jwt jwt
     ) {
-        String email = jwt.getClaim("email");
+        String email = jwt.getClaim(CLAIM_EMAIL);
         Meeting meeting = meetingService.joinMeeting(request, email);
         MeetingResponse response = createMeetingResponse(meeting);
         return ResponseEntity.ok(response);
@@ -84,7 +85,7 @@ public class MeetingController {
             @PathVariable Long meetingId,
             @AuthenticationPrincipal Jwt jwt
     ) {
-        String email = jwt.getClaim("email");
+        String email = jwt.getClaim(CLAIM_EMAIL);
         Meeting meeting = meetingService.leaveMeeting(meetingId, email);
         MeetingResponse response = createMeetingResponse(meeting);
         return ResponseEntity.ok(response);
@@ -96,7 +97,7 @@ public class MeetingController {
             @PathVariable Long meetingId,
             @AuthenticationPrincipal Jwt jwt
     ) {
-        String email = jwt.getClaim("email");
+        String email = jwt.getClaim(CLAIM_EMAIL);
         Meeting meeting = meetingService.markIncidentAsResolved(meetingId, email);
         MeetingResponse response = createMeetingResponse(meeting);
         return ResponseEntity.ok(response);
