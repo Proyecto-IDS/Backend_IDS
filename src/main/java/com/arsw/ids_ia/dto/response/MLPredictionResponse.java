@@ -2,6 +2,9 @@ package com.arsw.ids_ia.dto.response;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 /**
@@ -10,6 +13,7 @@ import java.util.Map;
  */
 public class MLPredictionResponse extends com.arsw.ids_ia.dto.MLFieldsBase {
 
+    @JsonProperty("probabilities")
     private Map<String, Double> probabilitiesMap;
 
     private String state;
@@ -25,9 +29,21 @@ public class MLPredictionResponse extends com.arsw.ids_ia.dto.MLFieldsBase {
     public Map<String, Double> getProbabilitiesMap() {
         return probabilitiesMap;
     }
+    
+    @JsonProperty("probabilities")
     public void setProbabilitiesMap(Map<String, Double> probabilities) {
         this.probabilitiesMap = probabilities;
+        // Also set the String version for Alert storage
+        if (probabilities != null) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                this.probabilities = mapper.writeValueAsString(probabilities);
+            } catch (JsonProcessingException e) {
+                this.probabilities = probabilities.toString();
+            }
+        }
     }
+    
     public String getState() {
         return state;
     }

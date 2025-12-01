@@ -2304,3 +2304,1216 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No q
 2025-11-25 23:01:51 [main] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
 2025-11-25 23:01:51 [main] WARN  c.arsw.ids_ia.service.AlertService - Failed to broadcast alert via websocket: WebSocket error
 2025-11-25 23:01:51 [main] WARN  c.arsw.ids_ia.service.AlertService - Duplicate alert detected - using existing alert
+2025-11-30 19:01:45 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Starting IdsIaApplication using Java 21.0.7 with PID 27335 (/Users/user/Documents/Backend_IDS/target/classes started by user in /Users/user/Documents/Backend_IDS)
+2025-11-30 19:01:45 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-30 19:01:46 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-30 19:01:46 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-30 19:01:46 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-30 19:01:46 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 24 ms. Found 3 JPA repository interfaces.
+2025-11-30 19:01:46 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-30 19:01:46 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-30 19:01:46 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-30 19:01:46 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-30 19:01:46 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 765 ms
+2025-11-30 19:01:46 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-30 19:01:46 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-11-30 19:01:46 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-30 19:01:47 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-30 19:01:47 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-11-30 19:01:47 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@69595ef2
+2025-11-30 19:01:47 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-11-30 19:01:47 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-30 19:01:47 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.14
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-30 19:01:47 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-30 19:01:48 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:01:48 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-30 19:01:49 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:01:50 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2025-11-30 19:01:50 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-11-30 19:01:50 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-30 19:01:50 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Started IdsIaApplication in 4.767 seconds (process running for 4.967)
+2025-11-30 19:01:50 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin estebanac0903@gmail.com already exists
+2025-11-30 19:01:50 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin barrerovelasquezcarlosdavid@gmail.com already exists
+2025-11-30 19:01:50 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin juansebastianipc@gmail.com already exists
+2025-11-30 19:01:57 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-30 19:01:57 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-30 19:01:57 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 13 ms
+2025-11-30 19:01:58 [http-nio-8080-exec-2] INFO  o.a.tomcat.util.http.parser.Cookie - A cookie header was received [g_state={"i_l":0,"i_ll":1764546321610}] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2025-11-30 19:02:34 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 50395646-e315-caeb-3caa-ba7137369fe8 (open sessions=1)
+2025-11-30 19:02:34 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 9adb0930-09a3-ce64-f3f7-f839b10ad85b (open sessions=2)
+2025-11-30 19:05:21 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-30 19:05:21 [Thread-5] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-30 19:05:21 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-11-30 19:05:21 [Thread-5] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:05:21 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-11-30 19:05:21 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-11-30 19:05:21 [Thread-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 9adb0930-09a3-ce64-f3f7-f839b10ad85b (open sessions=1)
+2025-11-30 19:05:21 [Thread-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 50395646-e315-caeb-3caa-ba7137369fe8 (open sessions=0)
+2025-11-30 19:05:21 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Starting IdsIaApplication using Java 21.0.7 with PID 27335 (/Users/user/Documents/Backend_IDS/target/classes started by user in /Users/user/Documents/Backend_IDS)
+2025-11-30 19:05:21 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-30 19:05:21 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-30 19:05:21 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 3 JPA repository interfaces.
+2025-11-30 19:05:21 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-30 19:05:21 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-30 19:05:21 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-30 19:05:21 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-30 19:05:21 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 226 ms
+2025-11-30 19:05:21 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-30 19:05:21 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-30 19:05:21 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-30 19:05:21 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2025-11-30 19:05:21 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@96ac4a8
+2025-11-30 19:05:21 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2025-11-30 19:05:21 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-30 19:05:21 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 15.14
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-30 19:05:21 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-30 19:05:21 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:05:22 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:05:22 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2025-11-30 19:05:22 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-11-30 19:05:22 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-30 19:05:22 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Started IdsIaApplication in 1.647 seconds (process running for 217.158)
+2025-11-30 19:05:22 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin estebanac0903@gmail.com already exists
+2025-11-30 19:05:22 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin barrerovelasquezcarlosdavid@gmail.com already exists
+2025-11-30 19:05:22 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin juansebastianipc@gmail.com already exists
+2025-11-30 19:05:22 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-11-30 19:05:26 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-30 19:05:26 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-30 19:05:26 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-11-30 19:05:26 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: f1e8eefb-0abb-6024-86e5-bcfc2d359d1a (open sessions=1)
+2025-11-30 19:05:26 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 951d8a34-c5d0-9f09-22b3-bd7d6a1297e3 (open sessions=2)
+2025-11-30 19:05:47 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-30 19:05:47 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-11-30 19:05:47 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:05:47 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2025-11-30 19:05:47 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2025-11-30 19:05:47 [SpringApplicationShutdownHook] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 951d8a34-c5d0-9f09-22b3-bd7d6a1297e3 (open sessions=1)
+2025-11-30 19:05:47 [SpringApplicationShutdownHook] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: f1e8eefb-0abb-6024-86e5-bcfc2d359d1a (open sessions=0)
+2025-11-30 19:05:52 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Starting IdsIaApplication using Java 21.0.7 with PID 29738 (/Users/user/Documents/Backend_IDS/target/classes started by user in /Users/user/Documents/Backend_IDS)
+2025-11-30 19:05:52 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-30 19:05:52 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-30 19:05:52 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-30 19:05:52 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-30 19:05:52 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 3 JPA repository interfaces.
+2025-11-30 19:05:53 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-30 19:05:53 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-30 19:05:53 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-30 19:05:53 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-30 19:05:53 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 837 ms
+2025-11-30 19:05:53 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-30 19:05:53 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-11-30 19:05:53 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-30 19:05:53 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-30 19:05:53 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-11-30 19:05:53 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6be179d0
+2025-11-30 19:05:53 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-11-30 19:05:53 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-30 19:05:53 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.14
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-30 19:05:53 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-30 19:05:54 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:05:54 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-30 19:05:55 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:05:55 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2025-11-30 19:05:56 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-11-30 19:05:56 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-30 19:05:56 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Started IdsIaApplication in 4.049 seconds (process running for 4.233)
+2025-11-30 19:05:56 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin estebanac0903@gmail.com already exists
+2025-11-30 19:05:56 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin barrerovelasquezcarlosdavid@gmail.com already exists
+2025-11-30 19:05:56 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin juansebastianipc@gmail.com already exists
+2025-11-30 19:05:57 [http-nio-8080-exec-1] INFO  o.a.tomcat.util.http.parser.Cookie - A cookie header was received [g_state={"i_l":0,"i_ll":1764547320721}] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2025-11-30 19:05:57 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-30 19:05:57 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-30 19:05:57 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-11-30 19:05:57 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: d9fe5705-0dba-5b96-b29b-155f45192eda (open sessions=1)
+2025-11-30 19:05:58 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: a49183c6-c232-7878-e736-605f136772e5 (open sessions=2)
+2025-11-30 19:06:43 [http-nio-8080-exec-4] INFO  c.a.i.controller.TrafficController - Received traffic file upload
+2025-11-30 19:06:43 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Processing traffic file upload
+2025-11-30 19:06:43 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Parsed 8 traffic records from file
+2025-11-30 19:06:43 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Procesando lote de 8 paquetes, todas las alertas se crearán inmediatamente
+2025-11-30 19:06:43 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:06:47 [http-nio-8080-exec-4] ERROR c.a.i.service.TrafficAnalysisService - Error analizando paquete: Failed to analyze threat with ML model
+2025-11-30 19:06:47 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:06:48 [http-nio-8080-exec-4] ERROR c.a.i.service.TrafficAnalysisService - Error analizando paquete: Failed to analyze threat with ML model
+2025-11-30 19:06:48 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:06:48 [http-nio-8080-exec-4] ERROR c.a.i.service.TrafficAnalysisService - Error analizando paquete: Failed to analyze threat with ML model
+2025-11-30 19:06:48 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:06:48 [http-nio-8080-exec-4] ERROR c.a.i.service.TrafficAnalysisService - Error analizando paquete: Failed to analyze threat with ML model
+2025-11-30 19:06:48 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:06:48 [http-nio-8080-exec-4] ERROR c.a.i.service.TrafficAnalysisService - Error analizando paquete: Failed to analyze threat with ML model
+2025-11-30 19:06:48 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:06:49 [http-nio-8080-exec-4] ERROR c.a.i.service.TrafficAnalysisService - Error analizando paquete: Failed to analyze threat with ML model
+2025-11-30 19:06:49 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:06:49 [http-nio-8080-exec-4] ERROR c.a.i.service.TrafficAnalysisService - Error analizando paquete: Failed to analyze threat with ML model
+2025-11-30 19:06:49 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:06:49 [http-nio-8080-exec-4] ERROR c.a.i.service.TrafficAnalysisService - Error analizando paquete: Failed to analyze threat with ML model
+2025-11-30 19:06:49 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Lote completado. Total de alertas creadas: 0
+2025-11-30 19:06:49 [http-nio-8080-exec-4] INFO  c.a.i.controller.TrafficController - File processed successfully: 0 alerts created
+2025-11-30 19:06:57 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Starting IdsIaApplication using Java 21.0.7 with PID 30348 (/Users/user/Documents/Backend_IDS/target/classes started by user in /Users/user/Documents/Backend_IDS)
+2025-11-30 19:06:57 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-30 19:06:57 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-30 19:06:57 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-30 19:06:57 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-30 19:06:57 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38 ms. Found 3 JPA repository interfaces.
+2025-11-30 19:06:58 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-30 19:06:58 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-30 19:06:58 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-30 19:06:58 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-30 19:06:58 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 831 ms
+2025-11-30 19:06:58 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-30 19:06:58 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-11-30 19:06:58 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-30 19:06:58 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-30 19:06:58 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-11-30 19:06:58 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@38806d13
+2025-11-30 19:06:58 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-11-30 19:06:58 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-30 19:06:58 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.14
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-30 19:06:58 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-30 19:06:59 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:06:59 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-30 19:07:00 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:07:00 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2025-11-30 19:07:01 [restartedMain] WARN  o.s.b.d.a.OptionalLiveReloadServer - Unable to start LiveReload server
+2025-11-30 19:07:01 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-11-30 19:07:01 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:07:01 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-11-30 19:07:01 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-11-30 19:07:01 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-11-30 19:07:01 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2025-11-30 19:09:04 [http-nio-8080-exec-2] INFO  c.a.i.controller.TrafficController - Analyzing single packet
+2025-11-30 19:09:04 [http-nio-8080-exec-2] INFO  c.a.i.service.TrafficAnalysisService - Analyzing single packet
+2025-11-30 19:09:04 [http-nio-8080-exec-2] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:09:05 [http-nio-8080-exec-2] ERROR c.a.i.controller.TrafficController - Error analyzing packet: Failed to analyze threat for packet
+java.lang.IllegalStateException: Failed to analyze threat for packet
+	at com.arsw.ids_ia.service.TrafficAnalysisService.analyzeSinglePacket(TrafficAnalysisService.java:83)
+	at com.arsw.ids_ia.controller.TrafficController.analyzeSinglePacket(TrafficController.java:110)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:490)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:351)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:83)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:129)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.authentication.AuthenticationFilter.doFilterInternal(AuthenticationFilter.java:177)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter.doFilterInternal(BearerTokenAuthenticationFilter.java:135)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:334)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:225)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1776)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:975)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:493)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.arsw.ids_ia.service.MachineLearningService$MLServiceException: Failed to analyze threat with ML model
+	at com.arsw.ids_ia.service.MachineLearningService.analyzeThreat(MachineLearningService.java:81)
+	at com.arsw.ids_ia.service.TrafficAnalysisService.analyzeSinglePacket(TrafficAnalysisService.java:81)
+	... 144 common frames omitted
+Caused by: org.springframework.web.client.RestClientException: Error while extracting response for type [class com.arsw.ids_ia.dto.response.MLPredictionResponse] and content type [application/json]
+	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:127)
+	at org.springframework.web.client.RestTemplate$ResponseEntityResponseExtractor.extractData(RestTemplate.java:1183)
+	at org.springframework.web.client.RestTemplate$ResponseEntityResponseExtractor.extractData(RestTemplate.java:1166)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:903)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:801)
+	at org.springframework.web.client.RestTemplate.postForEntity(RestTemplate.java:549)
+	at com.arsw.ids_ia.service.MachineLearningService.analyzeThreat(MachineLearningService.java:62)
+	... 145 common frames omitted
+Caused by: org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.lang.String` from Object value (token `JsonToken.START_OBJECT`)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:408)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.read(AbstractJackson2HttpMessageConverter.java:356)
+	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:105)
+	... 151 common frames omitted
+Caused by: com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `java.lang.String` from Object value (token `JsonToken.START_OBJECT`)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 44] (through reference chain: com.arsw.ids_ia.dto.response.MLPredictionResponse["probabilities"])
+	at com.fasterxml.jackson.databind.exc.MismatchedInputException.from(MismatchedInputException.java:59)
+	at com.fasterxml.jackson.databind.DeserializationContext.reportInputMismatch(DeserializationContext.java:1794)
+	at com.fasterxml.jackson.databind.DeserializationContext.handleUnexpectedToken(DeserializationContext.java:1568)
+	at com.fasterxml.jackson.databind.DeserializationContext.handleUnexpectedToken(DeserializationContext.java:1473)
+	at com.fasterxml.jackson.databind.DeserializationContext.extractScalarFromObject(DeserializationContext.java:971)
+	at com.fasterxml.jackson.databind.deser.std.StdDeserializer._parseString(StdDeserializer.java:1444)
+	at com.fasterxml.jackson.databind.deser.std.StringDeserializer.deserialize(StringDeserializer.java:48)
+	at com.fasterxml.jackson.databind.deser.std.StringDeserializer.deserialize(StringDeserializer.java:11)
+	at com.fasterxml.jackson.databind.deser.impl.MethodProperty.deserializeAndSet(MethodProperty.java:129)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:392)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:177)
+	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext.readRootValue(DefaultDeserializationContext.java:342)
+	at com.fasterxml.jackson.databind.ObjectReader._bindAndClose(ObjectReader.java:2130)
+	at com.fasterxml.jackson.databind.ObjectReader.readValue(ObjectReader.java:1500)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:397)
+	... 153 common frames omitted
+2025-11-30 19:09:49 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 6 class path changes (0 additions, 0 deletions, 6 modifications)
+2025-11-30 19:09:49 [Thread-5] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-30 19:09:49 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-11-30 19:09:49 [Thread-5] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:09:49 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-11-30 19:09:49 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-11-30 19:09:49 [Thread-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: d9fe5705-0dba-5b96-b29b-155f45192eda (open sessions=1)
+2025-11-30 19:09:49 [Thread-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: a49183c6-c232-7878-e736-605f136772e5 (open sessions=0)
+2025-11-30 19:09:50 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Starting IdsIaApplication using Java 21.0.7 with PID 29738 (/Users/user/Documents/Backend_IDS/target/classes started by user in /Users/user/Documents/Backend_IDS)
+2025-11-30 19:09:50 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-30 19:09:50 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-30 19:09:50 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 9 ms. Found 3 JPA repository interfaces.
+2025-11-30 19:09:50 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-30 19:09:50 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-30 19:09:50 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-30 19:09:50 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-30 19:09:50 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 276 ms
+2025-11-30 19:09:50 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-30 19:09:50 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-30 19:09:50 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-30 19:09:50 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2025-11-30 19:09:50 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@f0f3f16
+2025-11-30 19:09:50 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2025-11-30 19:09:50 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-30 19:09:50 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 15.14
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-30 19:09:50 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-30 19:09:50 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:09:51 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:09:51 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2025-11-30 19:09:51 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-11-30 19:09:51 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-30 19:09:51 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Started IdsIaApplication in 1.409 seconds (process running for 239.512)
+2025-11-30 19:09:51 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin estebanac0903@gmail.com already exists
+2025-11-30 19:09:51 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin barrerovelasquezcarlosdavid@gmail.com already exists
+2025-11-30 19:09:51 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin juansebastianipc@gmail.com already exists
+2025-11-30 19:09:51 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-11-30 19:09:54 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-30 19:09:54 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-30 19:09:54 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-11-30 19:09:54 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 9c21e57a-0f10-9ddb-2887-c1d70220a6ff (open sessions=1)
+2025-11-30 19:09:54 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 57406179-9a19-7b14-5597-7265a922e3da (open sessions=2)
+2025-11-30 19:10:07 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-30 19:10:07 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-11-30 19:10:07 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:10:07 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2025-11-30 19:10:07 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2025-11-30 19:10:07 [SpringApplicationShutdownHook] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 9c21e57a-0f10-9ddb-2887-c1d70220a6ff (open sessions=1)
+2025-11-30 19:10:07 [SpringApplicationShutdownHook] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 57406179-9a19-7b14-5597-7265a922e3da (open sessions=0)
+2025-11-30 19:10:44 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Starting IdsIaApplication using Java 21.0.7 with PID 33375 (/Users/user/Documents/Backend_IDS/target/classes started by user in /Users/user/Documents/Backend_IDS)
+2025-11-30 19:10:44 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-30 19:10:44 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-30 19:10:44 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-30 19:10:44 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-30 19:10:44 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 3 JPA repository interfaces.
+2025-11-30 19:10:44 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-30 19:10:44 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-30 19:10:44 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-30 19:10:44 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-30 19:10:44 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 812 ms
+2025-11-30 19:10:45 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-30 19:10:45 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-11-30 19:10:45 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-30 19:10:45 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-30 19:10:45 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-11-30 19:10:45 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6a5b4402
+2025-11-30 19:10:45 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-11-30 19:10:45 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-30 19:10:45 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.14
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-30 19:10:45 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-30 19:10:45 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:10:46 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-30 19:10:47 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:10:47 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2025-11-30 19:10:48 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-11-30 19:10:48 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-30 19:10:48 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Started IdsIaApplication in 4.305 seconds (process running for 4.478)
+2025-11-30 19:10:48 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin estebanac0903@gmail.com already exists
+2025-11-30 19:10:48 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin barrerovelasquezcarlosdavid@gmail.com already exists
+2025-11-30 19:10:48 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin juansebastianipc@gmail.com already exists
+2025-11-30 19:10:49 [http-nio-8080-exec-1] INFO  o.a.tomcat.util.http.parser.Cookie - A cookie header was received [g_state={"i_l":0,"i_ll":1764547320721}] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2025-11-30 19:10:49 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-30 19:10:49 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-30 19:10:49 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-11-30 19:10:49 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 5b1fb9ce-8047-61d0-270a-21b8af1d15df (open sessions=1)
+2025-11-30 19:10:49 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: f382d600-9899-1ff0-79f7-303d7f434792 (open sessions=2)
+2025-11-30 19:11:31 [http-nio-8080-exec-5] INFO  c.a.i.controller.TrafficController - Analyzing single packet
+2025-11-30 19:11:31 [http-nio-8080-exec-5] INFO  c.a.i.service.TrafficAnalysisService - Analyzing single packet
+2025-11-30 19:11:31 [http-nio-8080-exec-5] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:11:32 [http-nio-8080-exec-5] INFO  c.a.i.service.MachineLearningService - ML prediction received: neptune with probability null
+2025-11-30 19:11:32 [http-nio-8080-exec-5] ERROR c.a.i.controller.TrafficController - Error analyzing packet: Cannot invoke "java.lang.Double.doubleValue()" because the return value of "com.arsw.ids_ia.dto.response.MLPredictionResponse.getAttackProbability()" is null
+java.lang.NullPointerException: Cannot invoke "java.lang.Double.doubleValue()" because the return value of "com.arsw.ids_ia.dto.response.MLPredictionResponse.getAttackProbability()" is null
+	at com.arsw.ids_ia.service.TrafficAnalysisService.analyzeSinglePacket(TrafficAnalysisService.java:86)
+	at com.arsw.ids_ia.controller.TrafficController.analyzeSinglePacket(TrafficController.java:110)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:490)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:351)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:83)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:129)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.authentication.AuthenticationFilter.doFilterInternal(AuthenticationFilter.java:177)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter.doFilterInternal(BearerTokenAuthenticationFilter.java:135)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:334)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:225)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1776)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:975)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:493)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-11-30 19:12:02 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 5 class path changes (0 additions, 0 deletions, 5 modifications)
+2025-11-30 19:12:02 [Thread-5] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-30 19:12:02 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-11-30 19:12:02 [Thread-5] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:12:02 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-11-30 19:12:02 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-11-30 19:12:02 [Thread-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 5b1fb9ce-8047-61d0-270a-21b8af1d15df (open sessions=1)
+2025-11-30 19:12:02 [Thread-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: f382d600-9899-1ff0-79f7-303d7f434792 (open sessions=0)
+2025-11-30 19:12:02 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Starting IdsIaApplication using Java 21.0.7 with PID 33375 (/Users/user/Documents/Backend_IDS/target/classes started by user in /Users/user/Documents/Backend_IDS)
+2025-11-30 19:12:02 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-30 19:12:02 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-30 19:12:02 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 3 JPA repository interfaces.
+2025-11-30 19:12:02 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-30 19:12:02 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-30 19:12:02 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-30 19:12:02 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-30 19:12:02 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 248 ms
+2025-11-30 19:12:02 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-30 19:12:02 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-30 19:12:02 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-30 19:12:02 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2025-11-30 19:12:02 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@1980c2cc
+2025-11-30 19:12:02 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2025-11-30 19:12:02 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-30 19:12:02 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 15.14
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-30 19:12:02 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-30 19:12:03 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:12:03 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:12:03 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2025-11-30 19:12:04 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-11-30 19:12:04 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-30 19:12:04 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Started IdsIaApplication in 1.732 seconds (process running for 80.431)
+2025-11-30 19:12:04 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin estebanac0903@gmail.com already exists
+2025-11-30 19:12:04 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin barrerovelasquezcarlosdavid@gmail.com already exists
+2025-11-30 19:12:04 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin juansebastianipc@gmail.com already exists
+2025-11-30 19:12:04 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-11-30 19:12:07 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-30 19:12:07 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-30 19:12:07 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-11-30 19:12:07 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 43e1b676-2ffd-cd8b-7a2c-0c69f55e0201 (open sessions=1)
+2025-11-30 19:12:07 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 197aeaff-8a3c-3cfe-8e50-962e719cbcac (open sessions=2)
+2025-11-30 19:12:14 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-30 19:12:14 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-11-30 19:12:14 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:12:14 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2025-11-30 19:12:14 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2025-11-30 19:12:14 [SpringApplicationShutdownHook] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 197aeaff-8a3c-3cfe-8e50-962e719cbcac (open sessions=1)
+2025-11-30 19:12:14 [SpringApplicationShutdownHook] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 43e1b676-2ffd-cd8b-7a2c-0c69f55e0201 (open sessions=0)
+2025-11-30 19:14:15 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Starting IdsIaApplication using Java 21.0.7 with PID 35423 (/Users/user/Documents/Backend_IDS/target/classes started by user in /Users/user/Documents/Backend_IDS)
+2025-11-30 19:14:15 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-30 19:14:15 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-30 19:14:15 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-30 19:14:15 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-30 19:14:15 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 22 ms. Found 3 JPA repository interfaces.
+2025-11-30 19:14:16 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-30 19:14:16 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-30 19:14:16 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-30 19:14:16 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-30 19:14:16 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 810 ms
+2025-11-30 19:14:16 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-30 19:14:16 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-11-30 19:14:16 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-30 19:14:16 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-30 19:14:16 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-11-30 19:14:16 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@54f8524e
+2025-11-30 19:14:16 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-11-30 19:14:16 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-30 19:14:16 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.14
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-30 19:14:16 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-30 19:14:17 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:14:17 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-30 19:14:18 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:14:18 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2025-11-30 19:14:19 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-11-30 19:14:19 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-30 19:14:19 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Started IdsIaApplication in 4.166 seconds (process running for 4.361)
+2025-11-30 19:14:19 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin estebanac0903@gmail.com already exists
+2025-11-30 19:14:19 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin barrerovelasquezcarlosdavid@gmail.com already exists
+2025-11-30 19:14:19 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin juansebastianipc@gmail.com already exists
+2025-11-30 19:14:21 [http-nio-8080-exec-1] INFO  o.a.tomcat.util.http.parser.Cookie - A cookie header was received [g_state={"i_l":0,"i_ll":1764547320721}] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2025-11-30 19:14:21 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-30 19:14:21 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-30 19:14:21 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-11-30 19:14:21 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 681bcf3f-416d-1f67-e349-3eabc4722be4 (open sessions=1)
+2025-11-30 19:14:21 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: b1488bd3-55de-1e47-9e5f-10ce7116d927 (open sessions=2)
+2025-11-30 19:14:52 [http-nio-8080-exec-5] INFO  c.a.i.controller.TrafficController - Analyzing single packet
+2025-11-30 19:14:52 [http-nio-8080-exec-5] INFO  c.a.i.service.TrafficAnalysisService - Analyzing single packet
+2025-11-30 19:14:52 [http-nio-8080-exec-5] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:14:52 [http-nio-8080-exec-5] INFO  c.a.i.service.MachineLearningService - ML prediction received: neptune with probability 0.42
+2025-11-30 19:14:52 [http-nio-8080-exec-5] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=6 packetId=PKT-18A028F7 incidentId=INC-9F350CB9 severity=FALSO_POSITIVO
+2025-11-30 19:14:52 [http-nio-8080-exec-5] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:14:52 [http-nio-8080-exec-5] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 6 - INC-9F350CB9 (FALSO_POSITIVO)
+2025-11-30 19:14:52 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: b1488bd3-55de-1e47-9e5f-10ce7116d927 (open sessions=1)
+2025-11-30 19:14:52 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: c462581e-3cc3-dccc-b74c-684f8c715a08 (open sessions=2)
+2025-11-30 19:14:52 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: c462581e-3cc3-dccc-b74c-684f8c715a08 (open sessions=1)
+2025-11-30 19:14:52 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 690fb112-21ec-f7f6-4564-83ff540ffca8 (open sessions=2)
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.controller.TrafficController - Received traffic file upload
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Processing traffic file upload
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Parsed 8 traffic records from file
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Procesando lote de 8 paquetes, todas las alertas se crearán inmediatamente
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 1.0
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=7 packetId=PKT-281F3504 incidentId=INC-84821269 severity=CRITICO
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 7 - INC-84821269 (CRITICO)
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-84821269)
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:15:01 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 690fb112-21ec-f7f6-4564-83ff540ffca8 (open sessions=1)
+2025-11-30 19:15:01 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 0bde2cbf-c368-590b-7023-7309c063f219 (open sessions=2)
+2025-11-30 19:15:01 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 0bde2cbf-c368-590b-7023-7309c063f219 (open sessions=1)
+2025-11-30 19:15:01 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 9a17a51e-8ce4-d7a7-eb5d-d507af577324 (open sessions=2)
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - ML prediction received: neptune with probability 0.6166666666666667
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=8 packetId=PKT-9065DD51 incidentId=INC-B4ED2484 severity=FALSO_POSITIVO
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 8 - INC-B4ED2484 (FALSO_POSITIVO)
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-B4ED2484)
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:15:01 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 9a17a51e-8ce4-d7a7-eb5d-d507af577324 (open sessions=1)
+2025-11-30 19:15:01 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: b228fc4a-e22f-ac9b-c22e-44c063e45f98 (open sessions=2)
+2025-11-30 19:15:01 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: b228fc4a-e22f-ac9b-c22e-44c063e45f98 (open sessions=1)
+2025-11-30 19:15:01 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: fd09efd6-bc8a-943d-55b1-cd9d30722709 (open sessions=2)
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 0.3933333333333333
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=9 packetId=PKT-01CD29C6 incidentId=INC-587DEFDE severity=FALSO_POSITIVO
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 9 - INC-587DEFDE (FALSO_POSITIVO)
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-587DEFDE)
+2025-11-30 19:15:01 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:15:01 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: fd09efd6-bc8a-943d-55b1-cd9d30722709 (open sessions=1)
+2025-11-30 19:15:01 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: d44aeae7-7784-49da-a3c6-3fe970eef5ab (open sessions=2)
+2025-11-30 19:15:01 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: d44aeae7-7784-49da-a3c6-3fe970eef5ab (open sessions=1)
+2025-11-30 19:15:01 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 2ca2520c-e984-c06d-cb6a-1428b9ccd864 (open sessions=2)
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - ML prediction received: neptune with probability 0.28
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 0.61
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=10 packetId=PKT-FB4193A4 incidentId=INC-E90A4C94 severity=FALSO_POSITIVO
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 10 - INC-E90A4C94 (FALSO_POSITIVO)
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-E90A4C94)
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:15:02 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 2ca2520c-e984-c06d-cb6a-1428b9ccd864 (open sessions=1)
+2025-11-30 19:15:02 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: af294b47-b652-e57c-d05e-8f2c516796c2 (open sessions=2)
+2025-11-30 19:15:02 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: af294b47-b652-e57c-d05e-8f2c516796c2 (open sessions=1)
+2025-11-30 19:15:02 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 29a7014f-e22a-3586-9c2a-6673e272b624 (open sessions=2)
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 1.0
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=11 packetId=PKT-374A73B4 incidentId=INC-4F48387A severity=CRITICO
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 11 - INC-4F48387A (CRITICO)
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-4F48387A)
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:15:02 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 29a7014f-e22a-3586-9c2a-6673e272b624 (open sessions=1)
+2025-11-30 19:15:02 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 25882b18-a73d-3be3-47bb-57e96979f1f3 (open sessions=2)
+2025-11-30 19:15:02 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 25882b18-a73d-3be3-47bb-57e96979f1f3 (open sessions=1)
+2025-11-30 19:15:02 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: d773e4f6-89a4-97f4-9821-a91d7490284e (open sessions=2)
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - ML prediction received: warezclient with probability 0.85
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=12 packetId=PKT-B287D487 incidentId=INC-A9ECFCDF severity=CONOCIDO
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 12 - INC-A9ECFCDF (CONOCIDO)
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-A9ECFCDF)
+2025-11-30 19:15:02 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:15:02 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: d773e4f6-89a4-97f4-9821-a91d7490284e (open sessions=1)
+2025-11-30 19:15:02 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 3c97c974-a625-373b-cb34-d1018cbe65db (open sessions=2)
+2025-11-30 19:15:02 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 3c97c974-a625-373b-cb34-d1018cbe65db (open sessions=1)
+2025-11-30 19:15:02 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 800f3b7c-5258-f354-941d-f56aefc37874 (open sessions=2)
+2025-11-30 19:15:03 [http-nio-8080-exec-3] INFO  c.a.i.service.MachineLearningService - ML prediction received: portsweep with probability 1.0
+2025-11-30 19:15:03 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=13 packetId=PKT-A96B7F48 incidentId=INC-D4DB67BA severity=CRITICO
+2025-11-30 19:15:03 [http-nio-8080-exec-3] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:15:03 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 13 - INC-D4DB67BA (CRITICO)
+2025-11-30 19:15:03 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-D4DB67BA)
+2025-11-30 19:15:03 [http-nio-8080-exec-3] INFO  c.a.i.service.TrafficAnalysisService - Lote completado. Total de alertas creadas: 7
+2025-11-30 19:15:03 [http-nio-8080-exec-3] INFO  c.a.i.controller.TrafficController - File processed successfully: 7 alerts created
+2025-11-30 19:15:03 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 800f3b7c-5258-f354-941d-f56aefc37874 (open sessions=1)
+2025-11-30 19:15:03 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 9f165f43-e3fe-3746-640d-74a3823acb8c (open sessions=2)
+2025-11-30 19:15:03 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 9f165f43-e3fe-3746-640d-74a3823acb8c (open sessions=1)
+2025-11-30 19:15:03 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 4dd618fd-c8a9-c3b6-eaa5-e009054142db (open sessions=2)
+2025-11-30 19:15:15 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 4dd618fd-c8a9-c3b6-eaa5-e009054142db (open sessions=1)
+2025-11-30 19:15:18 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 1a05df6c-e0f7-66ca-dcd4-aa538825b3e8 (open sessions=2)
+2025-11-30 19:15:18 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 1a05df6c-e0f7-66ca-dcd4-aa538825b3e8 (open sessions=1)
+2025-11-30 19:15:18 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: d1b17c1a-0908-0799-f627-a5e41dc3d308 (open sessions=2)
+2025-11-30 19:15:18 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: d1b17c1a-0908-0799-f627-a5e41dc3d308 (open sessions=1)
+2025-11-30 19:15:18 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 21e188be-f6ef-5c60-42dd-bc65ce86e6db (open sessions=2)
+2025-11-30 19:15:22 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 21e188be-f6ef-5c60-42dd-bc65ce86e6db (open sessions=1)
+2025-11-30 19:15:23 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 7fe1072e-454c-35d7-9a33-ec7cd14fed06 (open sessions=2)
+2025-11-30 19:15:23 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 7fe1072e-454c-35d7-9a33-ec7cd14fed06 (open sessions=1)
+2025-11-30 19:15:23 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 4a797345-d03d-905a-6bbf-e222f99e2d05 (open sessions=2)
+2025-11-30 19:15:23 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 4a797345-d03d-905a-6bbf-e222f99e2d05 (open sessions=1)
+2025-11-30 19:15:23 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 2f539537-4268-3362-bbc7-577870c98333 (open sessions=2)
+2025-11-30 19:15:23 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 2f539537-4268-3362-bbc7-577870c98333 (open sessions=1)
+2025-11-30 19:15:23 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: ce4c71f5-edc5-44f9-6cef-b659a322aad3 (open sessions=2)
+2025-11-30 19:16:37 [http-nio-8080-exec-7] INFO  c.a.i.controller.TrafficController - Received traffic file upload
+2025-11-30 19:16:37 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Processing traffic file upload
+2025-11-30 19:16:37 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Parsed 8 traffic records from file
+2025-11-30 19:16:37 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Procesando lote de 8 paquetes, todas las alertas se crearán inmediatamente
+2025-11-30 19:16:37 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 1.0
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=14 packetId=PKT-8AE06FA1 incidentId=INC-2750D2E1 severity=CRITICO
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 14 - INC-2750D2E1 (CRITICO)
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-2750D2E1)
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:16:38 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: ce4c71f5-edc5-44f9-6cef-b659a322aad3 (open sessions=1)
+2025-11-30 19:16:38 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 9d8b33c8-db64-9e29-c1ae-17f47d51744e (open sessions=2)
+2025-11-30 19:16:38 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 9d8b33c8-db64-9e29-c1ae-17f47d51744e (open sessions=1)
+2025-11-30 19:16:38 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 0c7cf076-2261-f8fa-2161-74bed6444e6f (open sessions=2)
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - ML prediction received: neptune with probability 0.6166666666666667
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=15 packetId=PKT-733B3FDE incidentId=INC-F02278F3 severity=FALSO_POSITIVO
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 15 - INC-F02278F3 (FALSO_POSITIVO)
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-F02278F3)
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:16:38 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 0c7cf076-2261-f8fa-2161-74bed6444e6f (open sessions=1)
+2025-11-30 19:16:38 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: ea1e439e-7cb0-070b-1beb-1dee2d7b5164 (open sessions=2)
+2025-11-30 19:16:38 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: ea1e439e-7cb0-070b-1beb-1dee2d7b5164 (open sessions=1)
+2025-11-30 19:16:38 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 0749b809-1693-85de-aa3c-b58195913aa4 (open sessions=2)
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 0.3933333333333333
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=16 packetId=PKT-2F8D1D54 incidentId=INC-726A4619 severity=FALSO_POSITIVO
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 16 - INC-726A4619 (FALSO_POSITIVO)
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-726A4619)
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:16:38 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 0749b809-1693-85de-aa3c-b58195913aa4 (open sessions=1)
+2025-11-30 19:16:38 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 19b9bb9c-a8bd-fcf5-b933-c492ed4db451 (open sessions=2)
+2025-11-30 19:16:38 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 19b9bb9c-a8bd-fcf5-b933-c492ed4db451 (open sessions=1)
+2025-11-30 19:16:38 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: e327a684-c590-76d9-e8a2-a3c754980c99 (open sessions=2)
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - ML prediction received: neptune with probability 0.28
+2025-11-30 19:16:38 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 0.61
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=17 packetId=PKT-D133EACF incidentId=INC-00FEE7B3 severity=FALSO_POSITIVO
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 17 - INC-00FEE7B3 (FALSO_POSITIVO)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-00FEE7B3)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:16:39 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: e327a684-c590-76d9-e8a2-a3c754980c99 (open sessions=1)
+2025-11-30 19:16:39 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 93b6d945-74f1-f3b4-9080-f485db17bbdd (open sessions=2)
+2025-11-30 19:16:39 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 93b6d945-74f1-f3b4-9080-f485db17bbdd (open sessions=1)
+2025-11-30 19:16:39 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 6b5fcc9c-fe96-429a-0482-ce357b66684f (open sessions=2)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 1.0
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=18 packetId=PKT-29A36FD4 incidentId=INC-CBA436F3 severity=CRITICO
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 18 - INC-CBA436F3 (CRITICO)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-CBA436F3)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:16:39 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 6b5fcc9c-fe96-429a-0482-ce357b66684f (open sessions=1)
+2025-11-30 19:16:39 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: a44cb6e7-09e2-78f4-1aa7-264f4810a0d5 (open sessions=2)
+2025-11-30 19:16:39 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: a44cb6e7-09e2-78f4-1aa7-264f4810a0d5 (open sessions=1)
+2025-11-30 19:16:39 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 8e3994c8-e590-6f6b-e979-14a2e6d146cd (open sessions=2)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - ML prediction received: warezclient with probability 0.85
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=19 packetId=PKT-6E4263AE incidentId=INC-7A4929B1 severity=CONOCIDO
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 19 - INC-7A4929B1 (CONOCIDO)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-7A4929B1)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:16:39 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 8e3994c8-e590-6f6b-e979-14a2e6d146cd (open sessions=1)
+2025-11-30 19:16:39 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: fb418c37-25e5-3133-d306-c5e73cca9126 (open sessions=2)
+2025-11-30 19:16:39 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: fb418c37-25e5-3133-d306-c5e73cca9126 (open sessions=1)
+2025-11-30 19:16:39 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: dec3c545-710e-d231-c5d0-56096793d254 (open sessions=2)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.MachineLearningService - ML prediction received: portsweep with probability 1.0
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=20 packetId=PKT-C7B2A7C4 incidentId=INC-07DFB146 severity=CRITICO
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 20 - INC-07DFB146 (CRITICO)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-07DFB146)
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.service.TrafficAnalysisService - Lote completado. Total de alertas creadas: 7
+2025-11-30 19:16:39 [http-nio-8080-exec-7] INFO  c.a.i.controller.TrafficController - File processed successfully: 7 alerts created
+2025-11-30 19:16:39 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: dec3c545-710e-d231-c5d0-56096793d254 (open sessions=1)
+2025-11-30 19:16:39 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 2e37ab2e-9aee-983e-bd45-ca0bf27637ae (open sessions=2)
+2025-11-30 19:16:39 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 2e37ab2e-9aee-983e-bd45-ca0bf27637ae (open sessions=1)
+2025-11-30 19:16:39 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 10209703-ef8a-650d-8c77-e6584331de3f (open sessions=2)
+2025-11-30 19:16:40 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 10209703-ef8a-650d-8c77-e6584331de3f (open sessions=1)
+2025-11-30 19:16:40 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 347f5b9a-cebe-81c1-dd1c-aa5457f88a5d (open sessions=2)
+2025-11-30 19:17:06 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 681bcf3f-416d-1f67-e349-3eabc4722be4 (open sessions=0)
+2025-11-30 19:17:06 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 347f5b9a-cebe-81c1-dd1c-aa5457f88a5d (open sessions=0)
+2025-11-30 19:17:06 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 7e642574-7d03-7719-751e-dd41b1b93ceb (open sessions=1)
+2025-11-30 19:17:06 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 7e642574-7d03-7719-751e-dd41b1b93ceb (open sessions=0)
+2025-11-30 19:17:07 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: e98734f6-3a61-c732-bb34-d7568fc3f254 (open sessions=1)
+2025-11-30 19:17:07 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: a80cf992-90dd-1be6-7b59-d4415f4d879d (open sessions=2)
+2025-11-30 19:17:07 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: a80cf992-90dd-1be6-7b59-d4415f4d879d (open sessions=1)
+2025-11-30 19:17:07 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 8dd2a7d6-ebfa-ba23-e611-78f27193c5d3 (open sessions=2)
+2025-11-30 19:17:20 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 8dd2a7d6-ebfa-ba23-e611-78f27193c5d3 (open sessions=0)
+2025-11-30 19:17:20 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: e98734f6-3a61-c732-bb34-d7568fc3f254 (open sessions=0)
+2025-11-30 19:17:20 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: aef977c0-6f1d-2fca-ddd4-ac48ec79197c (open sessions=1)
+2025-11-30 19:17:20 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 457cc25f-04e9-2d87-6e11-1dc806eba130 (open sessions=2)
+2025-11-30 19:19:19 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-11-30 19:19:19 [Thread-5] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-30 19:19:19 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-11-30 19:19:19 [Thread-5] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:19:19 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-11-30 19:19:19 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-11-30 19:19:19 [Thread-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 457cc25f-04e9-2d87-6e11-1dc806eba130 (open sessions=1)
+2025-11-30 19:19:19 [Thread-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: aef977c0-6f1d-2fca-ddd4-ac48ec79197c (open sessions=0)
+2025-11-30 19:19:19 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Starting IdsIaApplication using Java 21.0.7 with PID 35423 (/Users/user/Documents/Backend_IDS/target/classes started by user in /Users/user/Documents/Backend_IDS)
+2025-11-30 19:19:19 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-30 19:19:19 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-30 19:19:19 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 3 JPA repository interfaces.
+2025-11-30 19:19:20 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-30 19:19:20 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-30 19:19:20 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-30 19:19:20 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-30 19:19:20 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 345 ms
+2025-11-30 19:19:20 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-30 19:19:20 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-30 19:19:20 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-30 19:19:20 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2025-11-30 19:19:20 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@67c4db2e
+2025-11-30 19:19:20 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2025-11-30 19:19:20 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-30 19:19:20 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 15.14
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-30 19:19:20 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-30 19:19:20 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:19:20 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:19:20 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2025-11-30 19:19:21 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-11-30 19:19:21 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-30 19:19:21 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Started IdsIaApplication in 1.58 seconds (process running for 306.391)
+2025-11-30 19:19:21 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin estebanac0903@gmail.com already exists
+2025-11-30 19:19:21 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin barrerovelasquezcarlosdavid@gmail.com already exists
+2025-11-30 19:19:21 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin juansebastianipc@gmail.com already exists
+2025-11-30 19:19:21 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-11-30 19:19:24 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-30 19:19:24 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-30 19:19:24 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-11-30 19:19:24 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: d802676c-b5ec-4e1a-9e99-57e76f644e70 (open sessions=1)
+2025-11-30 19:19:24 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 99566702-3a2f-310b-6875-894a0d684393 (open sessions=2)
+2025-11-30 19:19:27 [http-nio-8080-exec-4] INFO  c.a.i.controller.TrafficController - Received traffic file upload
+2025-11-30 19:19:27 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Processing traffic file upload
+2025-11-30 19:19:27 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Parsed 8 traffic records from file
+2025-11-30 19:19:27 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Procesando lote de 8 paquetes, todas las alertas se crearán inmediatamente
+2025-11-30 19:19:27 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 1.0
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=21 packetId=PKT-07587E3C incidentId=INC-F2D48CC1 severity=CRITICO
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 21 - INC-F2D48CC1 (CRITICO)
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-F2D48CC1)
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:19:28 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 99566702-3a2f-310b-6875-894a0d684393 (open sessions=1)
+2025-11-30 19:19:28 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 0f16ddeb-d370-94a6-0662-d3bfefc34856 (open sessions=2)
+2025-11-30 19:19:28 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 0f16ddeb-d370-94a6-0662-d3bfefc34856 (open sessions=1)
+2025-11-30 19:19:28 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: f48f8300-5636-e408-6e81-e1367ae5bfd3 (open sessions=2)
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - ML prediction received: neptune with probability 0.6166666666666667
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=22 packetId=PKT-A7B73752 incidentId=INC-518BE2E4 severity=FALSO_POSITIVO
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 22 - INC-518BE2E4 (FALSO_POSITIVO)
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-518BE2E4)
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:19:28 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: f48f8300-5636-e408-6e81-e1367ae5bfd3 (open sessions=1)
+2025-11-30 19:19:28 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 61e84941-8bf1-ff9d-1ffe-cf02e8abcfed (open sessions=2)
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 0.3933333333333333
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=23 packetId=PKT-5E06577B incidentId=INC-D45488C0 severity=FALSO_POSITIVO
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 23 - INC-D45488C0 (FALSO_POSITIVO)
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-D45488C0)
+2025-11-30 19:19:28 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:19:28 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 61e84941-8bf1-ff9d-1ffe-cf02e8abcfed (open sessions=1)
+2025-11-30 19:19:28 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 28ecff06-b7da-ecde-1ca7-cf54f36d56b6 (open sessions=2)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - ML prediction received: neptune with probability 0.28
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 0.61
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=24 packetId=PKT-7EF9306A incidentId=INC-A08135D5 severity=FALSO_POSITIVO
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 24 - INC-A08135D5 (FALSO_POSITIVO)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-A08135D5)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:19:29 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 28ecff06-b7da-ecde-1ca7-cf54f36d56b6 (open sessions=1)
+2025-11-30 19:19:29 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 8036720f-764f-d31b-38c8-a923cc260acd (open sessions=2)
+2025-11-30 19:19:29 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 8036720f-764f-d31b-38c8-a923cc260acd (open sessions=1)
+2025-11-30 19:19:29 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: e78c7082-cdca-72c4-94c2-724052fe39b6 (open sessions=2)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 1.0
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=25 packetId=PKT-5CC6C7EA incidentId=INC-12D86A7B severity=CRITICO
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 25 - INC-12D86A7B (CRITICO)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-12D86A7B)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:19:29 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: e78c7082-cdca-72c4-94c2-724052fe39b6 (open sessions=1)
+2025-11-30 19:19:29 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 4495836a-7fca-5430-6629-af8f80a02304 (open sessions=2)
+2025-11-30 19:19:29 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 4495836a-7fca-5430-6629-af8f80a02304 (open sessions=1)
+2025-11-30 19:19:29 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 4b4ac531-9f35-b843-fb66-27a8261802b5 (open sessions=2)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - ML prediction received: warezclient with probability 0.85
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=26 packetId=PKT-9AEA1068 incidentId=INC-3814A207 severity=CONOCIDO
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 26 - INC-3814A207 (CONOCIDO)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-3814A207)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:19:29 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 4b4ac531-9f35-b843-fb66-27a8261802b5 (open sessions=1)
+2025-11-30 19:19:29 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 24d2a1bc-6618-b42b-fe2d-e221db202338 (open sessions=2)
+2025-11-30 19:19:29 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 24d2a1bc-6618-b42b-fe2d-e221db202338 (open sessions=1)
+2025-11-30 19:19:29 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 4f9b7ce0-46c9-a994-fa3a-7ed83124ab2f (open sessions=2)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.MachineLearningService - ML prediction received: portsweep with probability 1.0
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=27 packetId=PKT-FED8F6C5 incidentId=INC-644E83AB severity=CRITICO
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 27 - INC-644E83AB (CRITICO)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-644E83AB)
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.service.TrafficAnalysisService - Lote completado. Total de alertas creadas: 7
+2025-11-30 19:19:29 [http-nio-8080-exec-4] INFO  c.a.i.controller.TrafficController - File processed successfully: 7 alerts created
+2025-11-30 19:19:29 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 4f9b7ce0-46c9-a994-fa3a-7ed83124ab2f (open sessions=1)
+2025-11-30 19:19:29 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: c1e38f7d-3fcb-0b4f-1d2a-a8402a567fba (open sessions=2)
+2025-11-30 19:19:29 [http-nio-8080-exec-8] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: c1e38f7d-3fcb-0b4f-1d2a-a8402a567fba (open sessions=1)
+2025-11-30 19:19:29 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 530e1b20-7001-0001-3e65-f1a8eba4500d (open sessions=2)
+2025-11-30 19:19:30 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 530e1b20-7001-0001-3e65-f1a8eba4500d (open sessions=1)
+2025-11-30 19:19:30 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 5c6a560f-f007-b9cc-206e-190faf6f398a (open sessions=2)
+2025-11-30 19:19:44 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-30 19:19:44 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-11-30 19:19:44 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:19:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2025-11-30 19:19:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2025-11-30 19:19:44 [SpringApplicationShutdownHook] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: d802676c-b5ec-4e1a-9e99-57e76f644e70 (open sessions=1)
+2025-11-30 19:19:44 [SpringApplicationShutdownHook] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 5c6a560f-f007-b9cc-206e-190faf6f398a (open sessions=0)
+2025-11-30 19:19:49 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Starting IdsIaApplication using Java 21.0.7 with PID 38029 (/Users/user/Documents/Backend_IDS/target/classes started by user in /Users/user/Documents/Backend_IDS)
+2025-11-30 19:19:49 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-30 19:19:49 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-30 19:19:49 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-30 19:19:50 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-30 19:19:50 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 3 JPA repository interfaces.
+2025-11-30 19:19:50 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-11-30 19:19:50 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-30 19:19:50 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-30 19:19:50 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-30 19:19:50 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 919 ms
+2025-11-30 19:19:51 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-30 19:19:51 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-11-30 19:19:51 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-30 19:19:51 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-30 19:19:51 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-11-30 19:19:51 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2246c174
+2025-11-30 19:19:51 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-11-30 19:19:51 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-30 19:19:51 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.14
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-30 19:19:51 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-30 19:19:51 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-30 19:19:52 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-30 19:19:53 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-30 19:19:53 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoints beneath base path '/actuator'
+2025-11-30 19:19:53 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-11-30 19:19:53 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-11-30 19:19:53 [restartedMain] INFO  com.arsw.ids_ia.IdsIaApplication - Started IdsIaApplication in 4.235 seconds (process running for 4.447)
+2025-11-30 19:19:54 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin estebanac0903@gmail.com already exists
+2025-11-30 19:19:54 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin barrerovelasquezcarlosdavid@gmail.com already exists
+2025-11-30 19:19:54 [restartedMain] INFO  com.arsw.ids_ia.config.AdminSeeder - Admin juansebastianipc@gmail.com already exists
+2025-11-30 19:19:55 [http-nio-8080-exec-1] INFO  o.a.tomcat.util.http.parser.Cookie - A cookie header was received [g_state={"i_l":0,"i_ll":1764547320721}] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2025-11-30 19:19:55 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-30 19:19:55 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-30 19:19:55 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-11-30 19:19:55 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 438d9a76-16d8-7948-71d5-8963613c0739 (open sessions=1)
+2025-11-30 19:21:28 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 6f1a2101-bfa0-8f6c-da28-8da521fe3481 (open sessions=2)
+2025-11-30 19:21:28 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 1a4dc70a-3d31-d322-8b96-928dadd2af58 (open sessions=3)
+2025-11-30 19:21:28 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 6f1a2101-bfa0-8f6c-da28-8da521fe3481 (open sessions=1)
+2025-11-30 19:21:28 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 1a4dc70a-3d31-d322-8b96-928dadd2af58 (open sessions=1)
+2025-11-30 19:21:29 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 6b13a86a-eef8-466c-9dc7-bee0a8b176a6 (open sessions=2)
+2025-11-30 19:21:38 [http-nio-8080-exec-8] INFO  c.a.i.controller.TrafficController - Received traffic file upload
+2025-11-30 19:21:38 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Processing traffic file upload
+2025-11-30 19:21:38 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Parsed 8 traffic records from file
+2025-11-30 19:21:38 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Procesando lote de 8 paquetes, todas las alertas se crearán inmediatamente
+2025-11-30 19:21:38 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 1.0
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=28 packetId=PKT-A04C3776 incidentId=INC-2DC4D897 severity=CRITICO
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 28 - INC-2DC4D897 (CRITICO)
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-2DC4D897)
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:21:39 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 6b13a86a-eef8-466c-9dc7-bee0a8b176a6 (open sessions=1)
+2025-11-30 19:21:39 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 7443dff6-e081-0cbc-27b5-dc650d292d0c (open sessions=2)
+2025-11-30 19:21:39 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 7443dff6-e081-0cbc-27b5-dc650d292d0c (open sessions=1)
+2025-11-30 19:21:39 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: a466d7c1-2a49-3e1d-d1a2-b8ef2f066964 (open sessions=2)
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - ML prediction received: neptune with probability 0.6166666666666667
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=29 packetId=PKT-58C30E89 incidentId=INC-A26FD9EF severity=FALSO_POSITIVO
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 29 - INC-A26FD9EF (FALSO_POSITIVO)
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-A26FD9EF)
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:21:39 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: a466d7c1-2a49-3e1d-d1a2-b8ef2f066964 (open sessions=1)
+2025-11-30 19:21:39 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 8048e4ee-9a39-e43a-a7ae-97adfa0a43e0 (open sessions=2)
+2025-11-30 19:21:39 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 8048e4ee-9a39-e43a-a7ae-97adfa0a43e0 (open sessions=1)
+2025-11-30 19:21:39 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 923c6b5e-90ac-e2f0-2f0a-f8257e33e774 (open sessions=2)
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 0.3933333333333333
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=30 packetId=PKT-EAA4336F incidentId=INC-8CCAB21B severity=FALSO_POSITIVO
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 30 - INC-8CCAB21B (FALSO_POSITIVO)
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-8CCAB21B)
+2025-11-30 19:21:39 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:21:39 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 923c6b5e-90ac-e2f0-2f0a-f8257e33e774 (open sessions=1)
+2025-11-30 19:21:39 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: a14f7580-2915-5ec0-bc30-f34dae4fa5fa (open sessions=2)
+2025-11-30 19:21:39 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: a14f7580-2915-5ec0-bc30-f34dae4fa5fa (open sessions=1)
+2025-11-30 19:21:39 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 21d89631-9fb9-0bad-04af-5ceb64f5caef (open sessions=2)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - ML prediction received: neptune with probability 0.28
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 0.61
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=31 packetId=PKT-DC87F076 incidentId=INC-F9B8358A severity=FALSO_POSITIVO
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 31 - INC-F9B8358A (FALSO_POSITIVO)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-F9B8358A)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:21:40 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 21d89631-9fb9-0bad-04af-5ceb64f5caef (open sessions=1)
+2025-11-30 19:21:40 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: ed19db14-ee1e-8a3d-f04f-4d9ea70e9cbe (open sessions=2)
+2025-11-30 19:21:40 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: ed19db14-ee1e-8a3d-f04f-4d9ea70e9cbe (open sessions=1)
+2025-11-30 19:21:40 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 33f119cd-bb0a-620d-b3c2-736930884faf (open sessions=2)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - ML prediction received: normal with probability 1.0
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=32 packetId=PKT-DD10131C incidentId=INC-A9D4CF4C severity=CRITICO
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 32 - INC-A9D4CF4C (CRITICO)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-A9D4CF4C)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:21:40 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 33f119cd-bb0a-620d-b3c2-736930884faf (open sessions=1)
+2025-11-30 19:21:40 [http-nio-8080-exec-4] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: aeb80864-713f-fb2d-1e0e-81842ae44919 (open sessions=2)
+2025-11-30 19:21:40 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: aeb80864-713f-fb2d-1e0e-81842ae44919 (open sessions=1)
+2025-11-30 19:21:40 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 1bdfb624-ad56-de7a-3165-987239b527ba (open sessions=2)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - ML prediction received: warezclient with probability 0.85
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=33 packetId=PKT-D05138E0 incidentId=INC-2B1F154B severity=CONOCIDO
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 33 - INC-2B1F154B (CONOCIDO)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-2B1F154B)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - Sending traffic data to ML model at https://j7gb7hbknl.execute-api.us-east-1.amazonaws.com/predict
+2025-11-30 19:21:40 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 1bdfb624-ad56-de7a-3165-987239b527ba (open sessions=1)
+2025-11-30 19:21:40 [http-nio-8080-exec-1] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: e5df39f5-db5d-4fa7-f430-0f55be45c661 (open sessions=2)
+2025-11-30 19:21:40 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: e5df39f5-db5d-4fa7-f430-0f55be45c661 (open sessions=1)
+2025-11-30 19:21:40 [http-nio-8080-exec-2] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 22935387-2119-e3ad-8763-43ea58ef98f0 (open sessions=2)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.MachineLearningService - ML prediction received: portsweep with probability 1.0
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Alert created id=34 packetId=PKT-FB2ABA5C incidentId=INC-195AA51E severity=CRITICO
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.arsw.ids_ia.service.AlertService - Broadcasting alert to websocket sessions: (unknown) sessions present
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alert created: 34 - INC-195AA51E (CRITICO)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Alerta creada (incidentId: INC-195AA51E)
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.service.TrafficAnalysisService - Lote completado. Total de alertas creadas: 7
+2025-11-30 19:21:40 [http-nio-8080-exec-8] INFO  c.a.i.controller.TrafficController - File processed successfully: 7 alerts created
+2025-11-30 19:21:40 [http-nio-8080-exec-3] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 22935387-2119-e3ad-8763-43ea58ef98f0 (open sessions=1)
+2025-11-30 19:21:40 [http-nio-8080-exec-5] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: c2081975-7b10-6b18-7868-1b96ade67d4d (open sessions=2)
+2025-11-30 19:21:41 [http-nio-8080-exec-7] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: c2081975-7b10-6b18-7868-1b96ade67d4d (open sessions=1)
+2025-11-30 19:21:41 [http-nio-8080-exec-6] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 05634fec-26cb-b25d-5446-24c7697f2dd2 (open sessions=2)
+2025-11-30 19:21:41 [http-nio-8080-exec-10] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket closed: 05634fec-26cb-b25d-5446-24c7697f2dd2 (open sessions=1)
+2025-11-30 19:21:41 [http-nio-8080-exec-9] INFO  c.a.ids_ia.ws.TrafficSocketHandler - WebSocket connected: 2d6497fc-42dd-4a05-80c5-776d862c8b55 (open sessions=2)
