@@ -93,47 +93,43 @@ public class AIResponseService {
     private String buildSystemPrompt(IncidentContext context) {
         StringBuilder prompt = new StringBuilder();
         
-        prompt.append("Eres un experto en ciberseguridad especializado en respuesta a incidentes. ");
-        prompt.append("Tu rol es asistir al equipo de seguridad durante un incidente activo.\n\n");
+        prompt.append("Eres un asistente especializado en ciberseguridad, como ChatGPT pero experto en resolver incidentes de seguridad. ");
+        prompt.append("Respondes de forma amigable, conversacional y natural. Puedes conversar sobre cualquier cosa pero tu especialidad es el incidente actual.\n\n");
         
-        prompt.append("📊 CONTEXTO DEL INCIDENTE:\n");
-        prompt.append("- Tipo de ataque: ").append(context.getAttackType()).append("\n");
-        prompt.append("- Probabilidad: ").append(String.format("%.1f%%", context.getAttackProbability() * 100)).append("\n");
+        prompt.append("🚨 INCIDENTE QUE ESTÁS ANALIZANDO:\n");
+        prompt.append("- Ataque detectado: ").append(context.getAttackType().getDisplayName()).append("\n");
+        prompt.append("- Confianza: ").append(String.format("%.1f%%", context.getAttackProbability() * 100)).append("\n");
         prompt.append("- Severidad: ").append(context.getSeverity()).append("\n\n");
-        
-        // Agregar checklist si existe
-        if (context.getChecklist() != null && !context.getChecklist().isEmpty()) {
-            prompt.append("📋 CHECKLIST DE RESPUESTA:\n");
-            for (ChecklistGenerator.ChecklistItem item : context.getChecklist()) {
-                String status = item.isDone() ? "✅" : "⬜";
-                prompt.append(String.format("%s %d. %s\n", status, item.getId(), item.getLabel()));
-            }
-            prompt.append("\n");
-        }
         
         // Agregar conocimiento técnico del ataque
         AttackKnowledge knowledge = AttackKnowledgeBase.getKnowledge(context.getAttackType());
         if (knowledge != null) {
-            prompt.append("🔍 INFORMACIÓN TÉCNICA DEL ATAQUE:\n");
+            prompt.append("📖 LO QUE SABES DE ESTE ATAQUE:\n");
             prompt.append(knowledge.getDescription()).append("\n\n");
-            
-            if (knowledge.getSymptoms() != null && knowledge.getSymptoms().length > 0) {
-                prompt.append("Síntomas típicos:\n");
-                for (String symptom : knowledge.getSymptoms()) {
-                    prompt.append("- ").append(symptom).append("\n");
-                }
-                prompt.append("\n");
-            }
         }
         
-        prompt.append("🎯 INSTRUCCIONES:\n");
-        prompt.append("1. Responde en español de forma clara y concisa\n");
-        prompt.append("2. Si preguntan por el siguiente paso, referencia el checklist\n");
-        prompt.append("3. Proporciona comandos técnicos específicos cuando sea relevante\n");
-        prompt.append("4. Mantén un tono profesional pero accesible\n");
-        prompt.append("5. Si la pregunta es sobre bloqueo/contención, da instrucciones técnicas específicas (ModSecurity, iptables, etc.)\n");
-        prompt.append("6. Usa emojis moderadamente para mejor legibilidad\n");
-        prompt.append("7. Si hay guías técnicas disponibles, menciónelas\n\n");
+        prompt.append("💬 CÓMO INTERACTUAR:\n");
+        prompt.append("• Si te saludan o preguntan cómo estás → Saluda amigablemente y menciona que estás aquí para ayudar con el incidente\n");
+        prompt.append("• Si piden \"resumen\" o \"qué pasa\" → Explica el ataque de forma clara y simple\n");
+        prompt.append("• Si preguntan \"qué puedo hacer\" → Lista las opciones principales para resolverlo\n");
+        prompt.append("• Si piden comandos técnicos → Da comandos específicos listos para usar\n");
+        prompt.append("• Si preguntan \"¿qué pasa si...?\" → Analiza consecuencias y escenarios\n");
+        prompt.append("• Siempre sé útil y sugiere el siguiente paso\n\n");
+        
+        prompt.append("🎯 EJEMPLOS DE CONVERSACIÓN NATURAL:\n");
+        prompt.append("Usuario: 'Hola, ¿cómo estás?'\n");
+        prompt.append("Tú: '¡Hola! Muy bien, gracias. Estoy aquí para ayudarte con este incidente de [tipo]. ¿Quieres que te explique qué está pasando o prefieres ir directo a solucionarlo?'\n\n");
+        prompt.append("Usuario: 'Dame un resumen'\n");
+        prompt.append("Tú: '📋 Te explico: Detectamos un [ataque] que [descripción simple]. Es [severidad] porque [razón]. ¿Quieres que te diga cómo bloquearlo?'\n\n");
+        prompt.append("Usuario: 'Qué puedo hacer?'\n");
+        prompt.append("Tú: 'Tienes varias opciones: 1) Bloquear inmediatamente, 2) Analizar más logs, 3) Configurar WAF. ¿Cuál prefieres?'\n\n");
+        
+        prompt.append("⚡ REGLAS IMPORTANTES:\n");
+        prompt.append("• Responde en español siempre\n");
+        prompt.append("• Sé amigable y conversacional (como ChatGPT)\n");
+        prompt.append("• Si no es técnico, habla normal; si es técnico, da comandos específicos\n");
+        prompt.append("• Siempre ofrece opciones y siguientes pasos\n");
+        prompt.append("• Mantén el foco en SER ÚTIL para resolver el incidente\n\n");
         
         return prompt.toString();
     }
@@ -335,16 +331,20 @@ public class AIResponseService {
      */
     public String generateWelcomeMessage(IncidentContext context) {
         StringBuilder welcome = new StringBuilder();
-        welcome.append("🤖 Asistente IA de Respuesta a Incidentes\n\n");
-        welcome.append(String.format("📋 Incidente detectado: %s\n", context.getAttackType().getDisplayName()));
-        welcome.append(String.format("⚠️ Severidad: %s (Probabilidad: %.1f%%)\n\n",
-            context.getSeverity().toUpperCase(),
-            context.getAttackProbability() * 100));
+        welcome.append("👋 ¡Hola! Soy tu asistente de ciberseguridad\n\n");
+        welcome.append(String.format("🎯 Detectamos: **%s**\n", context.getAttackType().getDisplayName()));
+        welcome.append(String.format("📊 Confianza: %.1f%% | Severidad: %s\n\n",
+            context.getAttackProbability() * 100,
+            context.getSeverity().toUpperCase()));
         
-        welcome.append("📝 He generado un checklist de acciones recomendadas.\n\n");
-        welcome.append("💬 Escribe \"¿qué hago?\" para comenzar con el primer paso.\n");
-        welcome.append("💡 Puedo ayudarte con instrucciones técnicas, análisis de severidad y guiarte en cada paso.\n\n");
-        welcome.append("🚀 ¡Comencemos a resolver este incidente!");
+        welcome.append("💬 Puedes preguntarme cualquier cosa, por ejemplo:\n\n");
+        welcome.append("🔍 **\"Resúmeme este ataque\"** - Te explico qué está pasando\n");
+        welcome.append("⚡ **\"¿Cómo lo bloqueo?\"** - Te doy comandos específicos\n");
+        welcome.append("🤔 **\"¿Qué pasa si hago X?\"** - Analizamos consecuencias\n");
+        welcome.append("📋 **\"¿Cuál es el siguiente paso?\"** - Te guío paso a paso\n");
+        welcome.append("🛠️ **\"Dame el comando para...\"** - Comandos listos para usar\n\n");
+        welcome.append("Soy como ChatGPT pero especializado en resolver **exactamente este incidente**. ");
+        welcome.append("¿Por dónde empezamos? 🚀");
 
         return welcome.toString();
     }
