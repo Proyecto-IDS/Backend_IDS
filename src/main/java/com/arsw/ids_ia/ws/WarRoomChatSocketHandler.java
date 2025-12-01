@@ -79,4 +79,40 @@ public class WarRoomChatSocketHandler extends TextWebSocketHandler {
         sessions.remove(session);
         logger.info("Chat WebSocket closed: {} (open sessions={})", session.getId(), sessions.size());
     }
+
+    /**
+     * Broadcast a message to all connected WebSocket clients
+     */
+    public void broadcastMessage(String meetingId, String senderEmail, String senderName, String role, String content, String createdAt) {
+        if (meetingId == null || content == null) {
+            logger.warn("Cannot broadcast message with null meetingId or content");
+            return;
+        }
+        
+        ObjectNode outgoing = objectMapper.createObjectNode();
+        outgoing.put("meetingId", meetingId);
+        outgoing.put("senderEmail", senderEmail);
+        outgoing.put("senderName", senderName);
+        outgoing.put("role", role);
+        outgoing.put("content", content);
+        outgoing.put("createdAt", createdAt);
+
+        try {
+            String outgoingStr = objectMapper.writeValueAsString(outgoing);
+            if (outgoingStr != null) {
+                for (WebSocketSession s : sessions) {
+                    if (s.isOpen()) {
+                        try {
+                            s.sendMessage(new TextMessage(outgoingStr));
+                        } catch (IOException e) {
+                            logger.warn("Error sending chat message to {}: {}", s.getId(), e.getMessage());
+                        }
+                    }
+                }
+                logger.info("[Chat WS] Broadcasted mensaje from service: meetingId={}, senderEmail={}", meetingId, senderEmail);
+            }
+        } catch (Exception e) {
+            logger.error("[Chat WS] Error broadcasting message: {}", e.getMessage(), e);
+        }
+    }
 }

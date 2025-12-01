@@ -21,6 +21,7 @@ import com.arsw.ids_ia.model.chat.WarRoomMessage;
 import com.arsw.ids_ia.repository.MeetingRepository;
 import com.arsw.ids_ia.repository.UserRepository;
 import com.arsw.ids_ia.service.chat.WarRoomMessageService;
+import com.arsw.ids_ia.ws.WarRoomChatSocketHandler;
 
 @RestController
 @RequestMapping("/api/warroom/messages")
@@ -31,6 +32,8 @@ public class WarRoomMessageController {
     private MeetingRepository meetingRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private WarRoomChatSocketHandler chatSocketHandler;
 
     @GetMapping
     public ResponseEntity<List<WarRoomMessageResponse>> getMessages(Long meetingId) {
@@ -41,8 +44,13 @@ public class WarRoomMessageController {
 
     @PostMapping
     public ResponseEntity<WarRoomMessageResponse> sendMessage(@RequestBody WarRoomMessageRequest request, @AuthenticationPrincipal Jwt jwt) {
+        Long meetingIdValue = request.getMeetingId();
+        if (meetingIdValue == null || request.getContent() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        
         User sender = userRepository.findByEmail(jwt.getClaim("email")).orElse(null);
-        Meeting meeting = meetingRepository.findById(request.getMeetingId()).orElse(null);
+        Meeting meeting = meetingRepository.findById(meetingIdValue).orElse(null);
         if (sender == null || meeting == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -54,6 +62,17 @@ public class WarRoomMessageController {
             .createdAt(java.time.LocalDateTime.now())
             .build();
         WarRoomMessage saved = messageService.saveMessage(message);
+        
+        // Broadcast message to all connected WebSocket clients
+        chatSocketHandler.broadcastMessage(
+            String.valueOf(saved.getMeeting().getId()),
+            saved.getSender().getEmail(),
+            saved.getSender().getName(),
+            saved.getRole(),
+            saved.getContent(),
+            saved.getCreatedAt().toString()
+        );
+        
         return ResponseEntity.ok(toResponse(saved));
     }
 
