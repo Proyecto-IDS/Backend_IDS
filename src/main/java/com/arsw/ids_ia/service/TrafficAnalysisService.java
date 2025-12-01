@@ -119,31 +119,35 @@ public class TrafficAnalysisService {
      * Crea una alerta a partir de la predicción del modelo.
      */
     private Alert createAlertFromPrediction(MLPredictionResponse prediction, String packetId) {
-        try {
-            AlertSeverity severity = mlService.determineSeverity(prediction.getAttackProbability());
-            String incidentId = "INC-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+        AlertSeverity severity = mlService.determineSeverity(prediction.getAttackProbability());
+        String incidentId = "INC-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
 
-            String probabilitiesJson = objectMapper.writeValueAsString(prediction.getProbabilities());
+        // Use getProbabilities() which is already set as String in MLPredictionResponse
+        String probabilitiesJson = prediction.getProbabilities();
+        
+        // Debug log
+        logger.info("Creating alert with ML data - prediction: {}, attackProbability: {}, category: {}, standardProtocol: {}, probabilities: {}", 
+            prediction.getPrediction(), 
+            prediction.getAttackProbability(), 
+            prediction.getCategory(), 
+            prediction.getStandardProtocol(),
+            probabilitiesJson);
 
-            Alert alert = new Alert.Builder()
-                .packetId(packetId)
-                .incidentId(incidentId)
-                .severity(severity.name())
-                .attackProbability(prediction.getAttackProbability())
-                .prediction(prediction.getPrediction())
-                .category(prediction.getCategory())
-                .standardProtocol(prediction.getStandardProtocol())
-                .probabilities(probabilitiesJson)
-                .build();
+        Alert alert = new Alert.Builder()
+            .packetId(packetId)
+            .incidentId(incidentId)
+            .severity(severity.name())
+            .attackProbability(prediction.getAttackProbability())
+            .prediction(prediction.getPrediction())
+            .category(prediction.getCategory())
+            .standardProtocol(prediction.getStandardProtocol())
+            .probabilities(probabilitiesJson)
+            .build();
 
-            Alert savedAlert = alertService.create(alert);
-            logger.info("Alert created: {} - {} ({})", savedAlert.getId(), incidentId, severity);
+        Alert savedAlert = alertService.create(alert);
+        logger.info("Alert created: {} - {} ({})", savedAlert.getId(), incidentId, severity);
 
-            return savedAlert;
-
-        } catch (IOException e) {
-            throw new IllegalStateException("Failed to create alert from prediction", e);
-        }
+        return savedAlert;
     }
 
     /**

@@ -53,6 +53,8 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 // WebSocket endpoints
                 .requestMatchers("/ws/**").permitAll()
+                // Temporary for testing
+                .requestMatchers("/api/alerts/**").permitAll()
                 // All other endpoints require authentication
                 .anyRequest().authenticated()
             );

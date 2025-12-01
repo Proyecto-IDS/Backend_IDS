@@ -1,10 +1,13 @@
 package com.arsw.ids_ia.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * Clase base abstracta para campos ML comunes.
  */
+@MappedSuperclass
 public abstract class MLFieldsBase implements MLFields {
     protected String prediction;
     
@@ -13,9 +16,11 @@ public abstract class MLFieldsBase implements MLFields {
     
     protected String category;
     
+    @Column(columnDefinition = "TEXT")
     @JsonProperty("standard_protocol")
     protected String standardProtocol;
     
+    @Column(columnDefinition = "TEXT")
     protected String probabilities;
 
     @Override
