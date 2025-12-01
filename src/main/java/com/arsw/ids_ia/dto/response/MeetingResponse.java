@@ -13,5 +13,7 @@ public record MeetingResponse(
     Set<String> participantEmails,
     Integer currentParticipantCount,
     Long durationSeconds,
-    String status
+    String status,
+    String checklistJson,
+    String incidentContextJson
 ) {}

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -15,14 +16,21 @@ import org.springframework.transaction.annotation.Transactional;
 import com.arsw.ids_ia.dto.request.CreateMeetingRequest;
 import com.arsw.ids_ia.dto.request.JoinMeetingRequest;
 import com.arsw.ids_ia.exception.UnauthorizedException;
+import com.arsw.ids_ia.model.Alert;
 import com.arsw.ids_ia.model.Meeting;
 import com.arsw.ids_ia.model.User;
+import com.arsw.ids_ia.model.ai.AttackType;
 import com.arsw.ids_ia.repository.AlertRepository;
 import com.arsw.ids_ia.repository.MeetingRepository;
 import com.arsw.ids_ia.repository.UserRepository;
 import com.arsw.ids_ia.service.MeetingService;
+import com.arsw.ids_ia.service.ai.AIResponseService;
+import com.arsw.ids_ia.service.ai.ChecklistGenerator;
 import com.arsw.ids_ia.utils.enums.Role;
 import com.arsw.ids_ia.ws.TrafficSocketHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,6 +49,9 @@ public class MeetingServiceImpl implements MeetingService {
     private final UserRepository userRepository;
     private final AlertRepository alertRepository;
     private final TrafficSocketHandler socketHandler;
+    private final ChecklistGenerator checklistGenerator;
+    private final AIResponseService aiResponseService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     @Transactional
@@ -65,6 +76,11 @@ public class MeetingServiceImpl implements MeetingService {
                 .status(STATUS_ACTIVE)
                 .currentParticipantCount(0)
                 .build();
+        
+        // Generate checklist and incident context if this is for an incident
+        if (request.getIncidentId() != null && !request.getIncidentId().isEmpty()) {
+            generateIncidentContext(meeting, request.getIncidentId());
+        }
 
         try {
             // Use save() instead of saveAndFlush() to avoid forcing immediate database write
@@ -363,5 +379,85 @@ public class MeetingServiceImpl implements MeetingService {
             code = UUID.randomUUID().toString().replace("-", "").substring(0, 6);
         } while (meetingRepository.findByCode(code).isPresent());
         return code;
+    }
+    
+    /**
+     * Generate checklist and incident context for the meeting based on incident data
+     */
+    private void generateIncidentContext(Meeting meeting, String incidentId) {
+        try {
+            // Get alert data for the incident
+            Alert alert = alertRepository.findLatestByIncidentId(incidentId).orElse(null);
+            
+            if (alert == null) {
+                logger.warn("No alert found for incident {}, using default context", incidentId);
+                setDefaultContext(meeting);
+                return;
+            }
+            
+            // Determine attack type from ML prediction
+            AttackType attackType = AttackType.fromPrediction(alert.getPrediction());
+            double attackProbability = alert.getAttackProbability() != null ? alert.getAttackProbability() : 0.5;
+            String severity = alert.getSeverity() != null ? alert.getSeverity().toLowerCase() : "medium";
+            
+            // Generate checklist
+            List<ChecklistGenerator.ChecklistItem> checklist = checklistGenerator.generateChecklist(attackType, attackProbability);
+            
+            // Convert checklist to JSON
+            ArrayNode checklistArray = objectMapper.createArrayNode();
+            for (ChecklistGenerator.ChecklistItem item : checklist) {
+                ObjectNode itemNode = objectMapper.createObjectNode();
+                itemNode.put("id", item.getId());
+                itemNode.put("label", item.getLabel());
+                itemNode.put("done", item.isDone());
+                checklistArray.add(itemNode);
+            }
+            meeting.setChecklistJson(checklistArray.toString());
+            
+            // Create incident context JSON
+            ObjectNode contextNode = objectMapper.createObjectNode();
+            contextNode.put("attackType", attackType.name());
+            contextNode.put("attackProbability", attackProbability);
+            contextNode.put("severity", severity);
+            contextNode.put("prediction", alert.getPrediction());
+            contextNode.put("category", alert.getCategory());
+            meeting.setIncidentContextJson(contextNode.toString());
+            
+            logger.info("Generated AI context for meeting: attackType={}, severity={}, probability={}",
+                attackType.name(), severity, attackProbability);
+                
+        } catch (Exception e) {
+            logger.error("Error generating incident context: {}", e.getMessage(), e);
+            setDefaultContext(meeting);
+        }
+    }
+    
+    /**
+     * Set default context when incident data is not available
+     */
+    private void setDefaultContext(Meeting meeting) {
+        try {
+            AttackType defaultType = AttackType.UNKNOWN;
+            List<ChecklistGenerator.ChecklistItem> checklist = checklistGenerator.generateChecklist(defaultType, 0.5);
+            
+            ArrayNode checklistArray = objectMapper.createArrayNode();
+            for (ChecklistGenerator.ChecklistItem item : checklist) {
+                ObjectNode itemNode = objectMapper.createObjectNode();
+                itemNode.put("id", item.getId());
+                itemNode.put("label", item.getLabel());
+                itemNode.put("done", item.isDone());
+                checklistArray.add(itemNode);
+            }
+            meeting.setChecklistJson(checklistArray.toString());
+            
+            ObjectNode contextNode = objectMapper.createObjectNode();
+            contextNode.put("attackType", defaultType.name());
+            contextNode.put("attackProbability", 0.5);
+            contextNode.put("severity", "medium");
+            meeting.setIncidentContextJson(contextNode.toString());
+            
+        } catch (Exception e) {
+            logger.error("Error setting default context: {}", e.getMessage(), e);
+        }
     }
 }
