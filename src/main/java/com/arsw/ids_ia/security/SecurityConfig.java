@@ -76,7 +76,9 @@ public class SecurityConfig {
             "https://localhost:5173",
             // Vite preview default
             "http://localhost:4173",
-            "http://127.0.0.1:4173"
+            "http://127.0.0.1:4173",
+            // Azure Static Web Apps frontend
+            System.getenv("FRONTEND_URL") != null ? System.getenv("FRONTEND_URL") : "https://ambitious-plant-03b4bd40f.3.azurestaticapps.net"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
