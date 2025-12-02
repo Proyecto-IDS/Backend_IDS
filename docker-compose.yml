@@ -1,6 +1,6 @@
 # Docker Compose for local development
 # This file is for LOCAL DEVELOPMENT ONLY
-# For production, use AWS RDS for PostgreSQL and AWS MSK for Kafka
+# For production, use AWS RDS for PostgreSQL
 
 version: '3.8'
 
@@ -21,54 +21,23 @@ services:
     networks:
       - ids-network
 
-  # Zookeeper (required for Kafka in local development)
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.4.0
-    container_name: ids-zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    networks:
-      - ids-network
-
-  # Kafka (for local development)
-  # In production, replace this with AWS MSK (Managed Streaming for Kafka)
-  kafka:
-    image: confluentinc/cp-kafka:7.4.0
-    container_name: ids-kafka
-    depends_on:
-      - zookeeper
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-    networks:
-      - ids-network
-
   # Spring Boot Application
   app:
     build: .
     container_name: ids-backend
     depends_on:
       - postgres
-      - kafka
     ports:
-      - "8080:8080"
+      - "${SERVER_PORT:-8080}:8080"
+    env_file:
+      - .env.local
     environment:
-      # Database configuration for local development
+      # Override database configuration for containerized development
       DB_HOST: postgres
       DB_PORT: 5432
       DB_NAME: ids_database
       DB_USERNAME: postgres
       DB_PASSWORD: password
-      
-      # Kafka configuration for local development
-      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       
       # Application configuration
       SPRING_PROFILES_ACTIVE: development
@@ -91,7 +60,6 @@ networks:
 
 # AWS Production Configuration Notes:
 # 1. Replace postgres service with AWS RDS PostgreSQL endpoint
-# 2. Replace kafka service with AWS MSK bootstrap servers
-# 3. Update environment variables in app service with actual AWS endpoints
-# 4. Consider using AWS ECS or EKS for container orchestration
-# 5. Use AWS Secrets Manager for sensitive configuration values
+# 2. Update environment variables in app service with actual AWS endpoints
+# 3. Consider using AWS ECS or EKS for container orchestration
+# 4. Use AWS Secrets Manager for sensitive configuration values
