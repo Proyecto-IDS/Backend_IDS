@@ -31,43 +31,69 @@ public enum UserIntent {
             return UNKNOWN;
         }
 
-        String normalized = message.toLowerCase().trim();
+        String normalized = normalize(message);
 
-        // Patrones de completado
-        if (normalized.matches(".*(listo|completado|hecho|terminado|finalizado|ok).*")) {
+        if (containsAny(normalized, COMPLETION_KEYWORDS)) {
             return COMPLETION;
         }
-
-        // Patrones de siguiente paso
-        if (normalized.matches(".*(qu[eé] hago|qu[eé] sigue|siguiente|pr[oó]ximo paso|ahora qu[eé]).*")) {
+        if (containsAny(normalized, NEXT_STEP_KEYWORDS)) {
             return NEXT_STEP;
         }
-
-        // Patrones de cómo hacer
-        if (normalized.matches(".*(c[oó]mo|ayuda con|instrucciones|pasos para|gu[ií]a|tutorial).*")) {
+        if (containsAny(normalized, HOW_TO_KEYWORDS)) {
             return HOW_TO;
         }
-
-        // Patrones de severidad
-        if (normalized.matches(".*(es grave|urgente|prioridad|cr[ií]tico|importante|riesgo).*")) {
+        if (containsAny(normalized, SEVERITY_KEYWORDS)) {
             return SEVERITY_CHECK;
         }
-
-        // Patrones de explicación
-        if (normalized.matches(".*(por qu[eé]|qu[eé] es|explica|detalla|cu[aá]l es el problema).*")) {
+        if (containsAny(normalized, EXPLANATION_KEYWORDS)) {
             return EXPLANATION;
         }
-
-        // Patrones de estado
-        if (normalized.matches(".*(estado|progreso|c[oó]mo vamos|avance|situaci[oó]n).*")) {
+        if (containsAny(normalized, STATUS_KEYWORDS)) {
             return STATUS_CHECK;
         }
-
-        // Patrones de ayuda
-        if (normalized.matches(".*(ayuda|help|auxilio|no s[eé]|qu[eé] hacer).*")) {
+        if (containsAny(normalized, HELP_KEYWORDS)) {
             return HELP;
         }
 
         return UNKNOWN;
+    }
+
+    // Keyword lists
+    private static final String[] COMPLETION_KEYWORDS = {
+            "listo", "completado", "hecho", "terminado", "finalizado", "ok"
+    };
+    private static final String[] NEXT_STEP_KEYWORDS = {
+            "que hago", "que sigue", "siguiente", "proximo paso", "ahora que"
+    };
+    private static final String[] HOW_TO_KEYWORDS = {
+            "como", "ayuda con", "instrucciones", "pasos para", "guia", "tutorial"
+    };
+    private static final String[] SEVERITY_KEYWORDS = {
+            "es grave", "urgente", "prioridad", "critico", "importante", "riesgo"
+    };
+    private static final String[] EXPLANATION_KEYWORDS = {
+            "por que", "que es", "explica", "detalla", "cual es el problema"
+    };
+    private static final String[] STATUS_KEYWORDS = {
+            "estado", "progreso", "como vamos", "avance", "situacion"
+    };
+    private static final String[] HELP_KEYWORDS = {
+            "ayuda", "help", "auxilio", "no se", "que hacer"
+    };
+
+    private static boolean containsAny(String text, String[] needles) {
+        for (String n : needles) {
+            if (text.contains(n)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static String normalize(String input) {
+        String lower = input.toLowerCase().trim();
+        java.text.Normalizer.Form form = java.text.Normalizer.Form.NFD;
+        String decomposed = java.text.Normalizer.normalize(lower, form);
+        return decomposed.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 }
