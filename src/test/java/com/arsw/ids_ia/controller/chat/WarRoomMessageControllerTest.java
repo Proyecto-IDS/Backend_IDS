@@ -27,6 +27,7 @@ import com.arsw.ids_ia.model.chat.WarRoomMessage;
 import com.arsw.ids_ia.repository.MeetingRepository;
 import com.arsw.ids_ia.repository.UserRepository;
 import com.arsw.ids_ia.service.chat.WarRoomMessageService;
+import com.arsw.ids_ia.ws.WarRoomChatSocketHandler;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("WarRoomMessageController - Unit Tests")
@@ -37,6 +38,8 @@ class WarRoomMessageControllerTest {
     private MeetingRepository meetingRepository;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private WarRoomChatSocketHandler chatSocketHandler;
     @InjectMocks
     private WarRoomMessageController controller;
 
@@ -82,6 +85,8 @@ class WarRoomMessageControllerTest {
         when(userRepository.findByEmail("test@user.com")).thenReturn(Optional.of(user));
         when(meetingRepository.findById(1L)).thenReturn(Optional.of(meeting));
         when(messageService.saveMessage(any())).thenReturn(message);
+        // Avoid side effects from websocket broadcasting in unit test
+        // No need to stub return since method is void, just ensure mock exists
         ResponseEntity<WarRoomMessageResponse> response = controller.sendMessage(req, jwt);
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("Hello", response.getBody().getContent());
