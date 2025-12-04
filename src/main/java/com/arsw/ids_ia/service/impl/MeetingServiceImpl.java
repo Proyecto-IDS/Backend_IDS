@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -15,14 +16,23 @@ import org.springframework.transaction.annotation.Transactional;
 import com.arsw.ids_ia.dto.request.CreateMeetingRequest;
 import com.arsw.ids_ia.dto.request.JoinMeetingRequest;
 import com.arsw.ids_ia.exception.UnauthorizedException;
+import com.arsw.ids_ia.model.Alert;
 import com.arsw.ids_ia.model.Meeting;
 import com.arsw.ids_ia.model.User;
+import com.arsw.ids_ia.model.ai.AttackType;
 import com.arsw.ids_ia.repository.AlertRepository;
 import com.arsw.ids_ia.repository.MeetingRepository;
 import com.arsw.ids_ia.repository.UserRepository;
 import com.arsw.ids_ia.service.MeetingService;
+import com.arsw.ids_ia.service.ai.AIResponseService;
+import com.arsw.ids_ia.service.ai.ChecklistGenerator;
+import com.arsw.ids_ia.service.chat.AIPrivateChatService;
+import com.arsw.ids_ia.model.chat.AIPrivateMessage;
 import com.arsw.ids_ia.utils.enums.Role;
 import com.arsw.ids_ia.ws.TrafficSocketHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,6 +51,10 @@ public class MeetingServiceImpl implements MeetingService {
     private final UserRepository userRepository;
     private final AlertRepository alertRepository;
     private final TrafficSocketHandler socketHandler;
+    private final ChecklistGenerator checklistGenerator;
+    private final AIResponseService aiResponseService;
+    private final AIPrivateChatService aiChatService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     @Transactional
@@ -65,6 +79,11 @@ public class MeetingServiceImpl implements MeetingService {
                 .status(STATUS_ACTIVE)
                 .currentParticipantCount(0)
                 .build();
+        
+        // Generate checklist and incident context if this is for an incident
+        if (request.getIncidentId() != null && !request.getIncidentId().isEmpty()) {
+            generateIncidentContext(meeting, request.getIncidentId());
+        }
 
         try {
             // Use save() instead of saveAndFlush() to avoid forcing immediate database write
@@ -87,6 +106,11 @@ public class MeetingServiceImpl implements MeetingService {
             
             // Broadcast creation event
             broadcastMeetingCreated(savedMeeting, request.getIncidentId());
+            
+            // Create AI welcome message if this is for an incident
+            if (request.getIncidentId() != null && !request.getIncidentId().isEmpty()) {
+                createAIWelcomeMessage(savedMeeting, creator);
+            }
             
             return savedMeeting;
             
@@ -114,6 +138,12 @@ public class MeetingServiceImpl implements MeetingService {
                     }
                     
                     broadcastMeetingCreated(retryMeeting, request.getIncidentId());
+                    
+                    // Create AI welcome message if this is for an incident
+                    if (request.getIncidentId() != null && !request.getIncidentId().isEmpty()) {
+                        createAIWelcomeMessage(retryMeeting, creator);
+                    }
+                    
                     return retryMeeting;
                     
                 } catch (Exception retryEx) {
@@ -165,72 +195,45 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    @Transactional // Unifica la transacción aquí (Sonar S2229)
+    @Transactional
     public Meeting joinMeeting(JoinMeetingRequest request, String participantEmail) {
-        User participant = userRepository.findByEmail(participantEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        Meeting meeting = meetingRepository.findByCode(request.getCode())
-                .orElseThrow(() -> new RuntimeException(MSG_MEETING_NOT_FOUND));
-
-        // Check if user is already in the meeting using database query
-        boolean alreadyJoined = meetingRepository.isUserParticipant(meeting.getId(), participant.getId());
-        
-        if (alreadyJoined) {
-            // Refresh meeting from DB to get accurate participant count
-            meeting = meetingRepository.findById(meeting.getId()).get();
-            // Still broadcast the event to notify frontend of the user's presence
-            broadcastJoinEvent(meeting, participantEmail);
-            return meeting;
-        }
-
-        // Try to add participant in separate transaction to avoid rollback issues
-        return attemptJoinMeeting(meeting, participant, participantEmail);
-    }
-
-    // Sin @Transactional para evitar self-invocation incompatible (Sonar S2229)
-    public Meeting attemptJoinMeeting(Meeting meeting, User participant, String participantEmail) {
         try {
-            // Double-check if user is already in meeting before adding
-            if (meeting.getParticipants().stream().anyMatch(p -> p.getEmail().equals(participantEmail))) {
-                broadcastJoinEvent(meeting, participantEmail);
-                return meeting;
+            User participant = userRepository.findByEmail(participantEmail)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            Meeting meeting = meetingRepository.findByCode(request.getCode())
+                    .orElseThrow(() -> new RuntimeException(MSG_MEETING_NOT_FOUND));
+
+            // Check if user is already in the meeting
+            boolean alreadyJoined = meeting.getParticipants().stream()
+                    .anyMatch(p -> p.getEmail().equals(participantEmail));
+            
+            if (!alreadyJoined) {
+                // Add participant to meeting
+                meeting.getParticipants().add(participant);
+                meeting = meetingRepository.save(meeting);
+                logger.info("User {} joined meeting {} successfully", participantEmail, meeting.getId());
             }
             
-            meeting.getParticipants().add(participant);
-            meeting = meetingRepository.saveAndFlush(meeting);
-            
-            // Broadcast warroom.participants event via WebSocket
+            // Always broadcast join event to update frontend
             broadcastJoinEvent(meeting, participantEmail);
-            
             return meeting;
             
         } catch (Exception e) {
-            // Handle race condition where user was added between check and save
-            if (e.getMessage() != null && 
-                (e.getMessage().contains("meeting_participants_pkey") || 
-                 e.getMessage().contains("duplicate key value violates unique constraint"))) {
-                logger.warn("Race condition detected when adding participant {} to meeting {}: {}", 
-                    participantEmail, meeting.getId(), e.getMessage());
-                // Handle in separate transaction to avoid rollback issues
-                return handleRaceCondition(meeting.getId(), participantEmail);
-            } else {
-                logger.error("Unexpected error joining meeting: {}", e.getMessage(), e);
+            logger.error("Error joining meeting for user {}: {}", participantEmail, e.getMessage());
+            // Don't throw exception, try to return existing meeting state
+            try {
+                Meeting meeting = meetingRepository.findByCode(request.getCode())
+                        .orElseThrow(() -> new RuntimeException(MSG_MEETING_NOT_FOUND));
+                broadcastJoinEvent(meeting, participantEmail);
+                return meeting;
+            } catch (Exception fallbackEx) {
                 throw new RuntimeException("Error joining meeting: " + e.getMessage());
             }
         }
     }
 
-    // Sin @Transactional para evitar self-invocation incompatible (Sonar S2229); operación sólo lectura
-    public Meeting handleRaceCondition(Long meetingId, String participantEmail) {
-        // Reload meeting and broadcast event in separate read-only transaction
-        Meeting meeting = meetingRepository.findById(meetingId)
-                .orElseThrow(() -> new RuntimeException(MSG_MEETING_NOT_FOUND + " after race condition"));
-        
-        logger.info("User {} already in meeting {}, broadcasting join event", participantEmail, meetingId);
-        broadcastJoinEvent(meeting, participantEmail);
-        return meeting;
-    }
+
     
     private void broadcastJoinEvent(Meeting meeting, String participantEmail) {
         Map<String, Object> event = new HashMap<>();
@@ -363,5 +366,138 @@ public class MeetingServiceImpl implements MeetingService {
             code = UUID.randomUUID().toString().replace("-", "").substring(0, 6);
         } while (meetingRepository.findByCode(code).isPresent());
         return code;
+    }
+    
+    /**
+     * Generate checklist and incident context for the meeting based on incident data
+     */
+    private void generateIncidentContext(Meeting meeting, String incidentId) {
+        try {
+            // Get alert data for the incident
+            Alert alert = alertRepository.findLatestByIncidentId(incidentId).orElse(null);
+            
+            if (alert == null) {
+                logger.warn("No alert found for incident {}, using default context", incidentId);
+                setDefaultContext(meeting);
+                return;
+            }
+            
+            // Determine attack type from ML prediction
+            AttackType attackType = AttackType.fromPrediction(alert.getPrediction());
+            double attackProbability = alert.getAttackProbability() != null ? alert.getAttackProbability() : 0.5;
+            String severity = alert.getSeverity() != null ? alert.getSeverity().toLowerCase() : "medium";
+            
+            // Generate checklist
+            List<ChecklistGenerator.ChecklistItem> checklist = checklistGenerator.generateChecklist(attackType, attackProbability);
+            
+            // Convert checklist to JSON
+            ArrayNode checklistArray = objectMapper.createArrayNode();
+            for (ChecklistGenerator.ChecklistItem item : checklist) {
+                ObjectNode itemNode = objectMapper.createObjectNode();
+                itemNode.put("id", item.getId());
+                itemNode.put("label", item.getLabel());
+                itemNode.put("done", item.isDone());
+                checklistArray.add(itemNode);
+            }
+            meeting.setChecklistJson(checklistArray.toString());
+            
+            // Create incident context JSON
+            ObjectNode contextNode = objectMapper.createObjectNode();
+            contextNode.put("attackType", attackType.name());
+            contextNode.put("attackProbability", attackProbability);
+            contextNode.put("severity", severity);
+            contextNode.put("prediction", alert.getPrediction());
+            contextNode.put("category", alert.getCategory());
+            meeting.setIncidentContextJson(contextNode.toString());
+            
+            logger.info("Generated AI context for meeting: attackType={}, severity={}, probability={}",
+                attackType.name(), severity, attackProbability);
+                
+        } catch (Exception e) {
+            logger.error("Error generating incident context: {}", e.getMessage(), e);
+            setDefaultContext(meeting);
+        }
+    }
+    
+    /**
+     * Set default context when incident data is not available
+     */
+    private void setDefaultContext(Meeting meeting) {
+        try {
+            AttackType defaultType = AttackType.UNKNOWN;
+            List<ChecklistGenerator.ChecklistItem> checklist = checklistGenerator.generateChecklist(defaultType, 0.5);
+            
+            ArrayNode checklistArray = objectMapper.createArrayNode();
+            for (ChecklistGenerator.ChecklistItem item : checklist) {
+                ObjectNode itemNode = objectMapper.createObjectNode();
+                itemNode.put("id", item.getId());
+                itemNode.put("label", item.getLabel());
+                itemNode.put("done", item.isDone());
+                checklistArray.add(itemNode);
+            }
+            meeting.setChecklistJson(checklistArray.toString());
+            
+            ObjectNode contextNode = objectMapper.createObjectNode();
+            contextNode.put("attackType", defaultType.name());
+            contextNode.put("attackProbability", 0.5);
+            contextNode.put("severity", "medium");
+            meeting.setIncidentContextJson(contextNode.toString());
+            
+        } catch (Exception e) {
+            logger.error("Error setting default context: {}", e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Creates AI welcome message when a meeting is created for an incident
+     */
+    private void createAIWelcomeMessage(Meeting meeting, User adminUser) {
+        try {
+            // Parse incident context
+            AIResponseService.IncidentContext context = parseIncidentContextFromMeeting(meeting);
+            
+            // Generate welcome message
+            String welcomeMessage = aiResponseService.generateWelcomeMessage(context);
+            
+            // Create AI message
+            AIPrivateMessage welcome = AIPrivateMessage.builder()
+                .meeting(meeting)
+                .user(adminUser)
+                .content(welcomeMessage)
+                .role("assistant")
+                .createdAt(LocalDateTime.now())
+                .build();
+            
+            aiChatService.saveMessage(welcome);
+            
+            logger.info("AI welcome message created for meeting {} by admin {}", 
+                meeting.getId(), adminUser.getEmail());
+            
+        } catch (Exception e) {
+            logger.error("Failed to create AI welcome message for meeting {}: {}", 
+                meeting.getId(), e.getMessage());
+        }
+    }
+    
+    /**
+     * Parse incident context from meeting JSON
+     */
+    private AIResponseService.IncidentContext parseIncidentContextFromMeeting(Meeting meeting) {
+        try {
+            if (meeting.getIncidentContextJson() != null && !meeting.getIncidentContextJson().isEmpty()) {
+                com.fasterxml.jackson.databind.JsonNode contextNode = objectMapper.readTree(meeting.getIncidentContextJson());
+                
+                String attackTypeStr = contextNode.has("attackType") ? contextNode.get("attackType").asText() : "UNKNOWN";
+                double probability = contextNode.has("attackProbability") ? contextNode.get("attackProbability").asDouble() : 0.5;
+                String severity = contextNode.has("severity") ? contextNode.get("severity").asText() : "medium";
+                
+                AttackType attackType = AttackType.fromPrediction(attackTypeStr);
+                return new AIResponseService.IncidentContext(attackType, probability, severity);
+            }
+        } catch (Exception e) {
+            logger.warn("Failed to parse incident context for AI welcome message, using defaults: {}", e.getMessage());
+        }
+        
+        return new AIResponseService.IncidentContext(AttackType.UNKNOWN, 0.5, "medium");
     }
 }

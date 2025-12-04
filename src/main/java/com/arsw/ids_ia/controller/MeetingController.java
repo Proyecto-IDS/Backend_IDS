@@ -67,7 +67,9 @@ public class MeetingController {
             meeting.getParticipants().stream().map(User::getEmail).collect(Collectors.toSet()),
             meeting.getCurrentParticipantCount(),
             meeting.getDurationSeconds(),
-            meeting.getStatus()
+            meeting.getStatus(),
+            meeting.getChecklistJson(),
+            meeting.getIncidentContextJson()
         );
     }
 

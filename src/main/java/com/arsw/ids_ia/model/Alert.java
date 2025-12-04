@@ -60,12 +60,7 @@ public class Alert extends com.arsw.ids_ia.dto.MLFieldsBase {
     private Long warRoomId;
 
     // Campos del modelo ML (heredados de MLFieldsBase)
-    @Column(columnDefinition = "TEXT")
-    @Override
-    public String getStandardProtocol() { return standardProtocol; }
-    @Column(columnDefinition = "TEXT")
-    @Override
-    public String getProbabilities() { return probabilities; }
+    // Las anotaciones @Column están en MLFieldsBase
 
     public Alert() {
     }

@@ -26,7 +26,9 @@ public class WarRoomMessage {
     @JoinColumn(name = "sender_id")
     private User sender;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
+    
     private String role;
     private LocalDateTime createdAt;
 }

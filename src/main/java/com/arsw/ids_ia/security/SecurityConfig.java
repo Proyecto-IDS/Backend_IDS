@@ -53,6 +53,8 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 // WebSocket endpoints
                 .requestMatchers("/ws/**").permitAll()
+                // Temporary for testing
+                .requestMatchers("/api/alerts/**").permitAll()
                 // All other endpoints require authentication
                 .anyRequest().authenticated()
             );
@@ -75,9 +77,8 @@ public class SecurityConfig {
             // Vite preview default
             "http://localhost:4173",
             "http://127.0.0.1:4173",
-            // Backend/Frontend en 8080
-            "http://localhost:8080",
-            "http://127.0.0.1:8080"
+            // Azure Static Web Apps frontend
+            System.getenv("FRONTEND_URL") != null ? System.getenv("FRONTEND_URL") : "https://ambitious-plant-03b4bd40f.3.azurestaticapps.net"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
