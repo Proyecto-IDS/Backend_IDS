@@ -20,16 +20,11 @@ import com.arsw.ids_ia.dto.chat.WarRoomMessageRequest;
 import com.arsw.ids_ia.dto.chat.WarRoomMessageResponse;
 import com.arsw.ids_ia.model.Meeting;
 import com.arsw.ids_ia.model.User;
-import com.arsw.ids_ia.model.ai.AttackType;
 import com.arsw.ids_ia.model.chat.WarRoomMessage;
 import com.arsw.ids_ia.repository.MeetingRepository;
 import com.arsw.ids_ia.repository.UserRepository;
-import com.arsw.ids_ia.service.ai.AIResponseService;
-import com.arsw.ids_ia.service.ai.AIResponseService.IncidentContext;
 import com.arsw.ids_ia.service.chat.WarRoomMessageService;
 import com.arsw.ids_ia.ws.WarRoomChatSocketHandler;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api/warroom/messages")
@@ -44,10 +39,6 @@ public class WarRoomMessageController {
     private UserRepository userRepository;
     @Autowired
     private WarRoomChatSocketHandler chatSocketHandler;
-    @Autowired
-    private AIResponseService aiResponseService;
-    
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping
     public ResponseEntity<List<WarRoomMessageResponse>> getMessages(Long meetingId) {
@@ -89,94 +80,10 @@ public class WarRoomMessageController {
             saved.getCreatedAt().toString()
         );
         
-        // Generate AI response if this is a user message (not assistant)
-        if ("user".equals(request.getRole()) || request.getRole() == null) {
-            try {
-                generateAndSendAIResponse(meeting, sender, request.getContent());
-            } catch (Exception e) {
-                logger.error("Failed to generate AI response: {}", e.getMessage(), e);
-            }
-        }
-        
         return ResponseEntity.ok(toResponse(saved));
     }
     
-    /**
-     * Genera y envía una respuesta de IA basada en el contexto del incidente
-     */
-    private void generateAndSendAIResponse(Meeting meeting, User originalSender, String userMessage) {
-        try {
-            // Parse incident context from meeting
-            IncidentContext context = parseIncidentContext(meeting);
-            
-            // Generate AI response
-            String aiResponse = aiResponseService.generateResponse(userMessage, context);
-            
-            // Create AI system user (email: "ai-assistant@system")
-            User aiUser = userRepository.findByEmail("ai-assistant@system")
-                .orElseGet(() -> {
-                    User newAiUser = new User();
-                    newAiUser.setEmail("ai-assistant@system");
-                    newAiUser.setName("Asistente IA");
-                    return userRepository.save(newAiUser);
-                });
-            
-            // Save AI message
-            WarRoomMessage aiMessage = WarRoomMessage.builder()
-                .meeting(meeting)
-                .sender(aiUser)
-                .content(aiResponse)
-                .role("assistant")
-                .createdAt(java.time.LocalDateTime.now())
-                .build();
-            WarRoomMessage savedAiMessage = messageService.saveMessage(aiMessage);
-            
-            // Broadcast AI response via WebSocket
-            chatSocketHandler.broadcastMessage(
-                String.valueOf(meeting.getId()),
-                savedAiMessage.getSender().getEmail(),
-                savedAiMessage.getSender().getName(),
-                "assistant",
-                savedAiMessage.getContent(),
-                savedAiMessage.getCreatedAt().toString()
-            );
-            
-            logger.info("AI response generated and sent for meeting {}", meeting.getId());
-            
-        } catch (Exception e) {
-            logger.error("Error generating AI response: {}", e.getMessage(), e);
-        }
-    }
-    
-    /**
-     * Parse incident context from meeting JSON
-     */
-    private IncidentContext parseIncidentContext(Meeting meeting) {
-        try {
-            if (meeting.getIncidentContextJson() != null && !meeting.getIncidentContextJson().isEmpty()) {
-                JsonNode contextNode = objectMapper.readTree(meeting.getIncidentContextJson());
-                
-                String attackTypeStr = contextNode.has("attackType") ? contextNode.get("attackType").asText() : "UNKNOWN";
-                double probability = contextNode.has("attackProbability") ? contextNode.get("attackProbability").asDouble() : 0.5;
-                String severity = contextNode.has("severity") ? contextNode.get("severity").asText() : "medium";
-                
-                AttackType attackType = AttackType.fromPrediction(attackTypeStr);
-                IncidentContext context = new IncidentContext(attackType, probability, severity);
-                
-                // Parse checklist if exists
-                if (meeting.getChecklistJson() != null && !meeting.getChecklistJson().isEmpty()) {
-                    // TODO: Parse checklist from JSON
-                }
-                
-                return context;
-            }
-        } catch (Exception e) {
-            logger.warn("Failed to parse incident context, using defaults: {}", e.getMessage());
-        }
-        
-        // Default context if parsing fails
-        return new IncidentContext(AttackType.UNKNOWN, 0.5, "medium");
-    }
+
 
     private WarRoomMessageResponse toResponse(WarRoomMessage message) {
         WarRoomMessageResponse resp = new WarRoomMessageResponse();

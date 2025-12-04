@@ -69,21 +69,27 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Permitir específicamente el frontend en puertos de desarrollo (5173, 8080, 4173)
-        configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:5173",
-            "http://127.0.0.1:5173",
-            "https://localhost:5173",
-            // Vite preview default
-            "http://localhost:4173",
-            "http://127.0.0.1:4173",
-            // Azure Static Web Apps frontend
-            System.getenv("FRONTEND_URL") != null ? System.getenv("FRONTEND_URL") : "https://ambitious-plant-03b4bd40f.3.azurestaticapps.net"
-        ));
+        
+        // Get frontend URL from environment variable
+        String frontendUrl = System.getenv("FRONTEND_URL");
+        
+        if (frontendUrl != null && !frontendUrl.isEmpty()) {
+            // Production: Use the specified frontend URL
+            configuration.setAllowedOrigins(Arrays.asList(frontendUrl));
+        } else {
+            // Development: Allow localhost origins
+            configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:5173",
+                "http://127.0.0.1:5173",
+                "https://localhost:5173",
+                "http://localhost:4173",
+                "http://127.0.0.1:4173"
+            ));
+        }
+        
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
-        // Permitir el header Authorization para JWT
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
