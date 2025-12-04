@@ -21,12 +21,12 @@ public class AIResponseService {
     private static final Logger logger = LoggerFactory.getLogger(AIResponseService.class);
     
     private final ChecklistGenerator checklistGenerator;
-    private final GeminiService geminiService;
+    private final AzureOpenAIService azureOpenAIService;
 
     @Autowired
-    public AIResponseService(ChecklistGenerator checklistGenerator, GeminiService geminiService) {
+    public AIResponseService(ChecklistGenerator checklistGenerator, AzureOpenAIService azureOpenAIService) {
         this.checklistGenerator = checklistGenerator;
-        this.geminiService = geminiService;
+        this.azureOpenAIService = azureOpenAIService;
     }
 
     /**
@@ -68,23 +68,23 @@ public class AIResponseService {
             return "¿En qué puedo ayudarte con este incidente?";
         }
 
-        // Si Gemini está configurado, usar IA
-        if (geminiService.isConfigured()) {
-            logger.info("Using Gemini AI for response generation");
-            return generateGeminiResponse(userMessage, context);
+        // Si Azure OpenAI está configurado, usar IA
+        if (azureOpenAIService.isConfigured()) {
+            logger.info("Using Azure OpenAI for response generation");
+            return generateAzureOpenAIResponse(userMessage, context);
         }
         
         // Fallback a templates locales
-        logger.info("Gemini not configured, using local templates");
+        logger.info("Azure OpenAI not configured, using local templates");
         return generateTemplateResponse(userMessage, context);
     }
     
     /**
-     * Genera respuesta usando Google Gemini AI
+     * Genera respuesta usando Azure OpenAI
      */
-    private String generateGeminiResponse(String userMessage, IncidentContext context) {
+    private String generateAzureOpenAIResponse(String userMessage, IncidentContext context) {
         String systemPrompt = buildSystemPrompt(context);
-        return geminiService.chat(systemPrompt, userMessage);
+        return azureOpenAIService.chat(systemPrompt, userMessage);
     }
     
     /**
@@ -93,43 +93,35 @@ public class AIResponseService {
     private String buildSystemPrompt(IncidentContext context) {
         StringBuilder prompt = new StringBuilder();
         
-        prompt.append("Eres un asistente especializado en ciberseguridad, como ChatGPT pero experto en resolver incidentes de seguridad. ");
-        prompt.append("Respondes de forma amigable, conversacional y natural. Puedes conversar sobre cualquier cosa pero tu especialidad es el incidente actual.\n\n");
+        prompt.append("Eres un asistente de ciberseguridad conversacional. ");
+        prompt.append("Cuando te pidan información sobre la alerta o incidente, proporciona los detalles directamente.\n\n");
         
-        prompt.append("🚨 INCIDENTE QUE ESTÁS ANALIZANDO:\n");
-        prompt.append("- Ataque detectado: ").append(context.getAttackType().getDisplayName()).append("\n");
+        prompt.append("INFORMACIÓN DEL INCIDENTE (solo úsala cuando te pregunten):\n");
+        prompt.append("- Tipo: ").append(context.getAttackType().getDisplayName()).append("\n");
         prompt.append("- Confianza: ").append(String.format("%.1f%%", context.getAttackProbability() * 100)).append("\n");
         prompt.append("- Severidad: ").append(context.getSeverity()).append("\n\n");
         
-        // Agregar conocimiento técnico del ataque
+        // Agregar conocimiento técnico del ataque (solo para referencia)
         AttackKnowledge knowledge = AttackKnowledgeBase.getKnowledge(context.getAttackType());
         if (knowledge != null) {
-            prompt.append("📖 LO QUE SABES DE ESTE ATAQUE:\n");
+            prompt.append("DETALLES TÉCNICOS (solo si preguntan):\n");
             prompt.append(knowledge.getDescription()).append("\n\n");
         }
         
-        prompt.append("💬 CÓMO INTERACTUAR:\n");
-        prompt.append("• Si te saludan o preguntan cómo estás → Saluda amigablemente y menciona que estás aquí para ayudar con el incidente\n");
-        prompt.append("• Si piden \"resumen\" o \"qué pasa\" → Explica el ataque de forma clara y simple\n");
-        prompt.append("• Si preguntan \"qué puedo hacer\" → Lista las opciones principales para resolverlo\n");
-        prompt.append("• Si piden comandos técnicos → Da comandos específicos listos para usar\n");
-        prompt.append("• Si preguntan \"¿qué pasa si...?\" → Analiza consecuencias y escenarios\n");
-        prompt.append("• Siempre sé útil y sugiere el siguiente paso\n\n");
+        prompt.append("EJEMPLOS DE RESPUESTAS:\n");
+        prompt.append("Si preguntan 'información de la alerta' o 'resumen':\n");
+        prompt.append("'📋 **Resumen del Incidente:**\n");
+        prompt.append("- **Tipo:** [tipo de ataque]\n");
+        prompt.append("- **Confianza:** [porcentaje]%\n");
+        prompt.append("- **Severidad:** [nivel]\n");
+        prompt.append("- **Descripción:** [explicación simple del ataque]\n\n");
+        prompt.append("¿Necesitas que te ayude con algo específico para resolverlo?'\n\n");
         
-        prompt.append("🎯 EJEMPLOS DE CONVERSACIÓN NATURAL:\n");
-        prompt.append("Usuario: 'Hola, ¿cómo estás?'\n");
-        prompt.append("Tú: '¡Hola! Muy bien, gracias. Estoy aquí para ayudarte con este incidente de [tipo]. ¿Quieres que te explique qué está pasando o prefieres ir directo a solucionarlo?'\n\n");
-        prompt.append("Usuario: 'Dame un resumen'\n");
-        prompt.append("Tú: '📋 Te explico: Detectamos un [ataque] que [descripción simple]. Es [severidad] porque [razón]. ¿Quieres que te diga cómo bloquearlo?'\n\n");
-        prompt.append("Usuario: 'Qué puedo hacer?'\n");
-        prompt.append("Tú: 'Tienes varias opciones: 1) Bloquear inmediatamente, 2) Analizar más logs, 3) Configurar WAF. ¿Cuál prefieres?'\n\n");
-        
-        prompt.append("⚡ REGLAS IMPORTANTES:\n");
-        prompt.append("• Responde en español siempre\n");
-        prompt.append("• Sé amigable y conversacional (como ChatGPT)\n");
-        prompt.append("• Si no es técnico, habla normal; si es técnico, da comandos específicos\n");
-        prompt.append("• Siempre ofrece opciones y siguientes pasos\n");
-        prompt.append("• Mantén el foco en SER ÚTIL para resolver el incidente\n\n");
+        prompt.append("REGLAS:\n");
+        prompt.append("• Responde de forma natural y conversacional\n");
+        prompt.append("• Cuando pidan información, dala directamente usando el formato del ejemplo\n");
+        prompt.append("• No repitas saludos en conversaciones activas\n");
+        prompt.append("• Sé útil y directo\n\n");
         
         return prompt.toString();
     }
