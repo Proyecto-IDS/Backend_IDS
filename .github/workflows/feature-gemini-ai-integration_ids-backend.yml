@@ -6,13 +6,10 @@ name: Build and deploy JAR app to Azure Web App - ids-backend
 on:
   push:
     branches:
-      - feature/gemini-ai-integration
       - develop
       - main
-  pull_request:
-    branches:
-      - develop
-      - main
+      - 'feature-*'
+      - 'feature/**'
   workflow_dispatch:
 
 jobs:
