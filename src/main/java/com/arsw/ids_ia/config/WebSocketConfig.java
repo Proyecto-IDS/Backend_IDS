@@ -19,8 +19,16 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(trafficSocketHandler, "/traffic/stream")
-                .setAllowedOrigins("http://localhost:5173", "http://localhost:8080")  
-                .setAllowedOriginPatterns("http://localhost:5173", "http://localhost:8080"); 
+        String frontendUrl = System.getenv("FRONTEND_URL");
+        
+        if (frontendUrl != null && !frontendUrl.isEmpty()) {
+            // Production: Use the specified frontend URL
+            registry.addHandler(trafficSocketHandler, "/traffic/stream")
+                   .setAllowedOrigins(frontendUrl);
+        } else {
+            // Development: Allow all origins for easier testing
+            registry.addHandler(trafficSocketHandler, "/traffic/stream")
+                   .setAllowedOriginPatterns("*");
+        }
     }
 }

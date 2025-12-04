@@ -16,6 +16,16 @@ public class WebSocketChatConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(chatSocketHandler, "/ws/warroom/chat").setAllowedOrigins("*");
+        String frontendUrl = System.getenv("FRONTEND_URL");
+        
+        if (frontendUrl != null && !frontendUrl.isEmpty()) {
+            // Production: Use the specified frontend URL
+            registry.addHandler(chatSocketHandler, "/ws/warroom/chat")
+                   .setAllowedOrigins(frontendUrl);
+        } else {
+            // Development: Allow all origins for easier testing
+            registry.addHandler(chatSocketHandler, "/ws/warroom/chat")
+                   .setAllowedOriginPatterns("*");
+        }
     }
 }
