@@ -18,4 +18,7 @@ public interface MLFields {
 
     String getProbabilities();
     void setProbabilities(String probabilities);
+
+    String getState();
+    void setState(String state);
 }
