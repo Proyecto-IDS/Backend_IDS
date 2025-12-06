@@ -37,10 +37,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .exceptionHandling(exception -> exception.authenticationEntryPoint((request, response, authException) -> {
-                response.setStatus(401);
-            }))
+            // CSRF deshabilitado: API JWT stateless sin cookies/sesión. Seguro. NOSONAR
+            .csrf(csrf -> csrf.disable()) // NOSONAR
+            .exceptionHandling(exception -> exception.authenticationEntryPoint((request, response, authException) -> response.setStatus(401)))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authz -> authz
                 // Public endpoints
@@ -54,6 +53,9 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 // WebSocket endpoints
                 .requestMatchers("/ws/**").permitAll()
+                // Temporary for testing
+                .requestMatchers("/api/alerts/**").permitAll()
+                .requestMatchers("/api/traffic/**").permitAll()
                 // All other endpoints require authentication
                 .anyRequest().authenticated()
             );
@@ -68,19 +70,30 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Permitir específicamente el frontend en puertos de desarrollo (5173 y preview 4173)
-        configuration.setAllowedOrigins(Arrays.asList(
+        
+        // Get frontend URL from environment variable
+        String frontendUrl = System.getenv("FRONTEND_URL");
+        
+        // Always allow localhost origins for development
+        java.util.List<String> allowedOrigins = new java.util.ArrayList<>(Arrays.asList(
             "http://localhost:5173",
             "http://127.0.0.1:5173",
             "https://localhost:5173",
-            // Vite preview default
             "http://localhost:4173",
-            "http://127.0.0.1:4173"
+            "http://127.0.0.1:4173",
+            "http://localhost:8080",
+            "http://127.0.0.1:8080"
         ));
+        
+        // Add production frontend URL if specified
+        if (frontendUrl != null && !frontendUrl.isEmpty()) {
+            allowedOrigins.add(frontendUrl);
+        }
+        
+        configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
-        // Permitir el header Authorization para JWT
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

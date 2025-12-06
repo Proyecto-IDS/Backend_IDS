@@ -51,11 +51,6 @@ ENV DB_NAME=your_database_name
 ENV DB_USERNAME=your_username
 ENV DB_PASSWORD=your_password
 
-# Kafka Configuration (AWS MSK - Managed Streaming for Apache Kafka)
-# TODO: Replace with your actual AWS MSK bootstrap servers
-# Example: b-1.your-cluster.xxxxxx.c2.kafka.us-east-1.amazonaws.com:9092,b-2.your-cluster.xxxxxx.c2.kafka.us-east-1.amazonaws.com:9092
-ENV KAFKA_BOOTSTRAP_SERVERS=your-kafka-cluster.kafka.us-east-1.amazonaws.com:9092
-
 # Application Configuration
 ENV SPRING_PROFILES_ACTIVE=production
 ENV SERVER_PORT=8080
@@ -86,5 +81,4 @@ ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
 #   -e DB_HOST=your-actual-rds-endpoint.amazonaws.com \
 #   -e DB_USERNAME=your_db_user \
 #   -e DB_PASSWORD=your_db_password \
-#   -e KAFKA_BOOTSTRAP_SERVERS=your-msk-endpoint.amazonaws.com:9092 \
 #   ids-backend:latest

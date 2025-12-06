@@ -54,6 +54,10 @@ buildNumber.properties
 
 ### Environment configuration files ###
 .env
+.env.*
+!.env.example
+!.env.local.example
+!.env.*.example
 
 ### Application Logs ###
 logs/

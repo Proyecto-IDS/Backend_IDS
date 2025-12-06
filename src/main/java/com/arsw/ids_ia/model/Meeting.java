@@ -3,6 +3,7 @@ package com.arsw.ids_ia.model;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -52,6 +53,12 @@ public class Meeting {
 
     private Integer currentParticipantCount;
     private String status; // ACTIVE, ENDED
+    
+    @Column(name = "checklist", columnDefinition = "TEXT")
+    private String checklistJson; // JSON array of checklist items
+    
+    @Column(name = "incident_context", columnDefinition = "TEXT")
+    private String incidentContextJson; // JSON with attack type, severity, probability
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cancelled_by_id")

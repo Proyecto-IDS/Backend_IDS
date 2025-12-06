@@ -1,6 +1,6 @@
 # Backend IDS - Spring Boot Application
 
-This is a Spring Boot backend application for the IDS project, featuring PostgreSQL database integration and Kafka messaging, designed to run in containerized environments.
+This is a Spring Boot backend application for the IDS project, featuring PostgreSQL database integration, WebSocket real-time communication, and AI integration with Google Gemini, designed to run in containerized environments.
 
 ## Prerequisites
 
@@ -8,19 +8,29 @@ This is a Spring Boot backend application for the IDS project, featuring Postgre
 - Maven 3.6+
 - Docker and Docker Compose
 
-## Local Development (with local PostgreSQL and Kafka)
+## Local Development (with local PostgreSQL)
 
-```bash
-# Start all services locally
-docker-compose up -d
+1. **Setup environment variables**
+   ```bash
+   # Copy the local development template
+   cp .env.local.example .env.local
+   
+   # Edit .env.local with your API keys
+   # Especially: GEMINI_API_KEY and GOOGLE_CLIENT_ID
+   ```
 
-# Access the application
-# Application: http://localhost:8080
-# Health check: http://localhost:8080/actuator/health
-
-# Stop services
-docker-compose down
-```
+2. **Start services**
+   ```bash
+   # Start all services locally
+   docker-compose up -d
+   
+   # Access the application
+   # Application: http://localhost:8080
+   # Health check: http://localhost:8080/actuator/health
+   
+   # Stop services
+   docker-compose down
+   ```
 
 ## Database Management
 
@@ -45,8 +55,14 @@ The script is located at `clean_database.sql` in the project root.
 
 1. **Configure environment variables**
    ```bash
-   cp .env.example .env
-   # Edit .env with your AWS RDS and MSK endpoints
+   # Solo necesitas configurar estas 2 variables críticas:
+   # - GEMINI_API_KEY (tu API key de Gemini)  
+   # - DB_PASSWORD (password de tu base de datos)
+   # 
+   # + Variables de database cuando despliegues:
+   # - DB_HOST, DB_USERNAME, DB_NAME
+   #
+   # Ver DEPLOYMENT.md para más detalles
    ```
 
 2. **Run with AWS services**
