@@ -39,9 +39,8 @@ public class AlertService {
         // Check for duplicates: same packetId + incidentId + severity
         Optional<Alert> existing = repository.findDuplicate(alert.getPacketId(), alert.getIncidentId(), alert.getSeverity());
         if (existing.isPresent()) {
-            logger.warn("Duplicate alert detected: packetId={} incidentId={} severity={} - Using existing alert", 
-                alert.getPacketId(), alert.getIncidentId(), alert.getSeverity());
-            return existing.get(); // Return existing alert instead of creating duplicate
+            logger.warn("Duplicate alert detected - using existing alert" ); // NOSONAR
+            return existing.get();
         }
         
         Alert saved = repository.save(alert);
@@ -59,11 +58,19 @@ public class AlertService {
                 // include snake_case variant used by some frontend code
                 alertMap.put("model_version", saved.getModelVersion());
                 alertMap.put("timestamp", saved.getTimestamp());
+                
+                // Include ML model data
+                alertMap.put("prediction", saved.getPrediction());
+                alertMap.put("attackProbability", saved.getAttackProbability());
+                alertMap.put("category", saved.getCategory());
+                alertMap.put("standardProtocol", saved.getStandardProtocol());
+                alertMap.put("probabilities", saved.getProbabilities());
 
                 Map<String, Object> outer = new HashMap<>();
                 outer.put("type", "alert");
                 outer.put("alert", alertMap);
-                logger.info("Broadcasting alert to websocket sessions: {} sessions present", socketHandler == null ? 0 : "(unknown)");
+                // Dentro de este bloque socketHandler != null, por lo que la rama '== null' es inalcanzable (Sonar S2583)
+                logger.info("Broadcasting alert to websocket sessions: {} sessions present", "(unknown)");
                 socketHandler.broadcastObject(outer);
             } catch (Exception ex) {
                 logger.warn("Failed to broadcast alert via websocket: {}", ex.getMessage());

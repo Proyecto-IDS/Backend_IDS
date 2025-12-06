@@ -24,10 +24,18 @@ import com.arsw.ids_ia.model.Alert;
 import com.arsw.ids_ia.model.Meeting;
 import com.arsw.ids_ia.service.AlertService;
 import com.arsw.ids_ia.service.MeetingService;
+import com.arsw.ids_ia.dto.response.AlertMLMetricsResponse;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api/alerts")
 public class AlertController {
+
+    private static final String SEV_CRITICAL = "critical";
+    private static final String SEV_HIGH = "high";
+    private static final String SEV_MEDIUM = "medium";
+    private static final String SEV_LOW = "low";
 
     private final AlertService service;
     private final MeetingService meetingService;
@@ -66,6 +74,50 @@ public class AlertController {
         return ResponseEntity.ok(response);
     }
     
+    /**
+     * Endpoint dedicado para obtener solo las métricas ML de una alerta.
+     * Retorna un formato limpio y estructurado con las predicciones del modelo.
+     * 
+     * @param id ID de la alerta
+     * @return Métricas ML estructuradas
+     */
+    @GetMapping("{id}/ml-metrics")
+    public ResponseEntity<AlertMLMetricsResponse> getMLMetrics(@PathVariable Long id) {
+        Optional<Alert> alertOpt = service.getById(id);
+        if (alertOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        Alert alert = alertOpt.get();
+        
+        // Parse probabilities from JSON String to Map
+        Map<String, Double> probabilitiesMap = null;
+        if (alert.getProbabilities() != null) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                probabilitiesMap = mapper.readValue(
+                    alert.getProbabilities(), 
+                    new TypeReference<Map<String, Double>>(){}
+                );
+            } catch (Exception e) {
+                // If parsing fails, return empty map
+                probabilitiesMap = new HashMap<>();
+            }
+        }
+        
+        AlertMLMetricsResponse response = new AlertMLMetricsResponse(
+            alert.getId(),
+            alert.getPrediction(),
+            alert.getAttackProbability(),
+            alert.getState(),
+            alert.getCategory(),
+            alert.getStandardProtocol(),
+            probabilitiesMap
+        );
+        
+        return ResponseEntity.ok(response);
+    }
+    
     private Map<String, Object> createAlertResponse(Alert alert) {
         Map<String, Object> response = new HashMap<>();
         
@@ -80,6 +132,30 @@ public class AlertController {
         response.put("createdAt", alert.getTimestamp());
         response.put("updatedAt", alert.getTimestamp());
         response.put("warRoomId", alert.getWarRoomId());
+        
+        // ML Model data
+        response.put("prediction", alert.getPrediction());
+        response.put("attackProbability", alert.getAttackProbability());
+        response.put("state", alert.getState());
+        response.put("category", alert.getCategory());
+        response.put("standardProtocol", alert.getStandardProtocol());
+        
+        // Parse probabilities from JSON String to Map
+        if (alert.getProbabilities() != null) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                Map<String, Double> probabilitiesMap = mapper.readValue(
+                    alert.getProbabilities(), 
+                    new TypeReference<Map<String, Double>>(){}
+                );
+                response.put("probabilities", probabilitiesMap);
+            } catch (Exception e) {
+                // If parsing fails, return as string
+                response.put("probabilities", alert.getProbabilities());
+            }
+        } else {
+            response.put("probabilities", null);
+        }
         
         // Mock data for now - these would come from a proper incident management system
         response.put("type", "Incidente INC-2024-001");
@@ -135,10 +211,10 @@ public class AlertController {
         Map<String, Long> counts = new HashMap<>();
         List<Alert> allAlerts = service.recent(Integer.MAX_VALUE);
         counts.put("total", (long) allAlerts.size());
-        counts.put("critical", allAlerts.stream().filter(a -> "critical".equalsIgnoreCase(a.getSeverity())).count());
-        counts.put("high", allAlerts.stream().filter(a -> "high".equalsIgnoreCase(a.getSeverity())).count());
-        counts.put("medium", allAlerts.stream().filter(a -> "medium".equalsIgnoreCase(a.getSeverity())).count());
-        counts.put("low", allAlerts.stream().filter(a -> "low".equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_CRITICAL, allAlerts.stream().filter(a -> SEV_CRITICAL.equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_HIGH, allAlerts.stream().filter(a -> SEV_HIGH.equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_MEDIUM, allAlerts.stream().filter(a -> SEV_MEDIUM.equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_LOW, allAlerts.stream().filter(a -> SEV_LOW.equalsIgnoreCase(a.getSeverity())).count());
         return counts;
     }
 
@@ -152,8 +228,8 @@ public class AlertController {
         List<Alert> todayAlerts = service.today();
         Map<String, Long> counts = new HashMap<>();
         counts.put("total", (long) todayAlerts.size());
-        counts.put("critical", todayAlerts.stream().filter(a -> "critical".equalsIgnoreCase(a.getSeverity())).count());
-        counts.put("high", todayAlerts.stream().filter(a -> "high".equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_CRITICAL, todayAlerts.stream().filter(a -> SEV_CRITICAL.equalsIgnoreCase(a.getSeverity())).count());
+        counts.put(SEV_HIGH, todayAlerts.stream().filter(a -> SEV_HIGH.equalsIgnoreCase(a.getSeverity())).count());
         return counts;
     }
 
