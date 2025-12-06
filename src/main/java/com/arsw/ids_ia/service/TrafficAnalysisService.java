@@ -88,7 +88,7 @@ public class TrafficAnalysisService {
             return null;
         }
 
-        return createAlertFromPrediction(prediction, generatePacketId());
+        return createAlertFromPrediction(prediction, generatePacketId(), features);
     }
 
     /**
@@ -103,7 +103,7 @@ public class TrafficAnalysisService {
             try {
                 MLPredictionResponse prediction = mlService.analyzeThreat(features);
                 if (mlService.shouldCreateAlert(prediction.getAttackProbability())) {
-                    Alert alert = createAlertFromPrediction(prediction, generatePacketId());
+                    Alert alert = createAlertFromPrediction(prediction, generatePacketId(), features);
                     createdAlerts.add(alert);
                     logger.info("Alerta creada (incidentId: {})", alert.getIncidentId());
                 }
@@ -118,12 +118,20 @@ public class TrafficAnalysisService {
     /**
      * Crea una alerta a partir de la predicción del modelo.
      */
-    private Alert createAlertFromPrediction(MLPredictionResponse prediction, String packetId) {
+    private Alert createAlertFromPrediction(MLPredictionResponse prediction, String packetId, NetworkTrafficFeatures features) {
         AlertSeverity severity = mlService.determineSeverity(prediction.getAttackProbability());
         String incidentId = "INC-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
 
         // Use getProbabilities() which is already set as String in MLPredictionResponse
         String probabilitiesJson = prediction.getProbabilities();
+        
+        // Serialize NetworkTrafficFeatures to JSON
+        String featuresJson = null;
+        try {
+            featuresJson = objectMapper.writeValueAsString(features);
+        } catch (Exception e) {
+            logger.warn("Failed to serialize features to JSON: {}", e.getMessage());
+        }
         
         // Debug log
         logger.info("Creating alert with ML data - prediction: {}, attackProbability: {}, category: {}, standardProtocol: {}, probabilities: {}", 
@@ -139,9 +147,11 @@ public class TrafficAnalysisService {
             .severity(severity.name())
             .attackProbability(prediction.getAttackProbability())
             .prediction(prediction.getPrediction())
+            .state(prediction.getState())
             .category(prediction.getCategory())
             .standardProtocol(prediction.getStandardProtocol())
             .probabilities(probabilitiesJson)
+            .originalFeatures(featuresJson)
             .build();
 
         Alert savedAlert = alertService.create(alert);

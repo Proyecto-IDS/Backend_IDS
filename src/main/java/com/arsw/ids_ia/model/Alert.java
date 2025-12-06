@@ -26,6 +26,9 @@ public class Alert extends com.arsw.ids_ia.dto.MLFieldsBase {
         private String standardProtocol;
         private String probabilities;
 
+        private String originalFeatures;
+        private String state;
+
         public Builder packetId(String packetId) { this.packetId = packetId; return this; }
         public Builder incidentId(String incidentId) { this.incidentId = incidentId; return this; }
         public Builder severity(String severity) { this.severity = severity; return this; }
@@ -38,7 +41,10 @@ public class Alert extends com.arsw.ids_ia.dto.MLFieldsBase {
         public Builder category(String category) { this.category = category; return this; }
         public Builder standardProtocol(String standardProtocol) { this.standardProtocol = standardProtocol; return this; }
         public Builder probabilities(String probabilities) { this.probabilities = probabilities; return this; }
-
+        
+        public Builder originalFeatures(String originalFeatures) { this.originalFeatures = originalFeatures; return this; }
+        public Builder state(String state) { this.state = state; return this; }
+        
         public Alert build() {
             return new Alert(this);
         }
@@ -58,6 +64,9 @@ public class Alert extends com.arsw.ids_ia.dto.MLFieldsBase {
     
     @Column(name = "war_room_id")
     private Long warRoomId;
+
+    @Column(columnDefinition = "TEXT")
+    private String originalFeatures;
 
     // Campos del modelo ML (heredados de MLFieldsBase)
     // Las anotaciones @Column están en MLFieldsBase
@@ -84,9 +93,11 @@ public class Alert extends com.arsw.ids_ia.dto.MLFieldsBase {
         this.warRoomId = builder.warRoomId;
         this.attackProbability = builder.attackProbability;
         this.prediction = builder.prediction;
+        this.state = builder.state;
         this.category = builder.category;
         this.standardProtocol = builder.standardProtocol;
         this.probabilities = builder.probabilities;
+        this.originalFeatures = builder.originalFeatures;
     }
 
     public Long getId() {
@@ -151,6 +162,14 @@ public class Alert extends com.arsw.ids_ia.dto.MLFieldsBase {
 
     public void setWarRoomId(Long warRoomId) {
         this.warRoomId = warRoomId;
+    }
+
+    public String getOriginalFeatures() {
+        return originalFeatures;
+    }
+
+    public void setOriginalFeatures(String originalFeatures) {
+        this.originalFeatures = originalFeatures;
     }
 
     // Los métodos MLFields se heredan de MLFieldsBase

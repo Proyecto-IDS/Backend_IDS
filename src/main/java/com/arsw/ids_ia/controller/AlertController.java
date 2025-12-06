@@ -24,6 +24,9 @@ import com.arsw.ids_ia.model.Alert;
 import com.arsw.ids_ia.model.Meeting;
 import com.arsw.ids_ia.service.AlertService;
 import com.arsw.ids_ia.service.MeetingService;
+import com.arsw.ids_ia.dto.response.AlertMLMetricsResponse;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api/alerts")
@@ -71,6 +74,50 @@ public class AlertController {
         return ResponseEntity.ok(response);
     }
     
+    /**
+     * Endpoint dedicado para obtener solo las métricas ML de una alerta.
+     * Retorna un formato limpio y estructurado con las predicciones del modelo.
+     * 
+     * @param id ID de la alerta
+     * @return Métricas ML estructuradas
+     */
+    @GetMapping("{id}/ml-metrics")
+    public ResponseEntity<AlertMLMetricsResponse> getMLMetrics(@PathVariable Long id) {
+        Optional<Alert> alertOpt = service.getById(id);
+        if (alertOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        Alert alert = alertOpt.get();
+        
+        // Parse probabilities from JSON String to Map
+        Map<String, Double> probabilitiesMap = null;
+        if (alert.getProbabilities() != null) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                probabilitiesMap = mapper.readValue(
+                    alert.getProbabilities(), 
+                    new TypeReference<Map<String, Double>>(){}
+                );
+            } catch (Exception e) {
+                // If parsing fails, return empty map
+                probabilitiesMap = new HashMap<>();
+            }
+        }
+        
+        AlertMLMetricsResponse response = new AlertMLMetricsResponse(
+            alert.getId(),
+            alert.getPrediction(),
+            alert.getAttackProbability(),
+            alert.getState(),
+            alert.getCategory(),
+            alert.getStandardProtocol(),
+            probabilitiesMap
+        );
+        
+        return ResponseEntity.ok(response);
+    }
+    
     private Map<String, Object> createAlertResponse(Alert alert) {
         Map<String, Object> response = new HashMap<>();
         
@@ -89,9 +136,26 @@ public class AlertController {
         // ML Model data
         response.put("prediction", alert.getPrediction());
         response.put("attackProbability", alert.getAttackProbability());
+        response.put("state", alert.getState());
         response.put("category", alert.getCategory());
         response.put("standardProtocol", alert.getStandardProtocol());
-        response.put("probabilities", alert.getProbabilities());
+        
+        // Parse probabilities from JSON String to Map
+        if (alert.getProbabilities() != null) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                Map<String, Double> probabilitiesMap = mapper.readValue(
+                    alert.getProbabilities(), 
+                    new TypeReference<Map<String, Double>>(){}
+                );
+                response.put("probabilities", probabilitiesMap);
+            } catch (Exception e) {
+                // If parsing fails, return as string
+                response.put("probabilities", alert.getProbabilities());
+            }
+        } else {
+            response.put("probabilities", null);
+        }
         
         // Mock data for now - these would come from a proper incident management system
         response.put("type", "Incidente INC-2024-001");

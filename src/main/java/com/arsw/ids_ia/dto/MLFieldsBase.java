@@ -10,6 +10,7 @@ import jakarta.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class MLFieldsBase implements MLFields {
     protected String prediction;
+    protected String state;
     
     @JsonProperty("attack_probability")
     protected Double attackProbability;
@@ -51,4 +52,9 @@ public abstract class MLFieldsBase implements MLFields {
     public String getProbabilities() { return probabilities; }
     @Override
     public void setProbabilities(String probabilities) { this.probabilities = probabilities; }
+
+    @Override
+    public String getState() { return state; }
+    @Override
+    public void setState(String state) { this.state = state; }
 }
