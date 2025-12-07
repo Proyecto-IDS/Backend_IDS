@@ -140,4 +140,78 @@ class AlertControllerTest {
         assertEquals("INC-001", result.get(0).getIncidentId());
         verify(alertService).getResolvedIncidents();
     }
+
+    @Test
+    @DisplayName("Debe retornar 404 cuando alerta no existe")
+    void shouldReturn404WhenAlertNotFound() {
+        when(alertService.getById(999L)).thenReturn(Optional.empty());
+
+        ResponseEntity<Map<String, Object>> response = alertController.get(999L);
+
+        assertEquals(404, response.getStatusCode().value());
+        verify(alertService).getById(999L);
+    }
+
+    @Test
+    @DisplayName("Debe manejar alertas sin warRoomId")
+    void shouldHandleAlertsWithoutWarRoom() {
+        testAlert.setWarRoomId(null);
+        when(alertService.getById(1L)).thenReturn(Optional.of(testAlert));
+
+        ResponseEntity<Map<String, Object>> response = alertController.get(1L);
+
+        assertTrue(response.getStatusCode().is2xxSuccessful());
+        Map<String, Object> body = response.getBody();
+        assertNotNull(body);
+        assertNull(body.get("warRoomId"));
+        assertNull(body.get("warRoomCode"));
+        verify(meetingService, never()).getMeetingById(anyLong());
+    }
+
+    @Test
+    @DisplayName("Debe listar alertas con límite personalizado")
+    void shouldListAlertsWithCustomLimit() {
+        when(alertService.recent(50)).thenReturn(List.of(testAlert));
+
+        List<Alert> result = alertController.list(50);
+
+        assertEquals(1, result.size());
+        verify(alertService).recent(50);
+    }
+
+    @Test
+    @DisplayName("Debe contar cero alertas cuando no hay datos")
+    void shouldCountZeroWhenNoAlerts() {
+        when(alertService.recent(Integer.MAX_VALUE)).thenReturn(List.of());
+
+        Map<String, Long> counts = alertController.countBySeverity();
+
+        assertEquals(0L, counts.get("total"));
+        assertEquals(0L, counts.get("critical"));
+        assertEquals(0L, counts.get("high"));
+        assertEquals(0L, counts.get("medium"));
+        assertEquals(0L, counts.get("low"));
+    }
+
+    @Test
+    @DisplayName("Debe mapear severidades en minúsculas")
+    void shouldMapSeveritiesLowercase() {
+        Alert alert1 = new Alert.Builder()
+            .packetId("PKT-1")
+            .severity("CRITICAL")
+            .build();
+        
+        Alert alert2 = new Alert.Builder()
+            .packetId("PKT-2")
+            .severity("Critical")
+            .build();
+
+        when(alertService.recent(Integer.MAX_VALUE))
+            .thenReturn(List.of(alert1, alert2));
+
+        Map<String, Long> counts = alertController.countBySeverity();
+
+        assertEquals(2L, counts.get("critical"));
+    }
 }
+

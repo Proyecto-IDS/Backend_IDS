@@ -12,17 +12,13 @@ import static org.mockito.Mockito.when;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 @DisplayName("WarRoomChatSocketHandler - Unit Tests")
 class WarRoomChatSocketHandlerTest {
     private WarRoomChatSocketHandler handler;
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
         handler = new WarRoomChatSocketHandler();
-        objectMapper = new ObjectMapper();
     }
 
     @Test
@@ -61,5 +57,68 @@ class WarRoomChatSocketHandlerTest {
         handler.afterConnectionEstablished(session);
         TextMessage msg = new TextMessage("not-json");
         assertDoesNotThrow(() -> handler.handleTextMessage(session, msg));
+    }
+
+    @Test
+    void handleTextMessage_withMissingSenderEmail() throws Exception {
+        WebSocketSession session = mock(WebSocketSession.class);
+        when(session.isOpen()).thenReturn(true);
+        handler.afterConnectionEstablished(session);
+        
+        String payload = "{\"meetingId\":\"1\",\"senderName\":\"A\",\"content\":\"hi\",\"role\":\"user\"}";
+        TextMessage msg = new TextMessage(payload);
+        
+        assertDoesNotThrow(() -> handler.handleTextMessage(session, msg));
+    }
+
+    @Test
+    void handleTextMessage_deriveSenderNameFromEmail() throws Exception {
+        WebSocketSession session = mock(WebSocketSession.class);
+        when(session.isOpen()).thenReturn(true);
+        handler.afterConnectionEstablished(session);
+        
+        String payload = "{\"meetingId\":\"1\",\"senderEmail\":\"test@example.com\",\"content\":\"hi\",\"role\":\"user\"}";
+        TextMessage msg = new TextMessage(payload);
+        
+        assertDoesNotThrow(() -> handler.handleTextMessage(session, msg));
+        verify(session, atLeastOnce()).sendMessage(any(TextMessage.class));
+    }
+
+    @Test
+    void handleTextMessage_withMissingContent() throws Exception {
+        WebSocketSession session = mock(WebSocketSession.class);
+        when(session.isOpen()).thenReturn(true);
+        handler.afterConnectionEstablished(session);
+        
+        String payload = "{\"meetingId\":\"1\",\"senderEmail\":\"a@b.com\",\"role\":\"user\"}";
+        TextMessage msg = new TextMessage(payload);
+        
+        assertDoesNotThrow(() -> handler.handleTextMessage(session, msg));
+    }
+
+    @Test
+    void broadcastMessage_withValidData() throws Exception {
+        WebSocketSession session = mock(WebSocketSession.class);
+        when(session.isOpen()).thenReturn(true);
+        handler.afterConnectionEstablished(session);
+        
+        assertDoesNotThrow(() -> handler.broadcastMessage("1", "a@b.com", "A", "user", "hi", "2025-12-06T00:00:00"));
+        verify(session, atLeastOnce()).sendMessage(any(TextMessage.class));
+    }
+
+    @Test
+    void broadcastMessage_withNullMeetingId() throws Exception {
+        WebSocketSession session = mock(WebSocketSession.class);
+        handler.afterConnectionEstablished(session);
+        
+        assertDoesNotThrow(() -> handler.broadcastMessage(null, "a@b.com", "A", "user", "hi", "2025-12-06T00:00:00"));
+    }
+
+    @Test
+    void broadcastMessage_withNullContent() throws Exception {
+        WebSocketSession session = mock(WebSocketSession.class);
+        handler.afterConnectionEstablished(session);
+        
+        assertDoesNotThrow(() -> handler.broadcastMessage("1", "a@b.com", "A", "user", null, "2025-12-06T00:00:00"));
     }
 }
