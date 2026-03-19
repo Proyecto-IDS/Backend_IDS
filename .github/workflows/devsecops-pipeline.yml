@@ -1,0 +1,14 @@
+name: "🚀 Pipeline de Seguridad Java"
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  # LLAMADA AL WORKFLOW REUTILIZABLE
+  seguridad-secretos:
+    uses: DevSecOps-Uni-Project/.github/.github/workflows/secrets-scan.yml@main
+    # Explicación de la ruta:
+    # [Org]/[Repo]/[Carpeta-Interna]/[Subcarpeta]/[Archivo]@Rama
