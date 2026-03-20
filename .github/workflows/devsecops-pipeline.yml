@@ -1,4 +1,4 @@
-name: "🚀 Pipeline de Seguridad Java"
+name: "Pipeline de Seguridad Java"
 
 on:
   push:
@@ -7,8 +7,13 @@ on:
     branches: [ "**" ]
 
 jobs:
-  # LLAMADA AL WORKFLOW REUTILIZABLE
+  # Job 1: Escaneo de Secretos
   seguridad-secretos:
     uses: DevSecOps-Uni-Project/.github/.github/workflows/secrets-scan.yml@main
-    # Explicación de la ruta:
-    # [Org]/[Repo]/[Carpeta-Interna]/[Subcarpeta]/[Archivo]@Rama
+
+  # Job 2: Escaneo de Librerías (Alineado con el Job 1)
+  seguridad-librerias:
+    needs: seguridad-secretos
+    uses: DevSecOps-Uni-Project/.github/.github/workflows/snyk-scan.yml@main
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
