@@ -1,0 +1,25 @@
+name: "Ejecución de Auditoría de Seguridad"
+
+on:
+  push:
+    branches: 
+      - main
+      - 'feat/**'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  call-governance:
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+      actions: read
+
+    uses: DevSecOps-Uni-Project/.github/.github/workflows/main-security-pipeline.yml@main
+    with:
+      java-version: '21'
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
