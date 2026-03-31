@@ -122,6 +122,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>5.2.0.RELEASE</version> 
+			# This is an older version of Spring Core, but it is compatible with Spring Boot 3.5.6
 		</dependency>
 	</dependencies>
 
