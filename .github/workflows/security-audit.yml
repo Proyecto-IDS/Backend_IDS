@@ -22,5 +22,5 @@ jobs:
       java-version: '21'
     secrets:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       DEPENDABOT_PAT: ${{ secrets.DEPENDABOT_PAT }}
