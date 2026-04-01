@@ -25,3 +25,5 @@ jobs:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       DEPENDABOT_PAT: ${{ secrets.DEPENDABOT_PAT }}
+
+      #Cometario activacion
