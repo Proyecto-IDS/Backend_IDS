@@ -134,5 +134,14 @@ class AdminSeederTest {
         // Assert
         verify(userRepository).existsByEmail("admin@test.com");
         verify(userRepository, times(1)).save(any(User.class));
+
     }
-}
+
+    @Test
+    void testSeedAdminsSavesAdminWithCorrectRole() throws Exception {
+        // Arrange
+        String emails = "admin@test.com";
+        ReflectionTestUtils.setField(adminSeeder, "initialAdmins", emails);
+
+    }    
+}       
