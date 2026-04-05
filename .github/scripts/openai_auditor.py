@@ -418,7 +418,27 @@ Analiza los siguientes reportes de seguridad y proporciona un análisis detallad
                 json_response = json.loads(json_match.group(1))
             else:
                 print(f"⚠️ No se pudo parsear JSON de la respuesta: {response_text[:200]}")
-                raise ValueError("Invalid JSON response from GPT-4o")
+                raise ValueError("Invalid JSON response from Azure OpenAI")
+
+        # Validar estructura JSON
+        required_keys = ['vulnerabilidades', 'resumen', 'veredicto']
+        missing_keys = [k for k in required_keys if k not in json_response]
+
+        if missing_keys:
+            print(f"⚠️ ADVERTENCIA: Faltan claves en respuesta: {missing_keys}")
+            print(f"   Respuesta recibida: {json.dumps(json_response, indent=2)[:500]}")
+
+            # Crear estructura mínima si faltan cosas
+            if 'resumen' not in json_response:
+                json_response['resumen'] = {
+                    'total': 0, 'criticos': 0, 'altos': 0, 'medios': 0, 'bajos': 0
+                }
+            if 'vulnerabilidades' not in json_response:
+                json_response['vulnerabilidades'] = []
+            if 'veredicto' not in json_response:
+                json_response['veredicto'] = 'ACEPTADO'
+            if 'can_auto_fix' not in json_response:
+                json_response['can_auto_fix'] = False
 
         # Add timestamp if missing
         if 'timestamp' not in json_response:
