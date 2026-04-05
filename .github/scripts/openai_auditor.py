@@ -37,7 +37,7 @@ if "api.openai.com" in AZURE_ENDPOINT:
     print(f"   Esperado: https://tu-recurso.openai.azure.com/")
     print("\n💡 Para Azure OpenAI:")
     print("   1. Ve a Azure Portal → Tu recurso OpenAI")
-    print("   2. "Keys and Endpoint" → Copia la URL Endpoint (debe contener .azure.com)")
+    print('   2. "Keys and Endpoint" → Copia la URL Endpoint (debe contener .azure.com)')
     print("   3. Actualiza AZURE_OPENAI_PDF_ENDPOINT en GitHub Secrets")
     sys.exit(1)
 
