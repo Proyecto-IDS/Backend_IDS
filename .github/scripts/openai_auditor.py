@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-OpenAI GPT-4o Security Auditor & Remediator
+Azure OpenAI GPT-4o Security Auditor & Remediator
 Analyzes security reports (SARIF/JSON) and generates detailed vulnerability report with remediation
 """
 
@@ -11,20 +11,31 @@ from datetime import datetime
 from typing import Dict, List, Any
 
 try:
-    from openai import OpenAI
+    from openai import AzureOpenAI
 except ImportError:
     print("❌ Error: No se pudo encontrar la librería openai.")
     print("Asegúrate de ejecutar: pip install -U openai")
     sys.exit(1)
 
-# 1. Configuración de OpenAI
-API_KEY = os.environ.get("OPENAI_API_KEY")
-if not API_KEY:
-    print("❌ Error: OPENAI_API_KEY no encontrada en el entorno.")
+# 1. Configuración de Azure OpenAI
+AZURE_ENDPOINT = os.environ.get("AZURE_OPENAI_PDF_ENDPOINT")
+AZURE_API_KEY = os.environ.get("AZURE_OPENAI_PDF_API_KEY")
+AZURE_DEPLOYMENT = os.environ.get("AZURE_OPENAI_PDF_DEPLOYMENT")
+AZURE_API_VERSION = os.environ.get("AZURE_OPENAI_PDF_API_VERSION", "2024-02-15-preview")
+
+if not all([AZURE_ENDPOINT, AZURE_API_KEY, AZURE_DEPLOYMENT]):
+    print("❌ Error: Una o más credenciales de Azure OpenAI no están configuradas.")
+    print(f"  - AZURE_OPENAI_PDF_ENDPOINT: {bool(AZURE_ENDPOINT)}")
+    print(f"  - AZURE_OPENAI_PDF_API_KEY: {bool(AZURE_API_KEY)}")
+    print(f"  - AZURE_OPENAI_PDF_DEPLOYMENT: {bool(AZURE_DEPLOYMENT)}")
     sys.exit(1)
 
-client = OpenAI(api_key=API_KEY)
-MODEL = "gpt-4o"  # GPT-4 Optimized para mejor structured output
+client = AzureOpenAI(
+    api_key=AZURE_API_KEY,
+    api_version=AZURE_API_VERSION,
+    azure_endpoint=AZURE_ENDPOINT
+)
+MODEL = AZURE_DEPLOYMENT  # Usar el nombre del deployment configurado
 
 # JSON Schema para structured output
 VULNERABILITY_SCHEMA = {
@@ -286,7 +297,7 @@ def create_markdown_report(json_response: Dict[str, Any], repo_name: str = "N/A"
 
 ---
 
-*Generado automáticamente por OpenAI GPT-4o Security Auditor*
+*Generado automáticamente por Azure OpenAI Security Auditor*
 """
 
     return md
@@ -297,9 +308,11 @@ def main():
     repo_name = os.environ.get('GITHUB_REPOSITORY', 'N/A')
     fail_on_api_error = _is_truthy(os.environ.get("IA_FAIL_ON_API_ERROR", "false"))
 
-    print(f"--- 🛡️ Iniciando Auditoría OpenAI en {results_dir} ---")
+    print(f"--- 🛡️ Iniciando Auditoría Azure OpenAI en {results_dir} ---")
     print(f"📦 Repositorio: {repo_name}")
-    print(f"🔧 OPENAI_API_KEY configurada: {bool(os.environ.get('OPENAI_API_KEY'))}")
+    print(f"🔧 AZURE_OPENAI_ENDPOINT configurado: {bool(os.environ.get('AZURE_OPENAI_ENDPOINT'))}")
+    print(f"🔧 AZURE_OPENAI_API_KEY configurado: {bool(os.environ.get('AZURE_OPENAI_API_KEY'))}")
+    print(f"🔧 AZURE_OPENAI_DEPLOYMENT_NAME: {os.environ.get('AZURE_OPENAI_DEPLOYMENT_NAME', 'N/A')}")
     print(f"⚙️ IA_FAIL_ON_API_ERROR: {fail_on_api_error}")
 
     # Parse all findings
