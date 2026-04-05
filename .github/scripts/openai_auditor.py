@@ -30,6 +30,23 @@ if not all([AZURE_ENDPOINT, AZURE_API_KEY, AZURE_DEPLOYMENT]):
     print(f"  - AZURE_OPENAI_PDF_DEPLOYMENT: {bool(AZURE_DEPLOYMENT)}")
     sys.exit(1)
 
+# Validar que sea Azure endpoint, no OpenAI estándar
+if "api.openai.com" in AZURE_ENDPOINT:
+    print("❌ ERROR CRÍTICO: AZURE_OPENAI_PDF_ENDPOINT es de OpenAI estándar, no de Azure!")
+    print(f"   Recibido: {AZURE_ENDPOINT}")
+    print(f"   Esperado: https://tu-recurso.openai.azure.com/")
+    print("\n💡 Para Azure OpenAI:")
+    print("   1. Ve a Azure Portal → Tu recurso OpenAI")
+    print("   2. "Keys and Endpoint" → Copia la URL Endpoint (debe contener .azure.com)")
+    print("   3. Actualiza AZURE_OPENAI_PDF_ENDPOINT en GitHub Secrets")
+    sys.exit(1)
+
+if ".openai.azure.com" not in AZURE_ENDPOINT:
+    print("⚠️ ADVERTENCIA: El endpoint no parece ser de Azure OpenAI")
+    print(f"   Recibido: {AZURE_ENDPOINT}")
+    print(f"   Esperado: debe contener '.openai.azure.com'")
+    print("\n   Continuando de todas formas...\n")
+
 client = AzureOpenAI(
     api_key=AZURE_API_KEY,
     api_version=AZURE_API_VERSION,
