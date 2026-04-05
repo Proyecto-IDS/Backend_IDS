@@ -327,9 +327,9 @@ def main():
 
     print(f"--- 🛡️ Iniciando Auditoría Azure OpenAI en {results_dir} ---")
     print(f"📦 Repositorio: {repo_name}")
-    print(f"🔧 AZURE_OPENAI_ENDPOINT configurado: {bool(os.environ.get('AZURE_OPENAI_ENDPOINT'))}")
-    print(f"🔧 AZURE_OPENAI_API_KEY configurado: {bool(os.environ.get('AZURE_OPENAI_API_KEY'))}")
-    print(f"🔧 AZURE_OPENAI_DEPLOYMENT_NAME: {os.environ.get('AZURE_OPENAI_DEPLOYMENT_NAME', 'N/A')}")
+    print(f"🔧 AZURE_OPENAI_PDF_ENDPOINT configurado: {bool(os.environ.get('AZURE_OPENAI_PDF_ENDPOINT'))}")
+    print(f"🔧 AZURE_OPENAI_PDF_API_KEY configurado: {bool(os.environ.get('AZURE_OPENAI_PDF_API_KEY'))}")
+    print(f"🔧 AZURE_OPENAI_PDF_DEPLOYMENT: {os.environ.get('AZURE_OPENAI_PDF_DEPLOYMENT', 'N/A')}")
     print(f"⚙️ IA_FAIL_ON_API_ERROR: {fail_on_api_error}")
 
     # Parse all findings
@@ -364,30 +364,53 @@ def main():
     context = json.dumps(parsed_data, indent=2)
 
     prompt = f"""
-Eres un Arquitecto Senior de DevSecOps especializado en auditorías de seguridad para proyectos Java.
+ERES UN AUDITOR SENIOR DE SEGURIDAD DEVOPS ESPECIALIZADO EN JAVA.
 
-## TAREA
-Analiza los siguientes reportes de seguridad y proporciona un análisis detallado en formato JSON estructurado.
+TU TAREA: Analizar reportes de seguridad y devolver ÚNICAMENTE un JSON estructurado.
 
-## DATOS DE LOS REPORTES
+DATOS DE SEGURIDAD:
 {context}
 
-## INSTRUCCIONES CRÍTICAS
-1. Para CADA vulnerabilidad, proporciona:
-   - Ubicación exacta (archivo y línea)
-   - Severidad mapeada a: CRÍTICO, ALTO, MEDIO, BAJO
-   - Explicación clara del impacto
-   - Explotabilidad (FÁCIL, MODERADA, DIFÍCIL)
-   - Código vulnerable y código corregido
+FORMATO DE RESPUESTA - DEBES DEVOLVER EXACTAMENTE ESTO:
+{{
+  "timestamp": "ISO_8601_DATE",
+  "vulnerabilidades": [
+    {{
+      "id": "vuln-001",
+      "archivo": "ruta/archivo.java",
+      "linea": 42,
+      "severidad": "CRÍTICO|ALTO|MEDIO|BAJO",
+      "herramienta": "Semgrep|CodeQL|Snyk|Trivy|ZAP|TruffleHog|Dependabot",
+      "regla": "rule-id",
+      "titulo": "Título breve",
+      "descripcion": "Qué es la vulnerabilidad",
+      "impacto": "RCE|SQL Injection|Data Breach|etc",
+      "explotabilidad": "FÁCIL|MODERADA|DIFÍCIL",
+      "solucion": "Cómo arreglarlo",
+      "codigo_vulnerable": "Snippet vulnerable",
+      "codigo_corregido": "Snippet fixed"
+    }}
+  ],
+  "resumen": {{
+    "total": 5,
+    "criticos": 1,
+    "altos": 2,
+    "medios": 1,
+    "bajos": 1
+  }},
+  "can_auto_fix": false,
+  "veredicto": "RECHAZADO|ADVERTENCIA|ACEPTADO"
+}}
 
-2. Si hay vulnerabilidades CRÍTICAS o ALTAS, veredicto = "RECHAZADO"
-3. Si hay MEDIAS, veredicto = "ADVERTENCIA"
-4. Si solo BAJAS o nada, veredicto = "ACEPTADO"
+REGLAS CRÍTICAS:
+1. NUNCA uses otras claves (evaluacion, findings, etc) - SOLO vulnerabilidades, resumen, veredicto, can_auto_fix
+2. Mapea TODAS las severidades a: CRÍTICO, ALTO, MEDIO, BAJO
+3. Si hay CRÍTICO o ALTO → veredicto = "RECHAZADO"
+4. Si hay MEDIO → veredicto = "ADVERTENCIA"
+5. Si solo BAJO o nada → veredicto = "ACEPTADO"
+6. Responde ÚNICAMENTE el JSON, sin markdown, sin explicaciones
 
-5. can_auto_fix = true SOLO si los fixes son simples y seguros (e.g., dependencia outdated)
-6. can_auto_fix = false si la vulnerabilidad requiere lógica compleja o validación manual
-
-7. Responde ÚNICAMENTE en JSON válido que cumpla con el schema proporcionado.
+COMIENZA:
 """
 
     try:
@@ -428,7 +451,31 @@ Analiza los siguientes reportes de seguridad y proporciona un análisis detallad
             print(f"⚠️ ADVERTENCIA: Faltan claves en respuesta: {missing_keys}")
             print(f"   Respuesta recibida: {json.dumps(json_response, indent=2)[:500]}")
 
-            # Crear estructura mínima si faltan cosas
+            # Intentar transformar estructura de Azure
+            if 'evaluacion' in json_response and 'vulnerabilidades' not in json_response:
+                print("🔄 Transformando respuesta de Azure OpenAI...")
+                evaluacion = json_response.get('evaluacion', [])
+
+                # Contar por severidad
+                severity_counts = {
+                    'CRÍTICO': 0, 'ALTO': 0, 'MEDIO': 0, 'BAJO': 0
+                }
+                for item in evaluacion:
+                    sev = item.get('severidad', 'BAJO')
+                    if sev in severity_counts:
+                        severity_counts[sev] += 1
+
+                json_response['vulnerabilidades'] = evaluacion
+                json_response['resumen'] = {
+                    'total': len(evaluacion),
+                    'criticos': severity_counts['CRÍTICO'],
+                    'altos': severity_counts['ALTO'],
+                    'medios': severity_counts['MEDIO'],
+                    'bajos': severity_counts['BAJO']
+                }
+                json_response['can_auto_fix'] = False
+
+            # Crear estructura mínima si aún faltan cosas
             if 'resumen' not in json_response:
                 json_response['resumen'] = {
                     'total': 0, 'criticos': 0, 'altos': 0, 'medios': 0, 'bajos': 0
