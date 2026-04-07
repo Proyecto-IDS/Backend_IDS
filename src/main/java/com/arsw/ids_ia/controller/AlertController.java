@@ -28,11 +28,7 @@ import com.arsw.ids_ia.dto.response.AlertMLMetricsResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * Controlador REST para gestionar alertas de seguridad.
- * Proporciona endpoints para crear, listar, obtener detalles y eliminar alertas.
- * Además, incluye un endpoint dedicado para obtener métricas ML de una alerta específica.
- */
+
 @RestController
 @RequestMapping("/api/alerts")
 public class AlertController {
