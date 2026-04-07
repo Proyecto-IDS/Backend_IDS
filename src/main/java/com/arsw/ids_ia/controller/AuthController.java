@@ -22,6 +22,10 @@ import com.arsw.ids_ia.utils.enums.Role;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Controlador REST para gestionar autenticación y autorización de usuarios.
+ * Proporciona endpoints para iniciar sesión con Google y obtener información del usuario autenticado.
+ */
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
